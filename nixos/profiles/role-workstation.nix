@@ -13,15 +13,8 @@ with config;
     # TODO decide if i drop to bash on pis?
     shell.fish.enable = true;
 
-    # TODO make nfs server configurable
-    # nfs.nas = {
-    #   enable = true;
-    #   lazy = true;
-    # };
-
     system.resticBackup.local.enable = false;
     system.resticBackup.remote.enable = false;
-
   };
 
   boot = {
@@ -43,10 +36,6 @@ with config;
     fwupd.enable = config.boot.loader.systemd-boot.enable; # fwupd does not work in BIOS mode
     thermald.enable = true;
     smartd.enable = true;
-
-    # required for yubikey
-    udev.packages = [ pkgs.yubikey-personalization ];
-    pcscd.enable = true;
   };
 
   hardware = {

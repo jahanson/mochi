@@ -10,6 +10,7 @@ with config;
   myHome.shell = {
     starship.enable = true;
     fish.enable = true;
+    wezterm.enable = true;
 
     git = {
       enable = true;

@@ -1,8 +1,4 @@
-{ config
-, pkgs
-, lib
-, ...
-}:
+{ config, pkgs, lib, ... }:
 with lib; let
   cfg = config.myHome.shell.wezterm;
 in
@@ -16,7 +12,7 @@ in
 
   config = mkIf cfg.enable {
     # xdg.configFile."wezterm/wezterm.lua".source = config.lib.file.mkOutOfStoreSymlink cfg.configPath;
-    programs.wezterm.package = pkgs.unstable.wezterm;
+    programs.wezterm.package = pkgs.wezterm;
     programs.wezterm = {
       enable = true;
       extraConfig = ''
