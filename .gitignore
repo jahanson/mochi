@@ -1,0 +1,6 @@
+**/*.tmp.sops.yaml
+**/*.sops.tmp.yaml
+age.key
+result*
+.direnv
+.kube

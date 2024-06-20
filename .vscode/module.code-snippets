@@ -1,0 +1,32 @@
+{
+  "nix-module": {
+    "prefix": "nm",
+    "body": [
+      "{ lib",
+      ", config",
+      ", pkgs",
+      ", ...",
+      "}:",
+      "with lib;",
+      "let",
+      "  cfg = config.mySystem.${1}.${2};",
+      "  app = \"${3}\"",
+      "  appFolder = \"apps/${app}\";",
+      "  persistentFolder = \"${config.mySystem.persistentFolder}/${appFolder}\";",
+      "  user = app;",
+      "  group = app;",
+      "in",
+      "{",
+      "  options.mySystem.${1}.${2}.enable = mkEnableOption \"${4}\";",
+      "",
+      "  config = mkIf cfg.enable {",
+      "",
+      "  $5",
+      "",
+      "  };",
+      "}",
+      ""
+    ],
+    "description": "nix-module"
+  }
+}
