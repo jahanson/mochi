@@ -36,6 +36,9 @@ with lib.hm.gvariant; {
       "org/gnome/desktop/peripherals/touchpad" = {
         tap-to-click = false;
       };
+      "org/gnome/desktop/interface" = {
+        clock-format = "12h";
+      };
 
     };
   };
