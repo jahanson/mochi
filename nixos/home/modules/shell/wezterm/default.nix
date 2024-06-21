@@ -17,11 +17,27 @@ in
       enable = true;
       extraConfig = ''
         local wez = require('wezterm')
+        local xcursor_size = nil
+        local xcursor_theme = nil
+
+        local success, stdout, stderr = wezterm.run_child_process({"gsettings", "get", "org.gnome.desktop.interface", "cursor-theme"})
+        if success then
+          xcursor_theme = stdout:gsub("'(.+)'\n", "%1")
+        end
+
+        local success, stdout, stderr = wezterm.run_child_process({"gsettings", "get", "org.gnome.desktop.interface", "cursor-size"})
+        if success then
+          xcursor_size = tonumber(stdout)
+        end
+
         return {
           -- issue relating to nvidia drivers
           -- https://github.com/wez/wezterm/issues/2011
           -- had to build out 550.67 manually to 'fix'
           enable_wayland = true,
+
+          xcursor_theme = xcursor_theme,
+          xcursor_size = xcursor_size,
 
           color_scheme   = "Dracula (Official)",
           check_for_updates = false,

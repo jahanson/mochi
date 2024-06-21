@@ -30,6 +30,12 @@ with lib.hm.gvariant; {
       "org/gnome/nautilus/icon-view" = {
         default-zoom-level = "small";
       };
+      "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+      };
+      "org/gnome/desktop/peripherals/touchpad" = {
+        tap-to-click = false;
+      };
 
     };
   };

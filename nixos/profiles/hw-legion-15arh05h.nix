@@ -1,22 +1,26 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 {
+  # Support windows partition
+  mySystem.system.packages = with pkgs; [
+    ntfs3g
+  ];
+
   boot = {
+    # for managing/mounting ntfs
+    supportedFilesystems = [ "ntfs" ];
+
     # Use the systemd-boot EFI boot loader.
     loader = {
-      systemd-boot = {
+      grub = {
         enable = true;
-      };
-      efi = {
-        canTouchEfiVariables = true;
+        zfsSupport = true;
+        efiSupport = true;
+        efiInstallAsRemovable = true;
+        mirroredBoots = [
+          { devices = ["nodev"]; path = "/boot";}
+        ];
       };
     };
-    # Kernel mods
-    initrd = {
-      availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
-      kernelModules = [ ];
-    };
-    kernelModules = [ "kvm-intel" ];
-    extraModulePackages = [ ];
   };
 
   networking = {
@@ -26,5 +30,4 @@
   # networking.interfaces.wlp4s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
