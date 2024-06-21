@@ -3,6 +3,7 @@
   # Support windows partition
   mySystem.system.packages = with pkgs; [
     ntfs3g
+    fira-code-nerdfont
   ];
 
   boot = {
