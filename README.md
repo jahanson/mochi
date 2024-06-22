@@ -10,12 +10,13 @@
 
 ## TODO
 
-- [ x ] Forgejo Actions
-- [   ] Bring over hosts
-  - [ x ] Varda (forgejo)
-  - [   ] Telperion (network services)
-  - [   ] Gandalf (NixNAS)
-  - [ x ] Thinkpad T470
+- [x] Forgejo Actions
+- [ ] Bring over hosts
+  - [x] Varda (forgejo)
+  - [x] Thinkpad T470
+  - [x] Legion 15 AMD/Nvidia
+  - [ ] Telperion (network services)
+  - [ ] Gandalf (NixNAS)
 
 ## Links & References
 
