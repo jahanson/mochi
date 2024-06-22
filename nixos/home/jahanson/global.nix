@@ -44,6 +44,7 @@ with config;
         ripgrep
         vim
         lsd
+        atuin
 
         # terminal file managers
         nnn
