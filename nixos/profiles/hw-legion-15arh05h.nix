@@ -17,14 +17,14 @@
         useOSProber = true;
         zfsSupport = true;
         efiSupport = true;
-        # efiInstallAsRemovable = true;
+        efiInstallAsRemovable = true;
         mirroredBoots = [
           { devices = ["nodev"]; path = "/boot";}
         ];
       };
-      efi = {
-        canTouchEfiVariables = true;
-      };
+      # efi = {
+      #   canTouchEfiVariables = true;
+      # };
     };
   };
 
