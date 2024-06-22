@@ -23,6 +23,7 @@
 
   # System settings and services.
   mySystem = {
+    purpose = "Production";
     system.motd.networkInterfaces = [ "enp1s0" ];
     security.acme.enable = true;
     services = {
