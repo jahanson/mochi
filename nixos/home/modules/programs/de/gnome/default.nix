@@ -38,6 +38,7 @@ with lib.hm.gvariant; {
       };
       "org/gnome/desktop/interface" = {
         clock-format = "12h";
+        show-battery-percentage = true;
       };
 
     };
