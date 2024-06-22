@@ -45,7 +45,7 @@ with lib;
   options.mySystem.purpose = mkOption {
     type = types.str;
     description = "System purpose";
-    default = "Production";
+    default = "Development";
   };
 
   options.mySystem.monitoring.prometheus.scrapeConfigs = mkOption {
