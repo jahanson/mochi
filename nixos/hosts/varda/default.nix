@@ -14,10 +14,10 @@
     fsType = "zfs";
   };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/8091-E7F2";
-      fsType = "vfat";
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/8091-E7F2";
+    fsType = "vfat";
+  };
 
   swapDevices = [ ];
 

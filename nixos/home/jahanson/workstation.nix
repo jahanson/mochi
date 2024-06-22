@@ -38,6 +38,5 @@ with config;
         minio-client # S3 management
         shellcheck # shell script linting
       ];
-
   };
 }

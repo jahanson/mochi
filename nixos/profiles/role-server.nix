@@ -5,7 +5,7 @@
 with lib;
 {
   config = {
-    # Enable monitoring for remote scraiping
+    # Enable monitoring for remote scraping
     mySystem.services.rebootRequiredCheck.enable = true;
     mySystem.security.wheelNeedsSudoPassword = false;
     mySystem.services.cockpit.enable = true;
@@ -22,6 +22,7 @@ with lib;
       noXlibs = mkDefault true;
       systemPackages = [ pkgs.lazygit ];
     };
+
     documentation = {
       enable = mkDefault false;
       doc.enable = mkDefault false;

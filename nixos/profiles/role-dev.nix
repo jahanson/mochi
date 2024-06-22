@@ -1,4 +1,4 @@
-{ config, lib, pkgs, imports, boot, self, inputs, ... }:
+{ config, pkgs, inputs, ... }:
 # Role for dev stations
 # Could be a workstatio or a headless server.
 
@@ -12,14 +12,10 @@ with config;
     dnsutils
     nix
 
-    # nix dev
-    dnscontrol # for updating internal DNS servers with homelab services
-
     # TODO Move
     nil
     nixpkgs-fmt
     statix
-    # nvd
     gh
 
     # bind # for dns utils like named-checkconf
