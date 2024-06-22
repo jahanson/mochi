@@ -10,7 +10,7 @@ jobs:
         include:
           - system: varda
             os: native-aarch64
-          - system: durincore
+          - system: legiondary
             os: native-x86_64
     runs-on: ${{ matrix.os }}
     env:
