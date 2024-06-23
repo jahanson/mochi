@@ -10,13 +10,6 @@
         canTouchEfiVariables = true;
       };
     };
-    # Kernel mods
-    initrd = {
-      availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
-      kernelModules = [ ];
-    };
-    kernelModules = [ "kvm-intel" ];
-    extraModulePackages = [ ];
   };
 
   networking = {

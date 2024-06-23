@@ -1,10 +1,16 @@
 { ... }: {
   config = {
-
-    # hardware-configuration.nix - half of the hardware-configuration.nix file
-
     networking.hostId = "ad4380db";
     networking.hostName = "durincore";
+    # Kernel mods
+    boot = {
+      initrd = {
+        availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
+        kernelModules = [ ];
+      };
+      kernelModules = [ "kvm-intel" ];
+      extraModulePackages = [ ];
+    };
 
     fileSystems."/" =
       { device = "rpool/root";
