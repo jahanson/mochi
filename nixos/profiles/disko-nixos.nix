@@ -45,7 +45,7 @@
             type = "zfs_fs";
             mountpoint = "/";
             options = {
-              ashift = 12;
+              ashift = "12";
               zfsutil = "";
             };
           };
@@ -54,7 +54,7 @@
             type = "zfs_fs";
             mountpoint = "/nix";
             options = {
-              ashift = 12;
+              ashift = "12";
               zfsutil = "";
             };
           };
@@ -63,7 +63,7 @@
             type = "zfs_fs";
             mountpoint = "/var";
             options = {
-              ashift = 12;
+              ashift = "12";
               zfsutil = "";
             };
           };
@@ -72,7 +72,7 @@
             type = "zfs_fs";
             mountpoint = "/home";
             options = {
-              ashift = 12;
+              ashift = "12";
               "com.sun:auto-snapshot" = "true";
               zfsutil = "";
             };
