@@ -26,6 +26,7 @@
           };
         };
       };
+    };
     zpool = {
       zroot = {
         type = "zpool";
@@ -37,36 +38,44 @@
           acltype = "posixacl";
         };
 
-        options = {
-          ashift = 12;
-        };
-        
         postCreateHook = "zfs list -t snapshot -H -o name | grep -E '^zroot@blank$' || zfs snapshot zroot@blank";
 
         datasets = {
           root = {
             type = "zfs_fs";
             mountpoint = "/";
-            options.zfsutil = "";
+            options = {
+              ashift = 12;
+              zfsutil = "";
+            };
           };
 
           nix = {
             type = "zfs_fs";
-            options.mountpoint = "/nix";
-            options.zfsutil = "";
+            mountpoint = "/nix";
+            options = {
+              ashift = 12;
+              zfsutil = "";
+            };
           };
 
           var = {
             type = "zfs_fs";
             mountpoint = "/var";
-            options.zfsutil = "";
+            options = {
+              ashift = 12;
+              zfsutil = "";
+            };
           };
 
           home = {
             type = "zfs_fs";
             mountpoint = "/home";
-            options."com.sun:auto-snapshot" = "true";
-            options.zfsutil = "";
+            options = {
+              ashift = 12;
+              "com.sun:auto-snapshot" = "true";
+              zfsutil = "";
+            };
           };
         };
       };
