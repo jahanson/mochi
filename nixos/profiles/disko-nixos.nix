@@ -47,22 +47,26 @@
           root = {
             type = "zfs_fs";
             mountpoint = "/";
+            options.zfsutil = "";
           };
 
           nix = {
             type = "zfs_fs";
             options.mountpoint = "/nix";
+            options.zfsutil = "";
           };
 
           var = {
             type = "zfs_fs";
             mountpoint = "/var";
+            options.zfsutil = "";
           };
 
           home = {
             type = "zfs_fs";
             mountpoint = "/home";
-            options."com.sun:auto-snapshot" = "true"
+            options."com.sun:auto-snapshot" = "true";
+            options.zfsutil = "";
           };
         };
       };
