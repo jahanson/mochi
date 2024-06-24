@@ -49,6 +49,9 @@
     nix-inspect = {
       url = "github:bluskript/nix-inspect";
     };
+
+    # disko - Declarative disk partitioning and formatting using nix
+    disko.url = "github:nix-community/disko";
   };
 
   outputs =
@@ -144,8 +147,10 @@
             hostname = "legiondary";
             system = "x86_64-linux";
             hardwareModules = [
-              ./nixos/profiles/hw-legion-15arh05h.nix
               inputs.nixos-hardware.nixosModules.lenovo-legion-15arh05h
+              ./nixos/profiles/hw-legion-15arh05h.nix
+              disko.nixosModules.disko
+              (import ./nixos/profiles/disko-nixos.nix { disks = [ "/dev/nvme0n1" ]; })
             ];
             profileModules = [
               ./nixos/profiles/role-dev.nix
