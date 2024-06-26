@@ -2,8 +2,9 @@
 {
   # Support windows partition
   mySystem = {
-      security.wheelNeedsSudoPassword = false;
-      system.packages = with pkgs; [
+    security.wheelNeedsSudoPassword = false;
+    system.packages = with pkgs; [
+      gparted
       ntfs3g
       fira-code-nerdfont
     ];
