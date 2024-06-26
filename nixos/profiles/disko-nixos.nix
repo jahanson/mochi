@@ -37,6 +37,9 @@
           mountpoint = "none";
           acltype = "posixacl";
         };
+        mountOptions = {
+          ashift = "12";
+        };
 
         postCreateHook = "zfs list -t snapshot -H -o name | grep -E '^zroot@blank$' || zfs snapshot zroot@blank";
 
@@ -44,9 +47,6 @@
           root = {
             type = "zfs_fs";
             mountpoint = "/";
-            mountOptions = {
-              ashift = "12";
-            };
             options = {
               zfsutil = "";
             };
@@ -55,9 +55,6 @@
           nix = {
             type = "zfs_fs";
             mountpoint = "/nix";
-            mountOptions = {
-              ashift = "12";
-            };
             options = {
               zfsutil = "";
             };
@@ -66,9 +63,6 @@
           var = {
             type = "zfs_fs";
             mountpoint = "/var";
-            mountOptions = {
-              ashift = "12";
-            };
             options = {
               zfsutil = "";
             };
@@ -77,9 +71,6 @@
           home = {
             type = "zfs_fs";
             mountpoint = "/home";
-            mountOptions = {
-              ashift = "12";
-            };
             options = {
               "com.sun:auto-snapshot" = "true";
               zfsutil = "";
