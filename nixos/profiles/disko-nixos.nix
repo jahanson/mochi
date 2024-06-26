@@ -47,25 +47,16 @@
           root = {
             type = "zfs_fs";
             mountpoint = "/";
-            options = {
-              zfsutil = "";
-            };
           };
 
           nix = {
             type = "zfs_fs";
             mountpoint = "/nix";
-            options = {
-              zfsutil = "";
-            };
           };
 
           var = {
             type = "zfs_fs";
             mountpoint = "/var";
-            options = {
-              zfsutil = "";
-            };
           };
 
           home = {
@@ -73,7 +64,6 @@
             mountpoint = "/home";
             options = {
               "com.sun:auto-snapshot" = "true";
-              zfsutil = "";
             };
           };
         };
