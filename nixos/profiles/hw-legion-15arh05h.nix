@@ -6,6 +6,8 @@
     fira-code-nerdfont
   ];
 
+  security.wheelNeedsSudoPassword = false;
+
   boot = {
     # for managing/mounting ntfs
     supportedFilesystems = [ "ntfs" ];
