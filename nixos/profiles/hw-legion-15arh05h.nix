@@ -14,14 +14,12 @@
     # for managing/mounting ntfs
     supportedFilesystems = [ "ntfs" ];
 
-    # Use the systemd-boot EFI boot loader.
     loader = {
       grub = {
         enable = true;
         useOSProber = true;
         zfsSupport = true;
-        efiSupport = true;
-        efiInstallAsRemovable = true;
+        device = "nodev";
         mirroredBoots = [
           { devices = ["nodev"]; path = "/boot";}
         ];
