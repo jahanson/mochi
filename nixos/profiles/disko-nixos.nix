@@ -44,8 +44,10 @@
           root = {
             type = "zfs_fs";
             mountpoint = "/";
-            options = {
+            mountOptions = {
               ashift = "12";
+            };
+            options = {
               zfsutil = "";
             };
           };
@@ -53,8 +55,10 @@
           nix = {
             type = "zfs_fs";
             mountpoint = "/nix";
-            options = {
+            mountOptions = {
               ashift = "12";
+            };
+            options = {
               zfsutil = "";
             };
           };
@@ -62,8 +66,10 @@
           var = {
             type = "zfs_fs";
             mountpoint = "/var";
-            options = {
+            mountOptions = {
               ashift = "12";
+            };
+            options = {
               zfsutil = "";
             };
           };
@@ -71,8 +77,10 @@
           home = {
             type = "zfs_fs";
             mountpoint = "/home";
-            options = {
+            mountOptions = {
               ashift = "12";
+            };
+            options = {
               "com.sun:auto-snapshot" = "true";
               zfsutil = "";
             };
