@@ -37,9 +37,9 @@
           mountpoint = "none";
           acltype = "posixacl";
         };
-        mountOptions = {
-          ashift = "12";
-        };
+        mountOptions = [
+          "ashift=12"
+        ];
 
         postCreateHook = "zfs list -t snapshot -H -o name | grep -E '^zroot@blank$' || zfs snapshot zroot@blank";
 
