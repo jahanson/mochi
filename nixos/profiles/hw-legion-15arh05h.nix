@@ -1,12 +1,14 @@
 { config, lib, pkgs, ... }:
 {
   # Support windows partition
-  mySystem.system.packages = with pkgs; [
-    ntfs3g
-    fira-code-nerdfont
-  ];
+  mySystem = {
+      security.wheelNeedsSudoPassword = false;
+      system.packages = with pkgs; [
+      ntfs3g
+      fira-code-nerdfont
+    ];
+  };
 
-  security.wheelNeedsSudoPassword = false;
 
   boot = {
     # for managing/mounting ntfs
