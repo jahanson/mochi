@@ -18,7 +18,6 @@
     loader = {
       grub = {
         enable = true;
-        useOSProber = true;
         zfsSupport = true;
         device = "nodev";
         mirroredBoots = [
