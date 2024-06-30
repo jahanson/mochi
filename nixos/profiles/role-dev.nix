@@ -11,6 +11,7 @@ with config;
     btop
     dnsutils
     nix
+    fira-code-nerdfont
 
     # TODO Move
     nil
@@ -27,6 +28,4 @@ with config;
     enable = true;
     nix-direnv.enable = true;
   };
-
-
 }

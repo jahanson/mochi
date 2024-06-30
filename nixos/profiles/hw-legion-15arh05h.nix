@@ -4,9 +4,7 @@
   mySystem = {
     security.wheelNeedsSudoPassword = false;
     system.packages = with pkgs; [
-      gparted
       ntfs3g
-      fira-code-nerdfont
     ];
   };
 

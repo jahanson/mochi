@@ -54,6 +54,7 @@ with config;
     vscode
     vivaldi
     termius
+    gparted
   ];
 
   i18n = {
