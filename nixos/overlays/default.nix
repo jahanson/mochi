@@ -1,6 +1,6 @@
 { inputs, ... }:
 let
-  warpTerminal = import ./warp-terminal/warp-terminal.nix {
+  warpTerminal = import ./warp-terminal {
     inherit (inputs.nixpkgs) lib;
   };
 in
