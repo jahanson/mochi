@@ -49,7 +49,7 @@ get_version() {
     echo "$1" | grep -oP -m 1 '(?<=/v)[\d.\w]+(?=/)'
 }
 
-# nix-prefect-url seems to be uncompressing the archive then taking the hash
+# nix-prefetch-url seems to be uncompressing the archive then taking the hash
 # so just get the hash from fetchurl
 sri_get() {
     local ouput sri
@@ -62,7 +62,6 @@ sri_get() {
     [[ -z "$sri" ]] && err "$output"
     echo "$sri"
 }
-
 
 for sys in darwin linux; do
     url=$(resolve_url ${sys})
