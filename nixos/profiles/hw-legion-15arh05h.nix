@@ -1,10 +1,11 @@
-{ config, lib, pkgs, ... }:
+{ lib, pkgs, ... }:
 {
   # Support windows partition
   mySystem = {
     security.wheelNeedsSudoPassword = false;
     system.packages = with pkgs; [
       ntfs3g
+      warp-terminal
     ];
   };
 
