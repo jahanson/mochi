@@ -5,7 +5,6 @@
     security.wheelNeedsSudoPassword = false;
     system.packages = with pkgs; [
       ntfs3g
-      warp-terminal
     ];
   };
 

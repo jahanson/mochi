@@ -53,7 +53,6 @@ with config;
     cpupower-gui
     vscode
     vivaldi
-    termius
     gparted
   ];
 

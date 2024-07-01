@@ -29,6 +29,9 @@ with config;
         discord
         flameshot
         vlc
+        warp-terminal
+        termius
+        obsidian
 
         # cli
         brightnessctl
