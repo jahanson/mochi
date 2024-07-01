@@ -49,6 +49,7 @@
 
   # System settings and services.
   mySystem = {
+    purpose = "Development";
     system.motd.networkInterfaces = [ "eno1" "wlp4s0" ];
   };
 }
