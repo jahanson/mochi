@@ -3,10 +3,12 @@ let
   warpTerminal = import ./warp-terminal {
     inherit (inputs.nixpkgs) lib;
   };
+  termiusApp = import ./termius { };
 in
 {
   nur = inputs.nur.overlay;
   warp-terminal = warpTerminal;
+  termius = termiusApp;
 
   # The unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'
