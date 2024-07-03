@@ -1,22 +1,25 @@
 { inputs, ... }:
 let
-  warpTerminal = import ./warp-terminal {
+  warpTerminalOverlay = import ./warp-terminal {
     inherit (inputs.nixpkgs) lib;
   };
-  termiusApp = import ./termius { };
+  termiusOverlay = import ./termius { };
+  talosctlOverlay = import ./talosctl { };
+  goOverlay = import ./go { };
 in
 {
   nur = inputs.nur.overlay;
-  warp-terminal = warpTerminal;
-  termius = termiusApp;
+  warp-terminal = warpTerminalOverlay;
+  termius = termiusOverlay;
+  # talosctl = talosctlOverlay;
+  # go = goOverlay;
 
   # The unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'
-  # great idea if I wasn't using unstable as my base.
-  # unstable-packages = final: _prev: {
-  #   unstable = import inputs.nixpkgs-unstable {
-  #     inherit (final) system;
-  #     config.allowUnfree = true;
-  #   };
-  # };
+  unstable-packages = final: _prev: {
+    unstable = import inputs.nixpkgs-unstable {
+      inherit (final) system;
+      config.allowUnfree = true;
+    };
+  };
 }

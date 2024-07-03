@@ -76,9 +76,10 @@ in
             COOKIE_NAME = "session";
           };
         };
-        secrets = {
-          mailer.PASSWD = config.sops.secrets."services/forgejo/smtp/password".path;
-        };
+        mailerPasswordFile = config.sops.secrets."services/forgejo/smtp/password".path;
+        # secrets = {
+        #   mailer.PASSWD = config.sops.secrets."services/forgejo/smtp/password".path;
+        # };
       };
       # sops
       sops.secrets."services/forgejo/smtp/password" = {
