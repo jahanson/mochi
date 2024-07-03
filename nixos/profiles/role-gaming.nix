@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
   # Enable module for NVIDIA graphics
   mySystem = {
@@ -21,6 +21,19 @@
     winetricks
   ];
 
-  # sound.enable = lib.mkDefault true;
-  # hardware.pulseaudio.enable = lib.mkForce false;
+  # Disable Alsa
+  sound.enable = lib.mkDefault false;
+  hardware.pulseaudio.enable = lib.mkForce false;
+  
+  # Realtime Kit
+  security.rtkit.enable = true;
+  # Enable pipewire
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+  };
+
 }

@@ -16,6 +16,9 @@
     # https://github.com/nix-community
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
+    # disko - Declarative disk partitioning and formatting using nix
+    disko.url = "github:nix-community/disko";
+
     # home-manager - unstable
     # https://github.com/nix-community/home-manager
     home-manager = {
@@ -50,12 +53,14 @@
       url = "github:bluskript/nix-inspect";
     };
 
-    # disko - Declarative disk partitioning and formatting using nix
-    disko.url = "github:nix-community/disko";
+    # talhelper - A tool to help creating Talos kubernetes cluster
+    talhelper = {
+      url = "github:budimanjojo/talhelper";
+    };
   };
 
   outputs =
-    { self, nixpkgs, sops-nix, home-manager, nix-vscode-extensions, impermanence, disko, ... } @ inputs:
+    { self, nixpkgs, sops-nix, home-manager, nix-vscode-extensions, impermanence, disko, talhelper, ... } @ inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs [
         "aarch64-linux"
