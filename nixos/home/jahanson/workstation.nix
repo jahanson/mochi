@@ -32,6 +32,7 @@ with config;
         warp-terminal
         termius
         obsidian
+        jetbrains.datagrip
 
         # cli
         brightnessctl
