@@ -10,12 +10,13 @@ in
 
     # ref: https://nixos.wiki/wiki/Nvidia
     # Enable OpenGL
-    hardware.graphics = {
+    hardware.opengl = {
       enable = true;
-      enable32Bit = true;
+      driSupport = true;
+      driSupport32Bit = true;
     };
 
-    hardware.graphics.extraPackages = with pkgs; [
+    hardware.opengl.extraPackages = with pkgs; [
       vaapiVdpau
     ];
 

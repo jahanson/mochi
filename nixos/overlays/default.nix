@@ -11,7 +11,7 @@ in
   nur = inputs.nur.overlay;
   warp-terminal = warpTerminalOverlay;
   termius = termiusOverlay;
-  # talosctl = talosctlOverlay;
+  talosctl = talosctlOverlay;
   # go = goOverlay;
 
   # The unstable nixpkgs set (declared in the flake inputs) will

@@ -12,5 +12,3 @@ if [[ "$currentVersion" == "$latestVersion" ]]; then
 fi
 
 update-source-version talosctl "$latestVersion"
-
-$(nix-build . -A talosctl --no-out-link)
