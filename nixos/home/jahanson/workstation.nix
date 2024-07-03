@@ -33,7 +33,7 @@ with config;
         termius
         obsidian
         jetbrains.datagrip
-        talosctl
+        # talosctl
 
         # cli
         brightnessctl
