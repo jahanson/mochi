@@ -18,6 +18,7 @@ with config;
     nixpkgs-fmt
     statix
     gh
+    go
 
     # bind # for dns utils like named-checkconf
     inputs.nix-inspect.packages.${pkgs.system}.default

@@ -4,15 +4,20 @@ let
     inherit (inputs.nixpkgs) lib;
   };
   termiusOverlay = import ./termius { };
-  talosctlOverlay = import ./talosctl { };
+  # Partial overlay
+  # talosctlOverlay = import ./talosctl { };
+  # Full overlay
+  talosctlOverlay = self: super: {
+    talosctl = super.callPackage ./talosctl/talosctl-custom.nix { };
+  };
   goOverlay = import ./go { };
 in
 {
   nur = inputs.nur.overlay;
   warp-terminal = warpTerminalOverlay;
   termius = termiusOverlay;
-  # talosctl = talosctlOverlay;
-  # go = goOverlay;
+  talosctl = talosctlOverlay;
+  go = goOverlay;
 
   # The unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'
