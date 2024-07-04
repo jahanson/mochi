@@ -17,7 +17,6 @@ pkgs.mkShell {
   NIX_CONFIG = "experimental-features = nix-command flakes";
 
   nativeBuildInputs = with pkgs; [
-    buildPackages.go_1_22
     nix
     home-manager
     git

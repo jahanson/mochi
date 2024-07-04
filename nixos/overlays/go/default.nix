@@ -3,7 +3,7 @@ let
   finalVersion = "1.22.4";
 in
 (final: prev: {
-  go = prev.go.overrideAttrs (oldAttrs: { 
+  go_1_22 = prev.go_1_22.overrideAttrs (oldAttrs: { 
     version = finalVersion;
     src = prev.fetchurl {
       url = "https://go.dev/dl/go${finalVersion}.src.tar.gz";
