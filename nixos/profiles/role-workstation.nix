@@ -6,11 +6,7 @@
 with config;
 {
   mySystem = {
-
     de.gnome.enable = true;
-
-    # Lets see if fish everywhere is OK on the pi's
-    # TODO decide if i drop to bash on pis?
     shell.fish.enable = true;
 
     system.resticBackup.local.enable = false;
@@ -23,16 +19,16 @@ with config;
   };
 
   nix.settings = {
-    # TODO factor out into mySystem
     # Avoid disk full issues
     max-free = lib.mkDefault (1000 * 1000 * 1000);
     min-free = lib.mkDefault (128 * 1000 * 1000);
   };
 
-  # set xserver videodrivers if used
-  services.xserver.enable = true;
-
   services = {
+    # set xserver videodrivers if used
+    xserver.enable = true;
+    # Enable the Gnome keyring for auto unlocking ssh keys on login
+    gnome.gnome-keyring.enable = true;
     fwupd.enable = config.boot.loader.systemd-boot.enable; # fwupd does not work in BIOS mode
     thermald.enable = true;
     smartd.enable = true;
@@ -61,4 +57,5 @@ with config;
   };
 
   programs.mtr.enable = true;
+  programs.ssh.startAgent = true;
 }

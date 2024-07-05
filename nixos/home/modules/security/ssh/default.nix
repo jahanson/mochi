@@ -15,7 +15,6 @@ in
     programs.ssh = {
       inherit (cfg) matchBlocks;
       enable = true;
-      # addKeysToAgent = "yes";
     };
   };
 }
