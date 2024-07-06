@@ -132,7 +132,7 @@
         in
         {
           "durincore" = mkNixosConfig {
-            # T470 Thinkpad
+            # T470 Thinkpad Intel i7-6600U
             # Nix dev laptop
             hostname = "durincore";
             system = "x86_64-linux";
@@ -148,8 +148,8 @@
           };
 
           "legiondary" = mkNixosConfig {
-            # Legion 15arh05h AMD/Nvidia
-            # Nix gaming laptop
+            # Legion 15arh05h AMD/Nvidia Ryzen 7 4800H
+            # Nix dev/gaming laptop
             hostname = "legiondary";
             system = "x86_64-linux";
             hardwareModules = [
@@ -173,6 +173,20 @@
             system = "aarch64-linux";
             hardwareModules = [
               ./nixos/profiles/hw-hetzner-cax.nix
+            ];
+            profileModules = [
+              ./nixos/profiles/role-server.nix
+              { home-manager.users.jahanson = ./nixos/home/jahanson/server.nix; }
+            ];
+          };
+
+          "telperion" = mkNixosConfig {
+            # HP-S01 Intel G5900
+            # Network services server
+            hostname = "telperion";
+            system = "x86_64-linux";
+            hardwareModules = [
+              ./nixos/profiles/hw-hp-s01.nix
             ];
             profileModules = [
               ./nixos/profiles/role-server.nix

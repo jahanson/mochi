@@ -3,27 +3,18 @@
   # Support windows partition
   mySystem = {
     security.wheelNeedsSudoPassword = false;
-    system.packages = with pkgs; [
-      ntfs3g
-    ];
   };
 
   boot = {
-    # for managing/mounting ntfs
-    supportedFilesystems = [ "ntfs" ];
-
     loader = {
       grub = {
         enable = true;
         zfsSupport = true;
         device = "nodev";
         mirroredBoots = [
-          { devices = ["nodev"]; path = "/boot";}
+          { devices = [ "nodev" ]; path = "/boot"; }
         ];
       };
-      # efi = {
-      #   canTouchEfiVariables = true;
-      # };
     };
   };
 
