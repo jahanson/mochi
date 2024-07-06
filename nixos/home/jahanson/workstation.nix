@@ -34,6 +34,7 @@ with config;
         obsidian
         jetbrains.datagrip
         talosctl
+        pika-backup
 
         # cli
         brightnessctl
