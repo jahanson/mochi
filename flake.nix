@@ -187,6 +187,9 @@
             system = "x86_64-linux";
             hardwareModules = [
               ./nixos/profiles/hw-hp-s01.nix
+              disko.nixosModules.disko
+              (import ./nixos/profiles/disko-nixos.nix { disks = [ "/dev/nvme0n1" ]; })
+
             ];
             profileModules = [
               ./nixos/profiles/role-server.nix
