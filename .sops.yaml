@@ -1,6 +1,6 @@
 ---
 # config files for sops & used for encrypting keys that sops-nix decrypts.
-# each machine key is derieved from its generated `ssh_hosts_ed` file
+# each machine key is derived from its generated `ssh_hosts_ed` file
 # via ssh-to-age
 # sops encrypts the secrets ready to decrypt with the private key of any of the below machines
 # OR my 'main' key thats kept outside this repo securely.
