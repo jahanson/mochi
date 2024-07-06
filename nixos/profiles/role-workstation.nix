@@ -47,7 +47,7 @@ with config;
     lm_sensors
     cpufrequtils
     cpupower-gui
-    vscode
+    unstable.vscode
     vivaldi
     gparted
   ];
