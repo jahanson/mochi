@@ -69,14 +69,17 @@
 
     services = {
       podman.enable = true;
+
       onepassword-connect = {
         enable = true;
         credentialsFile = config.sops.secrets."1password-credentials.json".path;
       };
+
       bind = {
         enable = true;
         extraConfig = import ./config/bind.nix { inherit config; };
       };
+
       haproxy = {
         enable = true;
         config = import ./config/haproxy.nix { inherit config; };
