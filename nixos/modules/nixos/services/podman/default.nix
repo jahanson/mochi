@@ -47,5 +47,4 @@ in
       users.groups.kah = { };
       users.users.jahanson.extraGroups = [ "kah" ];
     };
-
 }

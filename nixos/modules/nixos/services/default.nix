@@ -1,8 +1,10 @@
 {
   imports = [
+    ./bind
     ./cockpit
     ./forgejo
     ./nginx
+    ./onepassword-connect
     ./podman
     ./postgresql
     ./radicale

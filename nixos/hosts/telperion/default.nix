@@ -42,9 +42,41 @@
 
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
+  sops = {
+    # Mounts unencrypted sops values at /run/secrets/rndc_keys accessible by root only by default.
+    secrets = {
+      "bind/rndc-keys/externaldns" = {
+        owner = config.users.users.named.name;
+        inherit (config.users.users.named) group;
+        sopsFile = ./secrets.sops.yaml;
+      };
+      "bind/zones/jahanson.tech" = {
+        owner = config.users.users.named.name;
+        inherit (config.users.users.named) group;
+        sopsFile = ./secrets.sops.yaml;
+      };
+      "1password-credentials.json" = {
+        mode = "0444";
+        sopsFile = ./secrets.sops.yaml;
+      };
+    };
+  };
+
   # System settings and services.
   mySystem = {
     purpose = "Production";
     system.motd.networkInterfaces = [ "enp2s0" "wlp3s0" ];
+
+    services = {
+      podman.enable = true;
+      onepassword-connect = {
+        enable = true;
+        credentialsFile = config.sops.secrets."1password-credentials.json".path;
+      };
+      bind = {
+        enable = true;
+        extraConfig = import ./config/bind.nix { inherit config; };
+      };
+    };
   };
 }
