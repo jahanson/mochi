@@ -14,6 +14,11 @@ in
   };
 
   config = mkIf cfg.enable {
+    networking.firewall = {
+      allowedTCPPorts = [ 53 ];
+      allowedUDPPorts = [ 53 ];
+    };
+
     # Forces the machine to use the resolver provided by the network
     networking.resolvconf.useLocalResolver = mkForce false;
 
