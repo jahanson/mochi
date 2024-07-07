@@ -6,14 +6,10 @@
   };
 
   boot = {
-    loader = {
-      grub = {
-        enable = true;
-        zfsSupport = true;
-        device = "nodev";
-        mirroredBoots = [
-          { devices = [ "nodev" ]; path = "/boot"; }
-        ];
+  loader = {
+      systemd-boot.enable = true;
+      efi = {
+        canTouchEfiVariables = true;
       };
     };
   };
