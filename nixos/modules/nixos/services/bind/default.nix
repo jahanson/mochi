@@ -9,7 +9,7 @@ in
     enable = mkEnableOption "bind";
     package = mkPackageOption pkgs "bind" { };
     extraConfig = mkOption {
-      type = types.string;
+      type = types.str;
     };
   };
 
