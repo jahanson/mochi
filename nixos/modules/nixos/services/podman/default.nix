@@ -20,7 +20,7 @@ in
 
         # and add dns
         defaultNetwork.settings = {
-          dns_enabled = true;
+          dns_enabled = false;
         };
       };
       virtualisation.oci-containers = {
