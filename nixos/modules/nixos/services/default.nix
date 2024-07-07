@@ -3,6 +3,7 @@
     ./bind
     ./cockpit
     ./forgejo
+    ./haproxy
     ./nginx
     ./onepassword-connect
     ./podman

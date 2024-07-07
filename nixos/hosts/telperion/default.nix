@@ -77,6 +77,11 @@
         enable = true;
         extraConfig = import ./config/bind.nix { inherit config; };
       };
+      haproxy = {
+        enable = true;
+        config = import ./config/haproxy.nix { inherit config; };
+        tcpPorts = [ 6443 50000 ];
+      };
     };
   };
 }
