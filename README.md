@@ -15,7 +15,7 @@
   - [x] Varda (forgejo)
   - [x] Thinkpad T470
   - [x] Legion 15 AMD/Nvidia
-  - [ ] Telperion (network services)
+  - [x] Telperion (network services)
   - [ ] Gandalf (NixNAS)
 
 ## Links & References
