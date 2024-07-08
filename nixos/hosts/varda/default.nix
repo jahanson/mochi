@@ -31,5 +31,4 @@
       nginx.enable = true;
     };
   };
-
 }
