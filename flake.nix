@@ -161,11 +161,29 @@
               inputs.nixos-hardware.nixosModules.lenovo-legion-15arh05h
               ./nixos/profiles/hw-legion-15arh05h.nix
               disko.nixosModules.disko
-              (import ./nixos/profiles/disko-nixos.nix { disks = [ "/dev/nvme1n1" ]; })
+              (import ./nixos/profiles/disko-nixos.nix { disks = [ "/dev/nvme0n1" ]; })
             ];
             profileModules = [
               ./nixos/profiles/role-dev.nix
               ./nixos/profiles/role-gaming.nix
+              ./nixos/profiles/role-workstation.nix
+              { home-manager.users.jahanson = ./nixos/home/jahanson/workstation.nix; }
+            ];
+          };
+
+          "telchar" = mkNixosConfig {
+            # Framework 16 Ryzen 7 7840HS - Radeon 780M Graphics
+            # Nix dev laptop
+            hostname = "telchar";
+            system = "x86_64-linux";
+            hardwareModules = [
+              inputs.nixos-hardware.nixosModules.framework-16-7040-amd
+              ./nixos/profiles/hw-framework-16-7840hs.nix
+              disko.nixosModules.disko
+              (import ./nixos/profiles/disko-nixos.nix { disks = [ "/dev/nvme0n1" ]; })
+            ];
+            profileModules = [
+              ./nixos/profiles/role-dev.nix
               ./nixos/profiles/role-workstation.nix
               { home-manager.users.jahanson = ./nixos/home/jahanson/workstation.nix; }
             ];

@@ -3,14 +3,11 @@
   # Support windows partition
   mySystem = {
     security.wheelNeedsSudoPassword = false;
-    system.packages = with pkgs; [
-      ntfs3g
-    ];
   };
 
   boot = {
     # for managing/mounting ntfs
-    supportedFilesystems = [ "ntfs" "nfs" ];
+    supportedFilesystems = [ "nfs" ];
 
     loader = {
       grub = {
