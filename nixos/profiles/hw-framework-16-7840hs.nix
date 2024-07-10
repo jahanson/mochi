@@ -10,23 +10,16 @@
     supportedFilesystems = [ "nfs" ];
 
     loader = {
-      grub = {
-        enable = true;
-        zfsSupport = true;
-        device = "nodev";
-        mirroredBoots = [
-          { devices = ["nodev"]; path = "/boot";}
-        ];
+      systemd-boot.enable = true;
+      efi = {
+        canTouchEfiVariables = true;
       };
-      # efi = {
-      #   canTouchEfiVariables = true;
-      # };
     };
   };
 
   networking = {
     useDHCP = lib.mkDefault true;
+    networkmanager.enable = true;
   };
-
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
