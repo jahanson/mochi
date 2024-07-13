@@ -3,10 +3,10 @@
 , ...
 }:
 let
-  cfg = config.mySystem.services.nfs;
+  cfg = config.mySystem.system.nfs;
 in
 {
-  options.mySystem.services.nfs = {
+  options.mySystem.system.nfs = {
     enable = lib.mkEnableOption "nfs";
     exports = lib.mkOption {
       type = lib.types.str;
@@ -15,8 +15,8 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    services.nfs.server.enable = true;
-    services.nfs.server.exports = cfg.exports;
+    system.nfs.server.enable = true;
+    system.nfs.server.exports = cfg.exports;
     networking.firewall.allowedTCPPorts = [
       2049
     ];
