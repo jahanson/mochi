@@ -4,6 +4,7 @@
     ./cockpit
     ./forgejo
     ./haproxy
+    ./libvirt-qemu
     ./nginx
     ./onepassword-connect
     ./podman

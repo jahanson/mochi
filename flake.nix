@@ -23,7 +23,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # home-manager - unstable
+    # home-manager - Manage user configuration with nix
     # https://github.com/nix-community/home-manager
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
@@ -64,10 +64,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Lix- Substitution of the Nix package manager, focused on correctness, usability, and growth – and committed to doing right by its community.
+    # https://git.lix.systems/lix-project/lix
     lix-module = {
       url = "https://git.lix.systems/lix-project/nixos-module/archive/2.90.0.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # NixVirt for qemu & libvirt
+    # https://github.com/AshleyYakeley/NixVirt
+    nixvirt-git = {
+      url = "github:AshleyYakeley/NixVirt/v0.5.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
@@ -98,7 +108,7 @@
           inherit inputs;
           # Import overlays for building nixosconfig with them.
           overlays = import ./nixos/overlays { inherit inputs; };
-          # generate a base nixos configuration with the specified overlays, hardware modules, and any extraModules applied
+          # generate a base nixos configuration with the specified overlays, hardware modules, and any AerModules applied
           mkNixosConfig =
             { hostname
             , system ? "x86_64-linux"
@@ -229,13 +239,13 @@
           "gandalf" = mkNixosConfig {
             # X9DRi-LN4+/X9DR3-LN4+ - Intel(R) Xeon(R) CPU E5-2650 v2
             # NAS
-            hostname = "telperion";
+            hostname = "gandalf";
             system = "x86_64-linux";
             hardwareModules = [
+              lix-module.nixosModules.default
               ./nixos/profiles/hw-supermicro.nix
               disko.nixosModules.disko
               (import ./nixos/profiles/disko-nixos.nix { disks = [ "/dev/sda/dev/disk/by-id/ata-Seagate_IronWolfPro_ZA240NX10001-2ZH100_7TF002RA" ]; })
-              lix-module.nixosModules.default
             ];
             profileModules = [
               ./nixos/profiles/role-server.nix
