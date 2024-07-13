@@ -1,7 +1,4 @@
-{ lib
-, config
-, ...
-}:
+{ lib, config, ... }:
 let
   cfg = config.mySystem.system.nfs;
 in
@@ -15,8 +12,8 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    system.nfs.server.enable = true;
-    system.nfs.server.exports = cfg.exports;
+    services.nfs.server.enable = true;
+    services.nfs.server.exports = cfg.exports;
     networking.firewall.allowedTCPPorts = [
       2049
     ];
