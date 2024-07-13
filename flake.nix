@@ -18,7 +18,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     # disko - Declarative disk partitioning and formatting using nix
-    disko = { 
+    disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -219,6 +219,23 @@
               disko.nixosModules.disko
               (import ./nixos/profiles/disko-nixos.nix { disks = [ "/dev/nvme0n1" ]; })
 
+            ];
+            profileModules = [
+              ./nixos/profiles/role-server.nix
+              { home-manager.users.jahanson = ./nixos/home/jahanson/server.nix; }
+            ];
+          };
+
+          "gandalf" = mkNixosConfig {
+            # X9DRi-LN4+/X9DR3-LN4+ - Intel(R) Xeon(R) CPU E5-2650 v2
+            # NAS
+            hostname = "telperion";
+            system = "x86_64-linux";
+            hardwareModules = [
+              ./nixos/profiles/hw-supermicro.nix
+              disko.nixosModules.disko
+              (import ./nixos/profiles/disko-nixos.nix { disks = [ "/dev/sda/dev/disk/by-id/ata-Seagate_IronWolfPro_ZA240NX10001-2ZH100_7TF002RA" ]; })
+              lix-module.nixosModules.default
             ];
             profileModules = [
               ./nixos/profiles/role-server.nix
