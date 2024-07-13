@@ -18,7 +18,7 @@
         zfsSupport = true;
         device = "nodev";
         mirroredBoots = [
-          { devices = ["nodev"]; path = "/boot";}
+          { devices = [ "nodev" ]; path = "/boot"; }
         ];
       };
       # efi = {

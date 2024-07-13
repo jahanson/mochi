@@ -14,8 +14,7 @@
 
     # Restic backups disabled.
     # TODO: configure storagebox for hetzner backups
-    system.resticBackup =
-    {
+    system.resticBackup = {
       local.enable = false;
       remote.enable = false;
     };

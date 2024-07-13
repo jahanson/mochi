@@ -24,7 +24,7 @@
   # Disable Alsa
   sound.enable = lib.mkDefault false;
   hardware.pulseaudio.enable = lib.mkForce false;
-  
+
   # Realtime Kit
   security.rtkit.enable = true;
   # Enable pipewire

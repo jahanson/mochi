@@ -1,12 +1,11 @@
 { lib, pkgs, ... }:
 {
-  # Support windows partition
   mySystem = {
     security.wheelNeedsSudoPassword = false;
   };
 
   boot = {
-  loader = {
+    loader = {
       systemd-boot.enable = true;
       efi = {
         canTouchEfiVariables = true;
