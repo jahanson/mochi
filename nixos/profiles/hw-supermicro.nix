@@ -3,8 +3,17 @@ with lib;
 {
   boot = {
     loader = {
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
+      grub = {
+        enable = true;
+        zfsSupport = true;
+        device = "nodev";
+        mirroredBoots = [
+          { devices = [ "nodev" ]; path = "/boot"; }
+        ];
+      };
+      efi = {
+        canTouchEfiVariables = true;
+      };
     };
   };
 
