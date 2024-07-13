@@ -1,9 +1,9 @@
 { lib, config, ... }:
 let
-  cfg = config.mySystem.services.samba;
+  cfg = config.mySystem.system.samba;
 in
 {
-  options.mySystem.services.samba = {
+  options.mySystem.system.samba = {
     enable = lib.mkEnableOption "samba";
     extraConfig = lib.mkOption {
       type = lib.types.str;
