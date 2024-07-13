@@ -1,18 +1,14 @@
 { lib, pkgs, ... }:
 with lib;
 {
-  mySystem.system.packages = with pkgs; [
-    ntfs3g
-  ];
-
   boot = {
 
     initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
     kernelModules = [ ];
     extraModulePackages = [ ];
 
-    # for managing/mounting ntfs
-    supportedFilesystems = [ "ntfs" ];
+    # for managing/mounting nfs
+    supportedFilesystems = [ "nfs" ];
 
     loader = {
       systemd-boot.enable = true;
