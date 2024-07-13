@@ -26,5 +26,6 @@ pkgs.mkShell {
     sops
     pre-commit
     gitleaks
+    cachix
   ];
 }

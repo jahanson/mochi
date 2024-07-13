@@ -19,7 +19,6 @@ with lib;
 
     services.logrotate.enable = mkDefault true;
     environment = {
-      noXlibs = mkDefault true;
       systemPackages = [ pkgs.lazygit ];
     };
 
