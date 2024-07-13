@@ -2,9 +2,6 @@
 with lib;
 {
   boot = {
-    # for managing/mounting nfs
-    supportedFilesystems = [ "nfs" ];
-
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
