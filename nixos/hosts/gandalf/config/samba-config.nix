@@ -1,4 +1,4 @@
-{ config, ... }:
+{ ... }:
 ''
   workgroup = WORKGROUP
   server string = gandalf
