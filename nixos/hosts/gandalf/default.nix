@@ -2,7 +2,9 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 { config, lib, modulesPath, ... }:
-
+let 
+  sanoidConfig = import ./config/sanoid.nix { };
+in
 {
   imports =
     [
@@ -66,6 +68,15 @@
 
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
+  sops = {
+    secrets = {
+      "lego/dnsimple/token" = {
+        mode = "0444";
+        sopsFile = ./secrets.sops.yaml;
+      };
+    };
+  };
+  
   # System settings and services.
   mySystem = {
     purpose = "Production";
@@ -80,6 +91,27 @@
       samba.enable = true;
       samba.shares = import ./config/samba-shares.nix { };
       samba.extraConfig = import ./config/samba-config.nix { };
+    };
+
+    services = {
+      podman.enable = true;
+
+      # Sanoid
+      
+      sanoid = {
+        enable = true;
+        inherit (sanoidConfig.outputs) templates datasets;
+      };
+      
+      # Unifi & Lego-Auto
+      unifi.enable = true;
+      lego-auto = {
+        enable = true;
+        dnsimpleTokenPath = "${config.sops.secrets."lego/dnsimple/token".path}";
+        domains = "gandalf.jahanson.tech";
+        email = "joe@veri.dev";
+        provider = "dnsimple";
+      };
     };
   };
 }
