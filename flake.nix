@@ -245,7 +245,7 @@
               lix-module.nixosModules.default
               ./nixos/profiles/hw-supermicro.nix
               disko.nixosModules.disko
-              (import ./nixos/profiles/disko-nixos.nix { disks = [ "/dev/sda/dev/disk/by-id/ata-Seagate_IronWolfPro_ZA240NX10001-2ZH100_7TF002RA" ]; })
+              (import ./nixos/profiles/disko-nixos.nix { disks = [ "/dev/disk/by-id/ata-Seagate_IronWolfPro_ZA240NX10001-2ZH100_7TF002RA" ]; })
             ];
             profileModules = [
               ./nixos/profiles/role-server.nix
