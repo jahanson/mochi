@@ -95,9 +95,9 @@ in
 
     services = {
       podman.enable = true;
+      libvirt-qemu.enable = true;
 
       # Sanoid
-      
       sanoid = {
         enable = true;
         inherit (sanoidConfig.outputs) templates datasets;
