@@ -6,7 +6,7 @@ let
 in
 {
   options.mySystem.services.haproxy = {
-    enable = mkEnableOption "haproxy";
+    enable = mkEnableOption "haproxy" // { default = false; };
     package = mkPackageOption pkgs "haproxy" { };
     config = mkOption {
       type = types.str;
