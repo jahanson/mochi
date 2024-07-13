@@ -10,16 +10,20 @@
     ];
 
   boot = {
-    initrd.availableKernelModules = [ "ehci_pci" "ahci" "mpt3sas" "isci" "usbhid" "usb_storage" "sd_mod" ];
-    initrd.kernelModules = [ ];
+    initrd = {
+      availableKernelModules = [ "ehci_pci" "ahci" "mpt3sas" "isci" "usbhid" "usb_storage" "sd_mod" ];
+      kernelModules = [ "nfs" ];
+      supportedFilesystems = [ "nfs" ];
+    };
+
     kernelModules = [ "kvm-intel" "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd" ];
     extraModulePackages = [ ];
-    kernelParams = [ "iommu=pt" "intel_iommu=on" ];
+    kernelParams = [ "iommu=pt" "intel_iommu=on" "zfs.zfs_arc_max=107374182400" ]; # 100GB
   };
-  
+
   # Network settings
   networking = {
-    hostName = "gandalf"; 
+    hostName = "gandalf";
     hostId = "e2fc95cd";
     useDHCP = false; # needed for bridge
     networkmanager.enable = true;
@@ -65,6 +69,17 @@
   # System settings and services.
   mySystem = {
     purpose = "Production";
-    system.motd.networkInterfaces = [ "enp130s0f0" "enp130s0f1" ];
+    system = {
+      motd.networkInterfaces = [ "enp130s0f0" "enp130s0f1" ];
+      # ZFS
+      zfs.enable = true;
+      zfs.mountPoolsAtBoot = [ "eru" ];
+      # NFS
+      nfs.enable = true;
+      # Samba
+      samba.enable = true;
+      samba.shares = import ./config/samba-shares.nix { };
+      samba.extraConfig = import ./config/samba-config.nix { };
+    };
   };
 }
