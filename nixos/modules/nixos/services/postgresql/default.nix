@@ -19,7 +19,7 @@ in
         };
       backupLocation = mkOption
         {
-          type = lib.types.string;
+          type = lib.types.str;
           description = "Location for sql backups to be stored.";
           default = "/persist/backup/postgresql";
         };
