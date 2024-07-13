@@ -18,17 +18,17 @@ in
       description = "Path to the DNSimple token file";
     };
     provider = mkOption {
-      type = types.string;
+      type = types.str;
       example = "dnsimple";
       description = "DNS provider";
     };
     domains = mkOption {
-      type = types.string;
+      type = types.str;
       example = "gandalf.jahanson.tech";
       description = "Domains to manage";
     };
     email = mkOption {
-      type = types.string;
+      type = types.str;
       example = "joe@veri.dev";
       description = "Email address for Let's Encrypt";
     };
@@ -56,7 +56,7 @@ in
 
       volumes = [
         "${appFolder}/cert:/cert"
-      ] // optionals (cfg.provider == "dnsimple") [ "${cfg.dnsimpleTokenPath}:/config/dnsimple-token" ];
+      ] ++ optionals (cfg.provider == "dnsimple") [ "${cfg.dnsimpleTokenPath}:/config/dnsimple-token" ];
     };
   };
 }
