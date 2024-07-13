@@ -8,6 +8,7 @@
     ./pushover
     ./security.nix
     ./systempackages.nix
+    ./samba
     ./time.nix
     ./zfs.nix
   ];
