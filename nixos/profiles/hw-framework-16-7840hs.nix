@@ -1,12 +1,11 @@
 { lib, pkgs, ... }:
 {
-  # Support windows partition
   mySystem = {
     security.wheelNeedsSudoPassword = false;
   };
 
   boot = {
-    # for managing/mounting ntfs
+    # for managing/mounting nfs
     supportedFilesystems = [ "nfs" ];
 
     loader = {
