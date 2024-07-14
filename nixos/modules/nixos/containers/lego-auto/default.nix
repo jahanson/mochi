@@ -45,9 +45,9 @@ in
       ];
       environment = {
         TZ = "America/Chicago";
-        LA_DATADIR = "/certs";
-        LA_CACHEDIR = "/certs/.cache";
-        LA_EMAIL = "cfg.email";
+        LA_DATADIR = "/cert";
+        LA_CACHEDIR = "/cert/.cache";
+        LA_EMAIL = cfg.email;
         LA_DOMAINS = cfg.domains;
         LA_PROVIDER = cfg.provider;
       } // lib.optionalAttrs (cfg.provider == "dnsimple") {
