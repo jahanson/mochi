@@ -16,7 +16,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    networking.firewall = {
+    networking.firewall.interfaces.podman0 = {
       allowedTCPPorts = [ 8080 8443 8880 8843 ];
       allowedUDPPorts = [ 3478 ];
     };
