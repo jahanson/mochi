@@ -5,9 +5,12 @@
     supportedFilesystems = [ "nfs" ];
 
     loader = {
-      systemd-boot.enable = true;
-      efi = {
-        canTouchEfiVariables = true;
+      grub = {
+        enable = true;
+        efiInstallAsRemovable = true;
+        mirroredBoots = [
+          { devices = [ "nodev" ]; path = "/boot"; }
+        ];
       };
     };
   };
