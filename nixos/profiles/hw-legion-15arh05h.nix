@@ -21,9 +21,6 @@
           { devices = [ "nodev" ]; path = "/boot"; }
         ];
       };
-      # efi = {
-      #   canTouchEfiVariables = true;
-      # };
     };
   };
 
