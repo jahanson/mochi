@@ -16,6 +16,10 @@ in
   };
 
   config = mkIf cfg.enable {
+    networking.firewall = {
+      allowedTCPPorts = [ 8080 8443 8880 8843 ];
+      allowedUDPPorts = [ 3478 ];
+    };
     virtualisation.oci-containers.containers.${app} = {
       image = "${image}";
       autoStart = true;
