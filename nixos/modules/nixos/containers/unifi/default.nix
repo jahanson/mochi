@@ -2,7 +2,7 @@
 with lib;
 let
   app = "unifi";
-  image = "ghcr.io/goofball222/unifi:8.1.113";
+  image = "ghcr.io/goofball222/unifi:8.2.93";
   user = "999"; #string
   group = "102"; #string
   port = 9898; #int
