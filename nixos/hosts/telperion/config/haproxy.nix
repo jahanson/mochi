@@ -21,28 +21,33 @@ defaults
   timeout http-keep-alive 10s
   timeout check 10s
 
-frontend k8s_apiserver
+frontend k8s_homelab_apiserver
   bind *:6443
   mode tcp
   option tcplog
-  default_backend k8s_controlplane
+  default_backend k8s_homelab_controlplane
 
-frontend talos_apiserver
-  bind *:50000
+frontend k8s_erebor_apiserver
+  bind *:6444
   mode tcp
   option tcplog
-  default_backend talos_controlplane
+  default_backend k8s_erebor_controlplane
 
-backend k8s_controlplane
+backend k8s_homelab_controlplane
   option httpchk GET /healthz
   http-check expect status 200
   mode tcp
   option ssl-hello-chk
   balance roundrobin
-  server worker1 10.1.1.61:6443 check
+  server shadowfax 10.1.1.61:6443 check
 
-backend talos_controlplane
+backend k8s_erebor_controlplane
   option httpchk GET /healthz
   http-check expect status 200
   mode tcp
+  option ssl-hello-chk
+  balance roundrobin
+  server nenya 10.1.1.81:6443 check
+  server vilya 10.1.1.82:6443 check
+  server narya 10.1.1.83:6443 check
 ''
