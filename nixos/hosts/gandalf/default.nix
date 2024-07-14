@@ -25,6 +25,10 @@ in
     kernelParams = [ "iommu=pt" "intel_iommu=on" "zfs.zfs_arc_max=107374182400" ]; # 100GB
   };
 
+  users.users.root.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAGSFTSVPt43PBpSMSF1dGTzN2JbxztDZUml7g4+PnWe CSI-Driver@talos"
+  ];
+
   # Network settings
   networking = {
     hostName = "gandalf";
