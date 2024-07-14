@@ -10,7 +10,7 @@ in
     [
       (modulesPath + "/installer/scan/not-detected.nix")
       inputs.disko.nixosModules.disko
-      (import ./nixos/profiles/disko-nixos.nix { disks = [ "/dev/sda" ]; })
+      (import ../../profiles/disko-nixos.nix { disks = [ "/dev/sda" ]; })
     ];
 
   boot = {
