@@ -17,7 +17,7 @@ in
   warp-terminal = warpTerminalOverlay;
   termius = termiusOverlay;
   talosctl = talosctlOverlay;
-  go = goOverlay;
+  # go = goOverlay;
 
   # The unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'
