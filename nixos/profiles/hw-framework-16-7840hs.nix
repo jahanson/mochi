@@ -16,6 +16,9 @@
     };
   };
 
+   # For updating firmware on the Framework.
+  services.fwupd.enable = true;
+
   networking = {
     useDHCP = lib.mkDefault true;
     networkmanager.enable = true;
