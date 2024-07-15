@@ -61,7 +61,7 @@
     # talhelper - A tool to help creating Talos kubernetes cluster
     talhelper = {
       url = "github:budimanjojo/talhelper";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Lix- Substitution of the Nix package manager, focused on correctness, usability, and growth – and committed to doing right by its community.
