@@ -83,7 +83,7 @@
       haproxy = {
         enable = true;
         config = import ./config/haproxy.nix { inherit config; };
-        tcpPorts = [ 6443 50000 ];
+        tcpPorts = [ 6443 6444 50000 ];
       };
     };
   };
