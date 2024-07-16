@@ -44,7 +44,7 @@ with config;
         ripgrep
         vim
         lsd
-        atuin
+        unstable.atuin
 
         # terminal file managers
         nnn

@@ -1,8 +1,9 @@
 { ... }: {
   imports = [
+    ./atuind
     ./fish
+    ./git
     ./starship
     ./wezterm
-    ./git
   ];
 }
