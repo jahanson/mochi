@@ -44,6 +44,7 @@ with config;
         pre-commit # Pre-commit tasks for git
         minio-client # S3 management
         shellcheck # shell script linting
+        unstable.act
       ];
   };
 }
