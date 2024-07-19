@@ -36,6 +36,8 @@ with config;
         jetbrains.datagrip
         talosctl
         pika-backup
+        parsec-bin
+        unstable.nheko
 
         # cli
         brightnessctl
