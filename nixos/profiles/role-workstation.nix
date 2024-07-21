@@ -56,6 +56,13 @@ with config;
     defaultLocale = lib.mkDefault "en_US.UTF-8";
   };
 
-  programs.mtr.enable = true;
-  programs.ssh.startAgent = true;
-}
+  programs = {
+    mtr.enable = true;
+    ssh.startAgent = true;
+
+    # Enable appimage support and executing them via the appimage-run helper.
+    appimage = {
+      enable = true;
+      binfmt = true;
+    };
+  }
