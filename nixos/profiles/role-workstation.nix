@@ -8,6 +8,7 @@ with config;
   mySystem = {
     de.gnome.enable = true;
     shell.fish.enable = true;
+    editor.vscode.enable = true;
 
     system.resticBackup.local.enable = false;
     system.resticBackup.remote.enable = false;
@@ -47,7 +48,6 @@ with config;
     lm_sensors
     cpufrequtils
     cpupower-gui
-    unstable.vscode
     vivaldi
     gparted
   ];
@@ -65,4 +65,5 @@ with config;
       enable = true;
       binfmt = true;
     };
-  }
+  };
+}

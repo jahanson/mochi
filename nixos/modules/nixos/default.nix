@@ -2,14 +2,15 @@
 with lib;
 {
   imports = [
-    ./system
-    ./programs
-    ./services
-    ./de
-    ./hardware
     ./containers
+    ./de
+    ./editor
+    ./hardware
     ./lib.nix
+    ./programs
     ./security
+    ./services
+    ./system
   ];
 
   options.mySystem.persistentFolder = mkOption {
