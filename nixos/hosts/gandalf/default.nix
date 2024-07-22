@@ -27,6 +27,8 @@ in
 
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAGSFTSVPt43PBpSMSF1dGTzN2JbxztDZUml7g4+PnWe CSI-Driver@talos"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO/W445gX2IINRbE6crIMwgN6Ks8LTzAXR86pS9xp335 root@Sting"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBROTzSefJGJeCNUgNLbE5l4sHHg2fHUO4sCwqvP+zAd root@Gollum"
   ];
 
   # Network settings
