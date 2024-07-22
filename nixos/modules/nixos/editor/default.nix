@@ -28,6 +28,8 @@ in
             # ms-vscode.remote-explorer
             redhat.vscode-yaml
             continue.continue
+            ms-python.python
+            ms-python.vscode-pylance
           ];
       })
     ];
