@@ -14,7 +14,7 @@ let
 in
 {
   nur = inputs.nur.overlay;
-  warp-terminal = warpTerminalOverlay;
+  # warp-terminal = warpTerminalOverlay;
   termius = termiusOverlay;
   talosctl = talosctlOverlay;
   # go = goOverlay;
