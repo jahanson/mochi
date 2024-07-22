@@ -27,9 +27,16 @@ in
             ms-vscode-remote.remote-ssh-edit
             # ms-vscode.remote-explorer
             redhat.vscode-yaml
-            continue.continue
+            # continue.continue
             ms-python.python
             ms-python.vscode-pylance
+          ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+            {
+              name = "cody-ai";
+              publisher = "sourcegraph";
+              version = "1.27.1721673993";
+              sha256 = "ULY2f7Pv1GCkJwqSc6q2cGYvkrKTKyfQ0ErPiQ+/bLQ=";
+            }
           ];
       })
     ];
