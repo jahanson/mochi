@@ -66,6 +66,8 @@
   mySystem = {
     purpose = "Production";
     system.motd.networkInterfaces = [ "enp2s0" "wlp3s0" ];
+    system.resticBackup.local.enable = false;
+    system.resticBackup.remote.enable = false;
 
     services = {
       podman.enable = true;

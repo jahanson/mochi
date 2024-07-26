@@ -2,7 +2,7 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 { config, lib, modulesPath, inputs, ... }:
-let 
+let
   sanoidConfig = import ./config/sanoid.nix { };
 in
 {
@@ -64,7 +64,7 @@ in
       };
     };
   };
-  
+
   # System settings and services.
   mySystem = {
     purpose = "Production";
@@ -79,6 +79,8 @@ in
       samba.enable = true;
       samba.shares = import ./config/samba-shares.nix { };
       samba.extraConfig = import ./config/samba-config.nix { };
+      resticBackup.local.enable = false;
+      resticBackup.remote.enable = false;
     };
 
     services = {
@@ -90,7 +92,7 @@ in
         enable = true;
         inherit (sanoidConfig.outputs) templates datasets;
       };
-      
+
       # Unifi & Lego-Auto
       unifi.enable = true;
       lego-auto = {
