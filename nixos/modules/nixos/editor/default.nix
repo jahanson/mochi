@@ -12,30 +12,38 @@ in
       (vscode-with-extensions.override {
         vscode = unstable.vscode;
 
-        vscodeExtensions = with vscode-extensions;
+        vscodeExtensions =
           [
-            dracula-theme.theme-dracula
-            yzhang.markdown-all-in-one
-            signageos.signageos-vscode-sops
-            redhat.ansible
-            ms-azuretools.vscode-docker
-            mikestead.dotenv
-            tamasfe.even-better-toml
-            pkief.material-icon-theme
-            jnoortheen.nix-ide
-            ms-vscode-remote.remote-ssh
-            ms-vscode-remote.remote-ssh-edit
-            # ms-vscode.remote-explorer
-            redhat.vscode-yaml
-            # continue.continue
-            ms-python.python
-            ms-python.vscode-pylance
+            vscode-extensions.dracula-theme.theme-dracula
+            vscode-extensions.yzhang.markdown-all-in-one
+            vscode-extensions.signageos.signageos-vscode-sops
+            vscode-extensions.redhat.ansible
+            vscode-extensions.ms-azuretools.vscode-docker
+            vscode-extensions.mikestead.dotenv
+            vscode-extensions.tamasfe.even-better-toml
+            vscode-extensions.pkief.material-icon-theme
+            vscode-extensions.jnoortheen.nix-ide
+            vscode-extensions.ms-vscode-remote.remote-ssh
+            vscode-extensions.ms-vscode-remote.remote-ssh-edit
+            vscode-extensions.redhat.vscode-yaml
+            # vscode-marketplace.continue.continue
+            # vscode-marketplace.github.copilot
+            # vscode-marketplace.github.copilot-chat
+            vscode-extensions.continue.continue
+            vscode-extensions.ms-python.python
+            vscode-extensions.ms-python.vscode-pylance
           ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
             {
-              name = "cody-ai";
-              publisher = "sourcegraph";
-              version = "1.27.1721673993";
-              sha256 = "ULY2f7Pv1GCkJwqSc6q2cGYvkrKTKyfQ0ErPiQ+/bLQ=";
+              name = "copilot";
+              publisher = "github";
+              version = "1.219.0";
+              sha256 = "Y/l59JsmAKtENhBBf965brSwSkTjSOEuxc3tlWI88sY=";
+            }
+            {
+              name = "copilot-chat";
+              publisher = "github";
+              version = "0.17.1";
+              sha256 = "sha256-Aa4gmHJCveP18v6CAvmkxmqf1JV1LygyQFNpzDz64Gw=";
             }
           ];
       })
