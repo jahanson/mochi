@@ -30,7 +30,6 @@ with config;
         discord
         flameshot
         vlc
-        warp-terminal
         termius
         obsidian
         jetbrains.datagrip
@@ -38,6 +37,7 @@ with config;
         pika-backup
         parsec-bin
         unstable.nheko
+        unstable.telegram-desktop
 
         # cli
         brightnessctl
