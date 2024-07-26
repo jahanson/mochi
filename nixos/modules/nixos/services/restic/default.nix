@@ -34,8 +34,8 @@ in
 
     # Warn if backups are disable and machine isnt a dev box
     warnings = [
-      (mkIf (!cfg.local.enable && config.mySystem.purpose != "Development") "WARNING: Local backups are disabled!")
-      (mkIf (!cfg.remote.enable && config.mySystem.purpose != "Development") "WARNING: Remote backups are disabled!")
+      (mkIf (!cfg.local.enable && config.mySystem.purpose != "Development") "WARNING: Local backups are disabled for ${config.system.name}!")
+      (mkIf (!cfg.remote.enable && config.mySystem.purpose != "Development") "WARNING: Remote backups are disabled for ${config.system.name}!")
     ];
 
     sops.secrets = mkIf (cfg.local.enable || cfg.remote.enable) {
