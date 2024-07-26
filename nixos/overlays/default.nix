@@ -27,4 +27,7 @@ in
       config.allowUnfree = true;
     };
   };
+
+  # VSCode Community Packages
+  comm-packages = inputs.nix-vscode-extensions.overlays.default;
 }
