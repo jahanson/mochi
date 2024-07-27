@@ -62,9 +62,6 @@ in
         mode = "0444";
         sopsFile = ./secrets.sops.yaml;
       };
-      "borg/repository/location" = {
-        sopsFile = ./secrets.sops.yaml;
-      };
       "borg/repository/passphrase" = {
         sopsFile = ./secrets.sops.yaml;
       };
@@ -88,13 +85,13 @@ in
       resticBackup.local.enable = false;
       resticBackup.remote.enable = false;
       # # Borg
-      # borgbackup = {
-      #   enable = true;
-      #   paths = [ "/home" ];
-      #   exclude = [ ];
-      #   repo = "ssh://t3zvn0dd@t3zvn0dd.repo.borgbase.com/./repo";
-      #   repoKeyPath = "/run/secrets/borgbackup/telchar";
-      # };
+      borgbackup = {
+        enable = true;
+        paths = [ "/home" ];
+        exclude = [ ];
+        repo = "ssh://t3zvn0dd@t3zvn0dd.repo.borgbase.com/./repo";
+        repoKeyPath = config.sops.secrets."borg/repository/passphrase".path;
+      };
     };
     services = {
       podman.enable = true;

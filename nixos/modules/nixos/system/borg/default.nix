@@ -8,24 +8,20 @@ in
     paths = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [ ];
-      required = true;
     };
     exclude = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [ ];
-      required = false;
     };
     repo = lib.mkOption {
       example = "borgbackup@myserver:repo";
       type = lib.types.str;
       default = "";
-      required = true;
     };
     repoKeyPath = lib.mkOption {
       example = "/run/secrets/borgbackup/telchar";
       type = lib.types.str;
       default = "";
-      required = false;
     };
   };
 
