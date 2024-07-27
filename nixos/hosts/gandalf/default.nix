@@ -62,6 +62,10 @@ in
         mode = "0444";
         sopsFile = ./secrets.sops.yaml;
       };
+      "borg/repositories/gandalf" = {
+        mode = "0444";
+        sopsFile = ./secrets.sops.yaml;
+      };
     };
   };
 
@@ -81,27 +85,34 @@ in
       samba.extraConfig = import ./config/samba-config.nix { };
       resticBackup.local.enable = false;
       resticBackup.remote.enable = false;
-    };
+      # # Borg
+      # borgbackup = {
+      #   enable = true;
+      #   paths = [ "/home" ];
+      #   exclude = [ ];
+      #   repo = "ssh://t3zvn0dd@t3zvn0dd.repo.borgbase.com/./repo";
+      #   repoKeyPath = "/run/secrets/borgbackup/telchar";
+      # };
 
-    services = {
-      podman.enable = true;
-      libvirt-qemu.enable = true;
+      services = {
+        podman.enable = true;
+        libvirt-qemu.enable = true;
 
-      # Sanoid
-      sanoid = {
-        enable = true;
-        inherit (sanoidConfig.outputs) templates datasets;
+        # Sanoid
+        sanoid = {
+          enable = true;
+          inherit (sanoidConfig.outputs) templates datasets;
+        };
+
+        # Unifi & Lego-Auto
+        unifi.enable = true;
+        lego-auto = {
+          enable = true;
+          dnsimpleTokenPath = "${config.sops.secrets."lego/dnsimple/token".path}";
+          domains = "gandalf.jahanson.tech";
+          email = "joe@veri.dev";
+          provider = "dnsimple";
+        };
       };
-
-      # Unifi & Lego-Auto
-      unifi.enable = true;
-      lego-auto = {
-        enable = true;
-        dnsimpleTokenPath = "${config.sops.secrets."lego/dnsimple/token".path}";
-        domains = "gandalf.jahanson.tech";
-        email = "joe@veri.dev";
-        provider = "dnsimple";
-      };
     };
-  };
-}
+  }
