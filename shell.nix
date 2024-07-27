@@ -17,15 +17,16 @@ pkgs.mkShell {
   NIX_CONFIG = "experimental-features = nix-command flakes";
 
   nativeBuildInputs = with pkgs; [
-    nix
-    home-manager
-    git
-    nil
-    nixpkgs-fmt
-    go-task
-    sops
-    pre-commit
-    gitleaks
     cachix
+    git
+    gitleaks
+    go-task
+    home-manager
+    nil
+    nix
+    nixpkgs-fmt
+    pre-commit
+    sops
+    statix
   ];
 }
