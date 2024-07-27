@@ -23,6 +23,7 @@ with config;
     # bind # for dns utils like named-checkconf
     inputs.nix-inspect.packages.${pkgs.system}.default
     inputs.talhelper.packages.${pkgs.system}.default
+    inputs.ghostty.packages.${pkgs.system}.default
   ];
 
   programs.direnv = {
