@@ -68,6 +68,8 @@
     system.motd.networkInterfaces = [ "enp2s0" "wlp3s0" ];
     system.resticBackup.local.enable = false;
     system.resticBackup.remote.enable = false;
+    system.resticBackup.local.noWarning = true;
+    system.resticBackup.remote.noWarning = true;
 
     services = {
       podman.enable = true;

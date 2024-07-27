@@ -7,6 +7,12 @@ in
   options.mySystem.system.resticBackup = {
     local = {
       enable = mkEnableOption "Local backups" // { default = true; };
+      noWarning = mkOption
+        {
+          type = types.bool;
+          description = "Disable warning for local backups";
+          default = false;
+        };
       location = mkOption
         {
           type = types.str;
@@ -16,6 +22,12 @@ in
     };
     remote = {
       enable = mkEnableOption "Remote backups" // { default = true; };
+      noWarning = mkOption
+        {
+          type = types.bool;
+          description = "Disable warning for remote backups";
+          default = false;
+        };
       location = mkOption
         {
           type = types.str;
@@ -34,8 +46,8 @@ in
 
     # Warn if backups are disable and machine isnt a dev box
     warnings = [
-      (mkIf (!cfg.local.enable && config.mySystem.purpose != "Development") "WARNING: Local backups are disabled for ${config.system.name}!")
-      (mkIf (!cfg.remote.enable && config.mySystem.purpose != "Development") "WARNING: Remote backups are disabled for ${config.system.name}!")
+      (mkIf (!cfg.local.noWarning && !cfg.local.enable && config.mySystem.purpose != "Development") "WARNING: Local backups are disabled for ${config.system.name}!")
+      (mkIf (!cfg.remote.noWarning && !cfg.remote.enable && config.mySystem.purpose != "Development") "WARNING: Remote backups are disabled for ${config.system.name}!")
     ];
 
     sops.secrets = mkIf (cfg.local.enable || cfg.remote.enable) {

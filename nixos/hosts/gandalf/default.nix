@@ -84,6 +84,8 @@ in
       samba.extraConfig = import ./config/samba-config.nix { };
       resticBackup.local.enable = false;
       resticBackup.remote.enable = false;
+      resticBackup.local.noWarning = true;
+      resticBackup.remote.noWarning = true;
       # Borg
       borgbackup = {
         enable = true;
