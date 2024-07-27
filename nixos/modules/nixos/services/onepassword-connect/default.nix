@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, ... }:
 with lib;
 let
   cfg = config.mySystem.services.onepassword-connect;
@@ -6,6 +6,16 @@ in
 {
   options.mySystem.services.onepassword-connect = {
     enable = mkEnableOption "onepassword-connect";
+    apiVersion = lib.mkOption {
+      type = lib.types.str;
+      # renovate: depName=docker.io/1password/connect-api datasource=docker
+      default = "1.7.2";
+    };
+    syncVersion = lib.mkOption {
+      type = lib.types.str;
+      # renovate: depName=docker.io/1password/connect-sync datasource=docker
+      default = "1.7.2";
+    };
     credentialsFile = lib.mkOption {
       type = lib.types.path;
     };
@@ -25,7 +35,7 @@ in
     # Enable onepassword-connect containers.
     virtualisation.oci-containers.containers = {
       onepassword-connect-api = {
-        image = "docker.io/1password/connect-api:1.7.2";
+        image = "docker.io/1password/connect-api:${cfg.apiVersion}";
         autoStart = true;
         ports = [ "8080:8080" ];
         volumes = [
@@ -35,7 +45,7 @@ in
       };
 
       onepassword-connect-sync = {
-        image = "docker.io/1password/connect-sync:1.7.2";
+        image = "docker.io/1password/connect-sync:${cfg.syncVersion}";
         autoStart = true;
         ports = [ "8081:8080" ];
         volumes = [
