@@ -32,7 +32,7 @@ in
     services.haproxy = {
       enable = true;
       inherit (cfg) package;
-      config = cfg.config;
+      inherit (cfg) config;
     };
   };
 }

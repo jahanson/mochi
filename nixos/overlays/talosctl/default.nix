@@ -2,7 +2,7 @@
 let
   finalVersion = "1.7.5";
 in
-(final: prev: {
+final: prev: {
   talosctl = prev.talosctl.overrideAttrs (oldAttrs: { 
     version = finalVersion;
     src = prev.fetchFromGitHub {
@@ -16,4 +16,4 @@ in
       updateScript = ./update.sh;
     };
   });
-})
+}

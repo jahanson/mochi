@@ -27,9 +27,9 @@ in
 
   config = lib.mkIf cfg.enable {
     services.borgbackup.jobs."borgbackup" = {
-      paths = cfg.paths;
-      exclude = cfg.exclude;
-      repo = cfg.repo;
+      inherit (cfg) paths;
+      inherit (cfg) exclude;
+      inherit (cfg) repo;
       encryption = {
         mode = "repokey-blake2";
         passCommand = "cat ${cfg.repoKeyPath}";

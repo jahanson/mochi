@@ -26,7 +26,7 @@ in
     services.bind = {
       enable = true;
       inherit (cfg) package;
-      extraConfig = cfg.extraConfig;
+      inherit (cfg) extraConfig;
     };
 
     # Clean up journal files

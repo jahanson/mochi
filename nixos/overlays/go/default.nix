@@ -2,7 +2,7 @@
 let
   finalVersion = "1.22.5";
 in
-(final: prev: {
+final: prev: {
   go_1_22 = prev.go_1_22.overrideAttrs (oldAttrs: { 
     version = finalVersion;
     src = prev.fetchurl {
@@ -10,4 +10,4 @@ in
       hash = "sha256-rJxyPyJJaa7mJLw0/TTJ4T8qIS11xxyAfeZEu0bhEvY=";
     };
   });
-})
+}

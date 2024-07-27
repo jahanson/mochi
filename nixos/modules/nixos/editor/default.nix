@@ -56,7 +56,7 @@ in
     # Enable vscode & addons
     environment.systemPackages = with pkgs; [
       (vscode-with-extensions.override {
-        vscode = unstable.vscode;
+        inherit (unstable) vscode;
         # Merge all the extension packages together.
         vscodeExtensions =
           vscodeCommunityExtensionsPackages ++ nixpkgsExtensionsPackages ++ marketplaceExtensionsPackages;
