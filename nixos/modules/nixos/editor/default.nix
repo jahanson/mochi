@@ -21,6 +21,8 @@ let
     "tamasfe.even-better-toml"
     "tyriar.sort-lines"
     "yzhang.markdown-all-in-one"
+    "mrmlnc.vscode-json5"
+    "editorconfig.editorconfig"
   ];
   # Nixpkgs Extensions. These are updated whenver they get around to it.
   vscodeNixpkgsExtensions = [
