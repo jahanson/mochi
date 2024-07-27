@@ -84,10 +84,10 @@ in
       samba.extraConfig = import ./config/samba-config.nix { };
       resticBackup.local.enable = false;
       resticBackup.remote.enable = false;
-      # # Borg
+      # Borg
       borgbackup = {
         enable = true;
-        paths = [ "/home" ];
+        paths = [ "/eru/containers/volumes/unifi/" ];
         exclude = [ ];
         repo = "ssh://t3zvn0dd@t3zvn0dd.repo.borgbase.com/./repo";
         repoKeyPath = config.sops.secrets."borg/repository/passphrase".path;
