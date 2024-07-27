@@ -1,5 +1,6 @@
 {
   imports = [
+    ./borg
     ./impermanence.nix
     ./motd
     ./nix.nix
