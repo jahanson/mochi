@@ -29,22 +29,22 @@ with config;
         _1password-gui
         discord
         flameshot
-        vlc
-        termius
-        obsidian
         jetbrains.datagrip
-        talosctl
-        pika-backup
+        obsidian
         parsec-bin
+        pika-backup
+        talosctl
+        termius
         unstable.nheko
         unstable.telegram-desktop
+        vlc
 
         # cli
         brightnessctl
 
         # dev utils
-        pre-commit # Pre-commit tasks for git
         minio-client # S3 management
+        pre-commit # Pre-commit tasks for git
         shellcheck # shell script linting
         unstable.act
       ];

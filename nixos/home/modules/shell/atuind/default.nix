@@ -1,6 +1,5 @@
 { config, pkgs, lib, ... }:
 with lib; let
-  inherit (config.myHome) username homeDirectory;
   cfg = config.myHome.shell.atuind;
 in
 {
