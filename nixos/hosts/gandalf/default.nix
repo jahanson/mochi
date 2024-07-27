@@ -62,8 +62,10 @@ in
         mode = "0444";
         sopsFile = ./secrets.sops.yaml;
       };
-      "borg/repository" = {
-        mode = "0444";
+      "borg/repository/location" = {
+        sopsFile = ./secrets.sops.yaml;
+      };
+      "borg/repository/passphrase" = {
         sopsFile = ./secrets.sops.yaml;
       };
     };
