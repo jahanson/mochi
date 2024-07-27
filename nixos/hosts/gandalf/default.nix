@@ -38,7 +38,7 @@ in
     useDHCP = false; # needed for bridge
     networkmanager.enable = true;
     # TODO: Add ports specifically.
-    # firewall.enable = false;
+    firewall.enable = false;
     interfaces = {
       "enp130s0f0".useDHCP = true;
       "enp130s0f1".useDHCP = true;
