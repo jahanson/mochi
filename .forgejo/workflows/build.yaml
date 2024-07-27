@@ -20,6 +20,13 @@ jobs:
         uses: https://github.com/actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Write ssh key
+        id: sshkey
+        uses: https://github.com/timheuer/base64-to-file@v1
+        with:
+          encodedString: "${{ secrets.SSH_USER }}"
+          fileName: id_ed25519
+          fileDir: ~/.ssh
       - uses: https://github.com/cachix/cachix-action@v15
         if: ${{ !github.event.pull_request.head.repo.fork }}
         with:
