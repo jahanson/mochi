@@ -23,6 +23,9 @@ jobs:
         uses: https://github.com/actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Set up ssh key folder
+        run: |
+          mkdir -p ~/.ssh
       - name: Write ssh key
         id: sshkey
         uses: https://github.com/timheuer/base64-to-file@v1
