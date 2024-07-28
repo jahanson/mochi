@@ -31,7 +31,9 @@ jobs:
           fileName: id_ed25519
           fileDir: ~/.ssh
       - name: Make id_ed25519 user only
-        run: chmod 600 ~/.ssh/id_ed25519
+        run: |
+          ls -la ~/.ssh
+          chmod 600 ~/.ssh/id_ed25519
       - uses: https://github.com/cachix/cachix-action@v15
         if: ${{ !github.event.pull_request.head.repo.fork }}
         with:
