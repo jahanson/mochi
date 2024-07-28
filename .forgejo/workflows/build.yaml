@@ -26,6 +26,7 @@ jobs:
       - name: Set up ssh key folder
         run: |
           mkdir -p $HOME/.ssh
+          chmod 700 $HOME/.ssh
       - name: Write ssh key
         id: sshkey
         uses: https://github.com/timheuer/base64-to-file@v1
