@@ -27,20 +27,23 @@ jobs:
         run: |
           mkdir -p $HOME/.ssh
           chmod 700 $HOME/.ssh
-      # - name: Write ssh key
-      #   id: sshkey
-      #   uses: https://github.com/timheuer/base64-to-file@v1
-      #   with:
-      #     encodedString: "${{ secrets.SSH_USER }}"
-      #     fileName: id_ed25519
-      #     fileDir: $HOME/.ssh/
+      - name: Write ssh key
+        id: sshkey
+        uses: https://github.com/timheuer/base64-to-file@v1
+        with:
+          encodedString: "${{ secrets.SSH_USER }}"
+          fileName: id_ed25519
+          fileDir: $HOME/.ssh/
       - name: Make id_ed25519 user only
+        shell: bash
         run: |
           # output to null to avoid leaking the key
           # echo ${{ secrets.SSH_USER }} | base64 -d > $HOME/.ssh/id_ed25519 >/dev/null 2>&1
           # echo "${{ secrets.SSH_USER }}" > $HOME/.ssh/id_ed25519 >/dev/null 2>&1
-          ls -la $HOME/.ssh
+          ls -lah $HOME/.ssh
+          ls -lah ${{ steps.sshkey.outputs.filePath }}
           # chmod 600 $HOME/.ssh/id_ed25519
+        
       - uses: https://github.com/cachix/cachix-action@v15
         if: ${{ !github.event.pull_request.head.repo.fork }}
         with:
