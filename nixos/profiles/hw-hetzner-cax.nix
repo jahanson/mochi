@@ -16,7 +16,9 @@
     # TODO: configure storagebox for hetzner backups
     system.resticBackup = {
       local.enable = false;
+      local.noWarning = true;
       remote.enable = false;
+      remote.noWarning = true;
     };
   };
 
