@@ -42,7 +42,7 @@ in
     # Disable fingerprint reader at login since you can't put in a password when fprintd is running.
     security.pam.services.login.fprintAuth = false;
     # This is part of a fix for the fingerprint reader on the Framework 13/16 laptop so you can login without the fingerprint reader when the lid is closed.
-    security.pam.services.gdm-fingerprint = lib.mkIf (config.services.fprintd.enable) {
+    security.pam.services.gdm-fingerprint = lib.mkIf config.services.fprintd.enable {
       text = ''
         auth       required                    pam_shells.so
         auth       requisite                   pam_nologin.so

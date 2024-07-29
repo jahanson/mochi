@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, ... }:
 {
   mySystem = {
     security.wheelNeedsSudoPassword = false;
