@@ -1,0 +1,10 @@
+{
+    "editor.fontFamily": "FiraCode Nerd Font",
+    "editor.hover.delay": 1500,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": true,
+    "editor.guides.bracketPairsHorizontal": true,
+    "editor.guides.highlightActiveBracketPair": true,
+    "files.trimTrailingWhitespace": true,
+    "sops.defaults.ageKeyFile": "age.key",
+}
