@@ -18,6 +18,7 @@ with lib;
     boot.tmp.cleanOnBoot = true;
     mySystem = {
       # basics for all devices
+      editor.vim.enable = true;
       time.timeZone = "America/Chicago";
       security.increaseWheelLoginLimits = true;
       system.packages = [ pkgs.bat ];

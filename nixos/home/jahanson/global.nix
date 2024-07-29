@@ -48,7 +48,6 @@ with config;
         python3
         fzf
         ripgrep
-        vim
         lsd
         unstable.atuin
 
@@ -89,12 +88,6 @@ with config;
         # nix tools
         nvd
       ];
-
-      sessionVariables = {
-        EDITOR = "vim";
-      };
-
     };
-
   };
 }
