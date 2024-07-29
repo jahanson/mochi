@@ -9,7 +9,7 @@ with lib.hm.gvariant; {
     ];
 
     # worked out from dconf2nix
-    # dconf dump / | dconf2nix > dconf.nix
+    # `dconf dump / | dconf2nix > dconf.nix`
     # can also dconf watch
     dconf.settings = {
       "org/gnome/mutter" = {
