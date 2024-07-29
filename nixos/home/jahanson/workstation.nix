@@ -11,7 +11,6 @@ with config;
       starship.enable = true;
       fish.enable = true;
       wezterm.enable = true;
-      atuind.enable = true;
 
       git = {
         enable = true;
