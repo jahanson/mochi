@@ -8,8 +8,6 @@ with config;
   myHome = {
     programs.firefox.enable = true;
     shell = {
-      starship.enable = true;
-      fish.enable = true;
       wezterm.enable = true;
 
       git = {

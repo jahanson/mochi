@@ -11,6 +11,8 @@ with config;
       homeDirectory = "/home/jahanson/";
       shell = {
         atuind.enable = true;
+        starship.enable = true;
+        fish.enable = true;
       };
     };
 
