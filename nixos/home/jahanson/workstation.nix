@@ -5,19 +5,20 @@ with config;
     ./global.nix
   ];
 
-  myHome.programs.firefox.enable = true;
+  myHome = {
+    programs.firefox.enable = true;
+    shell = {
+      starship.enable = true;
+      fish.enable = true;
+      wezterm.enable = true;
+      atuind.enable = true;
 
-  myHome.shell = {
-    starship.enable = true;
-    fish.enable = true;
-    wezterm.enable = true;
-    atuind.enable = true;
-
-    git = {
-      enable = true;
-      username = "Joseph Hanson";
-      email = "joe@veri.dev";
-      signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIDSAmssproxG+KsVn2DfuteBAemHrmmAFzCtldpKl4J";
+      git = {
+        enable = true;
+        username = "Joseph Hanson";
+        email = "joe@veri.dev";
+        signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIDSAmssproxG+KsVn2DfuteBAemHrmmAFzCtldpKl4J";
+      };
     };
   };
 
@@ -26,7 +27,6 @@ with config;
     packages = with pkgs;
       [
         #apps
-        _1password-gui
         discord
         flameshot
         jetbrains.datagrip

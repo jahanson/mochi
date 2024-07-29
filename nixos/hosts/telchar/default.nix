@@ -46,5 +46,6 @@
   mySystem = {
     purpose = "Development";
     system.motd.networkInterfaces = [ "wlp1s0" ];
+    security._1password.enable = true;
   };
 }

@@ -33,7 +33,6 @@ with config;
         p7zip
 
         # cli
-        _1password
         bat
         dbus
         direnv
