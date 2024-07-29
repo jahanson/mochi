@@ -38,9 +38,9 @@ jobs:
         run: |
           # output to null to avoid leaking the key
           # echo ${{ secrets.SSH_USER }} | base64 -d > $HOME/.ssh/id_ed25519 >/dev/null 2>&1
-          echo "${{ secrets.SSH_USER }}" > $HOME/.ssh/id_ed25519 >/dev/null 2>&1
+          # echo "${{ secrets.SSH_USER }}" > $HOME/.ssh/id_ed25519 >/dev/null 2>&1
           ls -la $HOME/.ssh
-          chmod 600 $HOME/.ssh/id_ed25519
+          # chmod 600 $HOME/.ssh/id_ed25519
       - uses: https://github.com/cachix/cachix-action@v15
         if: ${{ !github.event.pull_request.head.repo.fork }}
         with:
