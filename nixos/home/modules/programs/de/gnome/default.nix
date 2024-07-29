@@ -16,6 +16,9 @@ with lib.hm.gvariant; {
         edge-tiling = true;
         workspaces-only-on-primary = false;
       };
+      "org/gnome/settings-daemon/plugins/media-keys" = {
+        home = [ "<Super>e" ];
+      };
       "org/gnome/desktop/wm/preferences" = {
         workspace-names = [ "sys" "talk" "web" "edit" "run" ];
       };
@@ -40,7 +43,6 @@ with lib.hm.gvariant; {
         clock-format = "12h";
         show-battery-percentage = true;
       };
-
     };
   };
 }
