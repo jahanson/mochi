@@ -1,15 +1,16 @@
 {
   imports = [
     ./borg
+    ./fingerprint-laptop-lid.nix
     ./impermanence.nix
     ./motd
-    ./nix.nix
     ./nfs
+    ./nix.nix
     ./openssh.nix
     ./pushover
+    ./samba
     ./security.nix
     ./systempackages.nix
-    ./samba
     ./time.nix
     ./zfs.nix
   ];
