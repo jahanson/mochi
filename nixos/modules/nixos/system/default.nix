@@ -12,6 +12,7 @@
     ./security.nix
     ./systempackages.nix
     ./time.nix
+    ./wifi_swap
     ./zfs.nix
   ];
 }
