@@ -18,24 +18,26 @@
     extraModulePackages = [ ];
   };
 
-  fileSystems."/" = {
-    device = "zroot/root";
-    fsType = "zfs";
-  };
+  fileSystems = {
+    "/" = {
+      device = "zroot/root";
+      fsType = "zfs";
+    };
 
-  fileSystems."/nix" = {
-    device = "zroot/nix";
-    fsType = "zfs";
-  };
+    "/nix" = {
+      device = "zroot/nix";
+      fsType = "zfs";
+    };
 
-  fileSystems."/var" = {
-    device = "zroot/var";
-    fsType = "zfs";
-  };
+    "/var" = {
+      device = "zroot/var";
+      fsType = "zfs";
+    };
 
-  fileSystems."/home" = {
-    device = "zroot/home";
-    fsType = "zfs";
+    "/home" = {
+      device = "zroot/home";
+      fsType = "zfs";
+    };
   };
 
   swapDevices = [ ];
@@ -45,10 +47,12 @@
   # System settings and services.
   mySystem = {
     purpose = "Development";
-    system.motd.networkInterfaces = [ "wlp1s0" ];
+    system = {
+      motd.networkInterfaces = [ "wlp1s0" ];
+      fingerprint-reader-on-laptop-lid.enable = true;
+      borg.pika-backup.enable = true;
+    };
     security._1password.enable = true;
-    system.fingerprint-reader-on-laptop-lid.enable = true;
     framework_wifi_swap.enable = true;
-    system.borg.pika-backup.enable = true;
   };
 }

@@ -4,12 +4,14 @@ let
   cfg = config.mySystem.de.gnome;
 in
 {
-  options.mySystem.de.gnome.enable = mkEnableOption "GNOME";
-  options.mySystem.de.gnome.systrayicons = mkEnableOption "Enable systray icons" // { default = true; };
-  options.mySystem.de.gnome.gsconnect = mkEnableOption "Enable gsconnect (KDEConnect for GNOME)" // { default = true; };
+  options = {
+    mySystem.de.gnome = {
+      systrayicons = mkEnableOption "Enable systray icons" // { default = true; };
+      gsconnect = mkEnableOption "Enable gsconnect (KDEConnect for GNOME)" // { default = true; };
+    };
+  };
 
   config = mkIf cfg.enable {
-
     # Ref: https://nixos.wiki/wiki/GNOME
 
     # GNOME plz

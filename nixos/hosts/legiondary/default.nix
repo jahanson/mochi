@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   networking.hostId = "2132e3bf";
@@ -17,24 +18,31 @@
     extraModulePackages = [ ];
   };
 
-  fileSystems."/" =
-    { device = "zroot/root";
-      fsType = "zfs";
-    };
+  fileSystems =
+    {
+      "/" =
+        {
+          device = "zroot/root";
+          fsType = "zfs";
+        };
 
-  fileSystems."/nix" =
-    { device = "zroot/nix";
-      fsType = "zfs";
-    };
+      "/nix" =
+        {
+          device = "zroot/nix";
+          fsType = "zfs";
+        };
 
-  fileSystems."/var" =
-    { device = "zroot/var";
-      fsType = "zfs";
-    };
+      "/var" =
+        {
+          device = "zroot/var";
+          fsType = "zfs";
+        };
 
-  fileSystems."/home" =
-    { device = "zroot/home";
-      fsType = "zfs";
+      "/home" =
+        {
+          device = "zroot/home";
+          fsType = "zfs";
+        };
     };
 
   # fileSystems."/boot" =

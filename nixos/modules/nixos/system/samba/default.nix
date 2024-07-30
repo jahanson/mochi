@@ -9,7 +9,7 @@ in
       type = lib.types.str;
       default = "";
     };
-    
+
     shares = lib.mkOption {
       type = lib.types.attrsOf (lib.types.attrsOf lib.types.unspecified);
       default = "";
@@ -17,9 +17,13 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    services.samba.enable = true;
-    services.samba.extraConfig = cfg.extraConfig;
-    services.samba.shares = cfg.shares;
-    services.samba.openFirewall = true;
+    services = {
+      samaba = {
+        enable = true;
+        inherit (cfg) extraConfig;
+        inherit (cfg) shares;
+        openFirewall = true;
+      };
+    };
   };
 }

@@ -52,29 +52,32 @@ in
       directories = [ "/var/lib/radicale/" ];
     };
 
-    ## service
-    services.radicale = {
-      enable = true;
-      settings = {
-        server.hosts = [ "0.0.0.0:${builtins.toString port}" ];
-        auth = {
-          type = "htpasswd";
-          htpasswd_filename = config.sops.secrets."${category}/${app}/htpasswd".path;
-          htpasswd_encryption = "plain";
-          realm = "Radicale - Password Required";
-        };
-        storage.filesystem_folder = "/var/lib/radicale/collections";
-      };
-    };
 
-    ### Ingress
-    services.nginx.virtualHosts.${host} = {
-      useACMEHost = config.networking.domain;
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:${builtins.toString port}";
+    services =
+      {
+        ## service
+        nginx.virtualHosts.${host} = {
+          useACMEHost = config.networking.domain;
+          forceSSL = true;
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:${builtins.toString port}";
+          };
+        };
+        ### Ingress
+        radicale = {
+          enable = true;
+          settings = {
+            server.hosts = [ "0.0.0.0:${builtins.toString port}" ];
+            auth = {
+              type = "htpasswd";
+              htpasswd_filename = config.sops.secrets."${category}/${app}/htpasswd".path;
+              htpasswd_encryption = "plain";
+              realm = "Radicale - Password Required";
+            };
+            storage.filesystem_folder = "/var/lib/radicale/collections";
+          };
+        };
       };
-    };
 
     ### firewall config
 

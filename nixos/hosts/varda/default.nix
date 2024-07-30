@@ -3,20 +3,21 @@
 
   networking.hostId = "cdab8473";
   networking.hostName = "varda"; # Define your hostname.
+  fileSystems = {
+    "/" = {
+      device = "rpool/root";
+      fsType = "zfs";
+    };
 
-  fileSystems."/" = {
-    device = "rpool/root";
-    fsType = "zfs";
-  };
+    "/home" = {
+      device = "rpool/home";
+      fsType = "zfs";
+    };
 
-  fileSystems."/home" = {
-    device = "rpool/home";
-    fsType = "zfs";
-  };
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/8091-E7F2";
-    fsType = "vfat";
+    "/boot" = {
+      device = "/dev/disk/by-uuid/8091-E7F2";
+      fsType = "vfat";
+    };
   };
 
   swapDevices = [ ];

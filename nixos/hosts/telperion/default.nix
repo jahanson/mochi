@@ -17,25 +17,26 @@
     kernelModules = [ "kvm-intel" ];
     extraModulePackages = [ ];
   };
+  fileSystems = {
+    "/" = {
+      device = "zroot/root";
+      fsType = "zfs";
+    };
 
-  fileSystems."/" = {
-    device = "zroot/root";
-    fsType = "zfs";
-  };
+    "/nix" = {
+      device = "zroot/nix";
+      fsType = "zfs";
+    };
 
-  fileSystems."/nix" = {
-    device = "zroot/nix";
-    fsType = "zfs";
-  };
+    "/var" = {
+      device = "zroot/var";
+      fsType = "zfs";
+    };
 
-  fileSystems."/var" = {
-    device = "zroot/var";
-    fsType = "zfs";
-  };
-
-  fileSystems."/home" = {
-    device = "zroot/home";
-    fsType = "zfs";
+    "/home" = {
+      device = "zroot/home";
+      fsType = "zfs";
+    };
   };
 
   swapDevices = [ ];
@@ -65,11 +66,15 @@
   # System settings and services.
   mySystem = {
     purpose = "Production";
-    system.motd.networkInterfaces = [ "enp2s0" "wlp3s0" ];
-    system.resticBackup.local.enable = false;
-    system.resticBackup.remote.enable = false;
-    system.resticBackup.local.noWarning = true;
-    system.resticBackup.remote.noWarning = true;
+    system = {
+      motd.networkInterfaces = [ "enp2s0" "wlp3s0" ];
+      resticBackup = {
+        local.enable = false;
+        remote.enable = false;
+        local.noWarning = true;
+        remote.noWarning = true;
+      };
+    };
 
     services = {
       podman.enable = true;

@@ -34,17 +34,19 @@ in
 
       programs.fish.shellAliases = {
         # lazydocker --> lazypodman
-        lazypodman="sudo DOCKER_HOST=unix:///run/podman/podman.sock lazydocker";
+        lazypodman = "sudo DOCKER_HOST=unix:///run/podman/podman.sock lazydocker";
       };
 
       networking.firewall.interfaces.podman0.allowedUDPPorts = [ 53 ];
 
       # extra user for containers
-      users.users.kah = {
-        uid = 568;
-        group = "kah";
+      users = {
+        kah = {
+          uid = 568;
+          group = "kah";
+        };
+        groups.kah = { };
+        jahanson.extraGroups = [ "kah" ];
       };
-      users.groups.kah = { };
-      users.users.jahanson.extraGroups = [ "kah" ];
     };
 }

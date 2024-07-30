@@ -6,10 +6,13 @@ with lib;
 {
   config = {
     # Enable monitoring for remote scraping
-    mySystem.services.rebootRequiredCheck.enable = true;
-    mySystem.security.wheelNeedsSudoPassword = false;
-    mySystem.services.cockpit.enable = true;
-    mySystem.system.motd.enable = true;
+    mySystem = {
+      services.rebootRequiredCheck.enable = true;
+      security.wheelNeedsSudoPassword = false;
+      services.cockpit.enable = true;
+      system.motd.enable = true;
+    };
+
     nix.settings = {
       # TODO factor out into mySystem
       # Avoid disk full issues
