@@ -49,5 +49,6 @@
     security._1password.enable = true;
     system.fingerprint-reader-on-laptop-lid.enable = true;
     framework_wifi_swap.enable = true;
+    system.borg.pika-backup.enable = true;
   };
 }

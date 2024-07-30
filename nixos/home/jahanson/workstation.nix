@@ -29,7 +29,6 @@ with config;
         jetbrains.datagrip
         obsidian
         parsec-bin
-        pika-backup
         talosctl
         termius
         unstable.nheko
