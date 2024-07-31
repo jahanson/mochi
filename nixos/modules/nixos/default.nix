@@ -49,12 +49,11 @@ with lib;
       description = "System purpose";
       default = "Development";
     };
-  };
-
-  monitoring.prometheus.scrapeConfigs = mkOption {
-    type = lib.types.listOf lib.types.attrs;
-    description = "Prometheus scrape targets";
-    default = [ ];
+    monitoring.prometheus.scrapeConfigs = mkOption {
+      type = lib.types.listOf lib.types.attrs;
+      description = "Prometheus scrape targets";
+      default = [ ];
+    };
   };
 
   config = {

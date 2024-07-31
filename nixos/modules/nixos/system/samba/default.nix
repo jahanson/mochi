@@ -18,10 +18,9 @@ in
 
   config = lib.mkIf cfg.enable {
     services = {
-      samaba = {
+      samba = {
         enable = true;
-        inherit (cfg) extraConfig;
-        inherit (cfg) shares;
+        inherit (cfg) extraConfig shares;
         openFirewall = true;
       };
     };

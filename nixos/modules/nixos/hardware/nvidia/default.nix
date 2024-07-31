@@ -18,13 +18,13 @@ in
         driSupport32Bit = true;
       };
 
-      hardware.opengl.extraPackages = with pkgs; [
+      opengl.extraPackages = with pkgs; [
         vaapiVdpau
       ];
 
       # This is for the benefit of VSCODE running natively in wayland
 
-      hardware.nvidia = {
+      nvidia = {
 
         # Modesetting is required.
         modesetting.enable = true;
