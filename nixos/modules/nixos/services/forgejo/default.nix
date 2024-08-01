@@ -75,6 +75,11 @@ in
             COOKIE_SECURE = true;
             COOKIE_NAME = "session";
           };
+          repository ={
+            signing = {
+              SIGNING_KEY = "default";
+            };
+          };
         };
         mailerPasswordFile = config.sops.secrets."services/forgejo/smtp/password".path;
         # secrets = {
