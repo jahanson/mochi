@@ -35,7 +35,6 @@ with lib;
 
     programs.command-not-found.enable = mkDefault false;
     sound.enable = mkDefault false;
-    hardware.pulseaudio.enable = mkDefault false;
     services.udisks2.enable = mkDefault false;
   };
 }
