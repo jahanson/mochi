@@ -42,7 +42,8 @@ with config;
         minio-client # S3 management
         pre-commit # Pre-commit tasks for git
         shellcheck # shell script linting
-        unstable.act
+        unstable.act # run GitHub actions locally
+        unstable.nodePackages_latest.prettier # code formatter
       ];
   };
 }
