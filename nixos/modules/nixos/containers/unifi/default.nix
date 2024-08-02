@@ -2,10 +2,8 @@
 with lib;
 let
   app = "unifi";
-  image = "ghcr.io/goofball222/unifi:8.2.93";
-  user = "999"; #string
-  group = "102"; #string
-  port = 9898; #int
+  # renovate: depName=ghcr.io/goofball222/unifi
+  version = "8.2.93";
   cfg = config.mySystem.services.${app};
   appFolder = "/eru/containers/volumes/${app}";
   # persistentFolder = "${config.mySystem.persistentFolder}/var/lib/${appFolder}";
@@ -21,7 +19,7 @@ in
       allowedUDPPorts = [ 3478 ];
     };
     virtualisation.oci-containers.containers.${app} = {
-      image = "${image}";
+      image = "ghcr.io/goofball222/unifi:${version}";
       autoStart = true;
       ports = [
         "3478:3478/udp" # STUN
