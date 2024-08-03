@@ -11,10 +11,11 @@ let
         install_url = "https://addons.thunderbird.net/thunderbird/downloads/latest/quick-folder-move/latest.xpi";
         installation_mode = "force_installed";
       };
-      "tbsync@jobisoft.de" = {
-        # TbSync
-        # https://addons.thunderbird.net/en-US/thunderbird/addon/tbsync/
-        install_url = "https://addons.thunderbird.net/user-media/addons/_attachments/773590/tbsync-4.8-tb.xpi";
+      # https://addons.thunderbird.net/user-media/addons/_attachments/987716/minimize_on_close-2.0.1.4-tb.xpi
+      "minimizeonclose@rsjtdrjgfuzkfg.com" = {
+        # Minimize on Close
+        # https://addons.thunderbird.net/en-US/thunderbird/addon/minimize-on-close/
+        install_url = "https://addons.thunderbird.net/user-media/addons/_attachments/987716/minimize_on_close-2.0.1.4-tb.xpi";
         installation_mode = "force_installed";
       };
     };
