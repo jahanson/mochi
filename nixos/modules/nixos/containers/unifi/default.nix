@@ -2,7 +2,7 @@
 with lib;
 let
   app = "unifi";
-  # renovate: depName=ghcr.io/goofball222/unifi datasource=github-releases
+  # renovate: depName=github.com/goofball222/unifi datasource=github-releases
   version = "8.2.93";
   cfg = config.mySystem.services.${app};
   appFolder = "/eru/containers/volumes/${app}";
