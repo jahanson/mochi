@@ -7,6 +7,7 @@ with config;
 
   myHome = {
     programs.firefox.enable = true;
+    programs.thunderbird.enable = true;
     shell = {
       wezterm.enable = true;
 
