@@ -15,7 +15,11 @@ with lib;
       min-free = lib.mkDefault (128 * 1000 * 1000);
     };
 
-    services.logrotate.enable = mkDefault true;
+    services = {
+      logrotate.enable = mkDefault true;
+      smartd.enable = mkDefault true;
+    };
+
     environment = {
       systemPackages = [ pkgs.lazygit ];
     };
