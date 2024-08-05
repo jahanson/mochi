@@ -30,9 +30,11 @@ with config;
         jetbrains.datagrip
         obsidian
         parsec-bin
+        solaar
         talosctl
         termius
-        unstable.nheko
+        unstable.fractal
+        unstable.peazip
         unstable.telegram-desktop
         vlc
 
