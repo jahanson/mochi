@@ -4,6 +4,9 @@ on:
   push:
     branches: ["main"]
     paths: [".forgejo/workflows/build.yaml"]
+  # schedule every night
+  schedule:
+    - cron: "0 0 * * *"
 jobs:
   nix-build:
     if: github.event.pull_request.draft == false
@@ -15,6 +18,8 @@ jobs:
             os: native-aarch64
           - system: telchar
             os: native-x86_64
+          - system: gandalf
+            os: native-x86_64
     runs-on: ${{ matrix.os }}
     env:
       PATH: ${{ format('{0}:{1}', '/run/current-system/sw/bin', env.PATH) }}
@@ -22,7 +27,7 @@ jobs:
       - name: Checkout repository
         uses: https://github.com/actions/checkout@v4
         with:
-          fetch-depth: 0        
+          fetch-depth: 0
       - uses: https://github.com/cachix/cachix-action@v15
         if: ${{ !github.event.pull_request.head.repo.fork }}
         with:
