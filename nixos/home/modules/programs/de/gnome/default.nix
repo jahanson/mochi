@@ -21,6 +21,7 @@ with lib.hm.gvariant; {
       };
       "org/gnome/desktop/wm/preferences" = {
         workspace-names = [ "sys" "talk" "web" "edit" "run" ];
+        button-layout = "appmenu:minimize,close";
       };
       "org/gnome/shell" = {
         disabled-extensions = [ "apps-menu@gnome-shell-extensions.gcampax.github.com" "light-style@gnome-shell-extensions.gcampax.github.com" "places-menu@gnome-shell-extensions.gcampax.github.com" "drive-menu@gnome-shell-extensions.gcampax.github.com" "window-list@gnome-shell-extensions.gcampax.github.com" "workspace-indicator@gnome-shell-extensions.gcampax.github.com" ];
