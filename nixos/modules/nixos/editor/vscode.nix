@@ -5,9 +5,13 @@ let
   # VSCode Community Extensions. These are updated daily.
   vscodeCommunityExtensions = [
     "dracula-theme.theme-dracula"
+    "editorconfig.editorconfig"
     "esbenp.prettier-vscode"
+    "github.copilot"
+    # "github.copilot-chat"
     "jnoortheen.nix-ide"
     "mikestead.dotenv"
+    "mrmlnc.vscode-json5"
     "ms-azuretools.vscode-docker"
     # Python extensions *required* for redhat.ansible/vscode-yaml
     "ms-python.python"
@@ -21,8 +25,6 @@ let
     "tamasfe.even-better-toml"
     "tyriar.sort-lines"
     "yzhang.markdown-all-in-one"
-    "mrmlnc.vscode-json5"
-    "editorconfig.editorconfig"
   ];
   # Nixpkgs Extensions. These are updated whenver they get around to it.
   vscodeNixpkgsExtensions = [
@@ -31,20 +33,21 @@ let
   ];
   # Straight from the VSCode marketplace.
   marketplaceExtensions = [
-    {
-      name = "copilot";
-      publisher = "github";
-      version = "1.219.0";
-      sha256 = "Y/l59JsmAKtENhBBf965brSwSkTjSOEuxc3tlWI88sY=";
-    }
-    {
+    # {
+    #   name = "copilot";
+    #   publisher = "github";
+    #   version = "1.219.0";
+    #   sha256 = "Y/l59JsmAKtENhBBf965brSwSkTjSOEuxc3tlWI88sY=";
+    # }
+    { # Apparently there's no insiders build for copilot-chat so the latest isn't what we want.
+      # The latest generally targets insiders build of vs code right now and it won't load on stable.
       name = "copilot-chat";
       publisher = "github";
-      version = "0.17.1";
-      sha256 = "Aa4gmHJCveP18v6CAvmkxmqf1JV1LygyQFNpzDz64Gw=";
+      version = "0.18.1";
+      sha256 = "BrcrfhkX2VGF9wznTSlPSdPPv126ScbHb1ngBRGtr4E=";
     }
   ];
-  # Extract extension strings and coerce them to a list of valid attribute paths. 
+  # Extract extension strings and coerce them to a list of valid attribute paths.
   vscodeCommunityExtensionsPackages = map (ext: getAttrFromPath (splitString "." ext) pkgs.vscode-marketplace) vscodeCommunityExtensions;
   nixpkgsExtensionsPackages = map (ext: getAttrFromPath (splitString "." ext) pkgs.vscode-extensions) vscodeNixpkgsExtensions;
   marketplaceExtensionsPackages = pkgs.vscode-utils.extensionsFromVscodeMarketplace marketplaceExtensions;
