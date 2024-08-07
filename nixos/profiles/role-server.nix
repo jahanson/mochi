@@ -21,7 +21,7 @@ with lib;
     };
 
     environment = {
-      systemPackages = [ pkgs.lazygit ];
+      systemPackages = [ pkgs.unstable.lazygit ];
     };
 
     documentation = {
