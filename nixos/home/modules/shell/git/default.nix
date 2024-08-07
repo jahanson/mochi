@@ -63,7 +63,7 @@ in
       home.packages = [
         pkgs.git-filter-repo
         pkgs.tig
-        pkgs.lazygit
+        pkgs.unstable.lazygit
       ];
     })
   ];
