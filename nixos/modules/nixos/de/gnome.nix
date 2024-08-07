@@ -6,7 +6,7 @@ in
 {
   options = {
     mySystem.de.gnome = {
-      enable = mkEnableOption "GNOME" // { default = true; };
+      enable = mkEnableOption "GNOME" // { default = false; };
       systrayicons = mkEnableOption "Enable systray icons" // { default = true; };
       gsconnect = mkEnableOption "Enable gsconnect (KDEConnect for GNOME)" // { default = true; };
     };
