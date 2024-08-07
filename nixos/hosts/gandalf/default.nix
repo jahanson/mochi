@@ -68,6 +68,15 @@ in
     };
   };
 
+  # no de
+  services = {
+    xserver = {
+      enable = false;
+      displayManager.gdm.enable = false;
+      desktopManager.gnome.enable = false;
+    };
+  };
+
   # System settings and services.
   mySystem = {
     purpose = "Production";
@@ -100,11 +109,6 @@ in
       };
     };
     services = {
-      xserver = {
-        enable = false;
-        displayManager.gdm.enable = false;
-        desktopManager.gnome.enable = false;
-      };
       podman.enable = true;
       libvirt-qemu.enable = true;
 
