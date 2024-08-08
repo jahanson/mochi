@@ -9,10 +9,6 @@ pkgs.mkShell {
     git
     gitleaks
     go-task
-    home-manager
-    nil
-    nix
-    nixpkgs-fmt
     pre-commit
     sops
     statix
