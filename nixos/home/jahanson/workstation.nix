@@ -47,6 +47,7 @@ with config;
         shellcheck # shell script linting
         unstable.act # run GitHub actions locally
         unstable.nodePackages_latest.prettier # code formatter
+        unstable.tidal-hifi
       ];
   };
 }
