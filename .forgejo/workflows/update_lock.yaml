@@ -1,0 +1,20 @@
+name: update-flake-lock
+on:
+  workflow_dispatch: # allows manual triggering
+  schedule:
+    - cron: '0 0 * * *' # daily at midnight
+
+jobs:
+  lockfile:
+    runs-on: native-x86_64
+    steps:
+      - name: Checkout repository
+        uses: https://github.com/actions/checkout@v4
+      - name: Update flake.lock
+        uses: https://github.com/DeterminateSystems/update-flake-lock@main
+        with:
+          pr-title: "Update flake.lock" # Title of PR to be created
+          pr-labels: |                  # Labels to be set on the PR
+            dependencies
+            automated
+          inputs: nixpkgs nixpkgs-unstable
