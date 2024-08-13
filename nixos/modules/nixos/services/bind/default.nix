@@ -2,7 +2,6 @@
 with lib;
 let
   cfg = config.mySystem.services.bind;
-  serviceUser = "named";
 in
 {
   options.mySystem.services.bind = {
