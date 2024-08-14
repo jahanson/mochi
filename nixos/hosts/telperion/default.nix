@@ -94,6 +94,18 @@
         config = import ./config/haproxy.nix { inherit config; };
         tcpPorts = [ 6443 6444 50000 ];
       };
+
+      matchbox = {
+        enable = true;
+        dataPath = "/var/lib/matchbox";
+        assetPath = "/nas/matchbox/assets";
+      };
+
+      dnsmasq = {
+        enable = true;
+        tftpRoot = "/srv/tftp";
+        bootAsset = "http://10.1.1.57:8086/boot.ipxe";
+      };
     };
   };
 }

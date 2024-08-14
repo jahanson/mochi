@@ -1,8 +1,13 @@
 name: update-flake-lock
 on:
-  workflow_dispatch: # allows manual triggering
-  schedule:
-    - cron: '0 0 * * *' # daily at midnight
+  # workflow_dispatch: # allows manual triggering
+  # schedule:
+  #   - cron: '0 0 * * *' # daily at midnight
+  push:
+    branches:
+      - main
+    paths:
+      - ".forgejo/workflows/update_lock.yaml"
 
 jobs:
   lockfile:

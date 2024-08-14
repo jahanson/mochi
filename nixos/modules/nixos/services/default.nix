@@ -2,9 +2,11 @@
   imports = [
     ./bind
     ./cockpit
+    ./dnsmasq
     ./forgejo
     ./haproxy
     ./libvirt-qemu
+    ./matchbox
     ./nginx
     ./onepassword-connect
     ./podman
