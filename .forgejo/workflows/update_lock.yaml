@@ -11,10 +11,12 @@ on:
 
 jobs:
   lockfile:
-    runs-on: native-x86_64
+    runs-on: docker
     steps:
       - name: Checkout repository
         uses: https://github.com/actions/checkout@v4
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
       - name: Update flake.lock
         uses: https://github.com/DeterminateSystems/update-flake-lock@main
         with:
