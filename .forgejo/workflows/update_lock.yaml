@@ -16,7 +16,7 @@ jobs:
       - name: Checkout repository
         uses: https://github.com/actions/checkout@v4
       - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@main
+        uses: https://github.com/DeterminateSystems/nix-installer-action@main
       - name: Update flake.lock
         uses: https://github.com/DeterminateSystems/update-flake-lock@main
         with:
