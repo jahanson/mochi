@@ -73,16 +73,16 @@ jobs:
           echo "diff<<${delimiter}" >> "${GITHUB_OUTPUT}"
           nix profile diff-closures --profile ./profile | perl -pe 's/\e\[[0-9;]*m(?:\e\[K)?//g' >> "${GITHUB_OUTPUT}"
           echo "${delimiter}" >> "${GITHUB_OUTPUT}"
-      - name: Comment report in pr
-        uses: https://github.com/marocchino/sticky-pull-request-comment@v2
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          header: ".#top.${{ matrix.system }}"
-          message: |
-            ### Report for `${{ matrix.system }}`
+      # - name: Comment report in pr
+      #   uses: https://github.com/marocchino/sticky-pull-request-comment@v2
+      #   with:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     header: ".#top.${{ matrix.system }}"
+      #     message: |
+      #       ### Report for `${{ matrix.system }}`
 
-            <summary> Version changes </summary> <br>
-            <pre> ${{ steps.diff.outputs.diff }} </pre>
+      #       <summary> Version changes </summary> <br>
+      #       <pre> ${{ steps.diff.outputs.diff }} </pre>
       # - name: Push to Cachix
       #   if: success()
       #   env:
