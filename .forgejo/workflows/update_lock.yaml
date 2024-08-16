@@ -25,3 +25,4 @@ jobs:
             dependencies
             automated
           inputs: nixpkgs nixpkgs-unstable
+
