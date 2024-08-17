@@ -6,7 +6,7 @@ in
 {
   options.mySystem.services.matchbox = {
     enable = mkEnableOption "matchbox";
-    package = mkPackageOption pkgs "matchbox" { };
+    package = mkPackageOption pkgs "matchbox-server" { };
     dataPath = mkOption {
       type = types.str;
       example = "/var/lib/matchbox";
