@@ -9,7 +9,7 @@ in
     package = mkPackageOption pkgs "dnsmasq" { };
     bootAsset = mkOption {
       type = types.str;
-      example =  "http://10.1.1.57:8086/boot.ipxe";
+      example = "http://10.1.1.57:8086/boot.ipxe";
     };
     tftpRoot = mkOption {
       type = types.str;
@@ -18,6 +18,11 @@ in
   };
 
   config = mkIf cfg.enable {
+    # Ensure the tftpRoot directory exists
+    systemd.tmpfiles.rules = [
+      "d ${cfg.tftpRoot} 0755 dnsmasq dnsmasq"
+    ];
+
     networking.firewall = {
       # dhcp ports
       allowedUDPPorts = [ 67 68 ]; # server/client

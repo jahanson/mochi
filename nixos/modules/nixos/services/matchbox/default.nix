@@ -10,14 +10,23 @@ in
     dataPath = mkOption {
       type = types.str;
       example = "/var/lib/matchbox";
+      description = "This is where profiles, groups, and other matchbox configuration is stored.";
     };
     assetPath = mkOption {
       type = types.str;
-      example = "/nas/matchbox/assets";
+      example = "/var/lib/matchbox/assets";
+      description = "This is where matchbox will look for assets like kernels and initrds.";
     };
   };
 
   config = mkIf cfg.enable {
+    # Ensure the dataPath and assetPath directories exist
+    systemd.tmpfiles.rules = [
+      "d ${cfg.dataPath} 0755 matchbox matchbox"
+      "d ${cfg.assetPath} 0755 matchbox matchbox"
+    ];
+
+    # Matchbox Server for PXE booting via device profiles
     environment.systemPackages = [
       cfg.package
     ];
@@ -27,7 +36,6 @@ in
       allowedTCPPorts = [ 8086 ];
     };
 
-    # Matchbox Server for PXE booting via device profiles
     users.groups.matchbox = { };
     users.users = {
       matchbox = {
