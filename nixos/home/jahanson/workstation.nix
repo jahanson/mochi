@@ -33,6 +33,7 @@ with config;
         solaar
         talosctl
         termius
+        unstable.bruno
         unstable.fractal
         unstable.peazip
         unstable.telegram-desktop

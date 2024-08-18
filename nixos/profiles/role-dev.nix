@@ -6,19 +6,20 @@ with config;
 {
   # git & vim are in global
   environment.systemPackages = with pkgs; [
-    jq
-    yq
     btop
     dnsutils
-    nix
     fira-code-nerdfont
+    jq
+    nix
+    yq
 
     # TODO Move
-    nil
-    nixpkgs-fmt
-    statix
     gh
     go
+    nil
+    nixpkgs-fmt
+    shfmt
+    statix
 
     # bind # for dns utils like named-checkconf
     inputs.nix-inspect.packages.${pkgs.system}.default
