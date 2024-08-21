@@ -16,8 +16,6 @@ let
     # Python extensions *required* for redhat.ansible/vscode-yaml
     "ms-python.python"
     "ms-python.vscode-pylance"
-    "ms-vscode-remote.remote-ssh"
-    "ms-vscode-remote.remote-ssh-edit"
     "pkief.material-icon-theme"
     "redhat.ansible"
     "redhat.vscode-yaml"
@@ -32,6 +30,8 @@ let
   vscodeNixpkgsExtensions = [
     # Continue ships with a binary that requires the patchelf fix which is done by default in nixpkgs.
     "continue.continue"
+    "ms-vscode-remote.remote-ssh"
+    "ms-vscode-remote.remote-ssh-edit"
   ];
   # Straight from the VSCode marketplace.
   marketplaceExtensions = [
@@ -45,7 +45,7 @@ let
       # The latest generally targets insiders build of vs code right now and it won't load on stable.
       name = "copilot-chat";
       publisher = "github";
-      version = "0.18.1";
+      version = "0.18.2";
       sha256 = "BrcrfhkX2VGF9wznTSlPSdPPv126ScbHb1ngBRGtr4E=";
     }
   ];
