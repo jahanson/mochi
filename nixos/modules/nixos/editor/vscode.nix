@@ -46,7 +46,7 @@ let
       name = "copilot-chat";
       publisher = "github";
       version = "0.18.2";
-      sha256 = "BrcrfhkX2VGF9wznTSlPSdPPv126ScbHb1ngBRGtr4E=";
+      sha256 = "sha256-cku6FV88jMwWoxSiMAufZy00H9Wc1XnJJDBrfWAwXPg=";
     }
   ];
   # Extract extension strings and coerce them to a list of valid attribute paths.
