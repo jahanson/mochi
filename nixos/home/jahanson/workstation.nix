@@ -35,8 +35,11 @@ with config;
         termius
         unstable.bruno
         unstable.fractal
+        unstable.httpie
+        unstable.mods
         unstable.peazip
         unstable.telegram-desktop
+        unstable.tidal-hifi
         vlc
 
         # cli
@@ -48,7 +51,7 @@ with config;
         shellcheck # shell script linting
         unstable.act # run GitHub actions locally
         unstable.nodePackages_latest.prettier # code formatter
-        unstable.tidal-hifi
+        unstable.tailspin # logfile highlighter
       ];
   };
 }
