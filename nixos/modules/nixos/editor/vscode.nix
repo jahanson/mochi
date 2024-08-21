@@ -26,6 +26,7 @@ let
     "tyriar.sort-lines"
     "yzhang.markdown-all-in-one"
     "foxundermoon.shell-format"
+    "ahmadalli.vscode-nginx-conf"
   ];
   # Nixpkgs Extensions. These are updated whenver they get around to it.
   vscodeNixpkgsExtensions = [
