@@ -36,3 +36,4 @@ repos:
       - id: sops-encryption
         # Uncomment to exclude all markdown files from encryption
         # exclude: *.\.md
+        files: .*secrets.*
