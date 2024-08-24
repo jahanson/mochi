@@ -4,18 +4,19 @@ let
   cfg = config.mySystem.editor.vscode;
   # VSCode Community Extensions. These are updated daily.
   vscodeCommunityExtensions = [
+    "ahmadalli.vscode-nginx-conf"
     "dracula-theme.theme-dracula"
     "editorconfig.editorconfig"
     "esbenp.prettier-vscode"
+    "foxundermoon.shell-format"
     "github.copilot"
-    # "github.copilot-chat"
     "jnoortheen.nix-ide"
     "mikestead.dotenv"
     "mrmlnc.vscode-json5"
     "ms-azuretools.vscode-docker"
-    # Python extensions *required* for redhat.ansible/vscode-yaml
-    "ms-python.python"
+    "ms-python.python" # Python extensions *required* for redhat.ansible/vscode-yaml
     "ms-python.vscode-pylance"
+    "ms-vscode-remote.remote-ssh-edit"
     "pkief.material-icon-theme"
     "redhat.ansible"
     "redhat.vscode-yaml"
@@ -23,15 +24,13 @@ let
     "tamasfe.even-better-toml"
     "tyriar.sort-lines"
     "yzhang.markdown-all-in-one"
-    "foxundermoon.shell-format"
-    "ahmadalli.vscode-nginx-conf"
+    "astro-build.astro-vscode"
+    # "github.copilot-chat"
   ];
   # Nixpkgs Extensions. These are updated whenver they get around to it.
   vscodeNixpkgsExtensions = [
     # Continue ships with a binary that requires the patchelf fix which is done by default in nixpkgs.
     "continue.continue"
-    "ms-vscode-remote.remote-ssh"
-    "ms-vscode-remote.remote-ssh-edit"
   ];
   # Straight from the VSCode marketplace.
   marketplaceExtensions = [
@@ -41,12 +40,20 @@ let
     #   version = "1.219.0";
     #   sha256 = "Y/l59JsmAKtENhBBf965brSwSkTjSOEuxc3tlWI88sY=";
     # }
-    { # Apparently there's no insiders build for copilot-chat so the latest isn't what we want.
+    {
+      # Apparently there's no insiders build for copilot-chat so the latest isn't what we want.
       # The latest generally targets insiders build of vs code right now and it won't load on stable.
       name = "copilot-chat";
       publisher = "github";
       version = "0.18.2";
       sha256 = "sha256-cku6FV88jMwWoxSiMAufZy00H9Wc1XnJJDBrfWAwXPg=";
+    }
+    {
+      name = "remote-ssh";
+      publisher = "ms-vscode-remote";
+      version = "0.113.1";
+      sha256 = "sha256-/tyyjf3fquUmjdEX7Gyt3MChzn1qMbijyej8Lskt6So=";
+
     }
   ];
   # Extract extension strings and coerce them to a list of valid attribute paths.
