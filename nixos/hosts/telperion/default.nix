@@ -42,6 +42,8 @@
   swapDevices = [ ];
 
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  # Until I can figure out why the tftp port is not opening, disable the firewall.
+  networking.firewall.enable = false;
 
   sops = {
     # Mounts unencrypted sops values at /run/secrets/rndc_keys accessible by root only by default.
