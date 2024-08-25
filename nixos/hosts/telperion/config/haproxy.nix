@@ -47,7 +47,7 @@ backend k8s_theshire_controlplane
   mode tcp
   option ssl-hello-chk
   balance roundrobin
-  server nenya 10.1.1.62:6443 check
-  server vilya 10.1.1.63:6443 check
-  server narya 10.1.1.64:6443 check
+  server bilbo 10.1.1.62:6443 check
+  server frodo 10.1.1.63:6443 check
+  server sam 10.1.1.64:6443 check
 ''
