@@ -97,13 +97,15 @@
 
       matchbox = {
         enable = true;
-        dataPath = "/var/lib/matchbox";
-        assetPath = "/nas/matchbox/assets";
+        # /var/lib/matchbox/{profiles,groups,ignition,cloud,generic}
+        dataPath = "/opt/talbox/data";
+        # /var/lib/matchbox/assets
+        assetPath = "/opt/talbox/assets";
       };
 
       dnsmasq = {
         enable = true;
-        tftpRoot = "/srv/tftp";
+        tftpRoot = "/opt/talbox";
         bootAsset = "http://10.1.1.57:8086/boot.ipxe";
       };
     };
