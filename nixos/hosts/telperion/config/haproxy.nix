@@ -27,11 +27,11 @@ frontend k8s_homelab_apiserver
   option tcplog
   default_backend k8s_homelab_controlplane
 
-frontend k8s_erebor_apiserver
+frontend k8s_theshire_apiserver
   bind *:6444
   mode tcp
   option tcplog
-  default_backend k8s_erebor_controlplane
+  default_backend k8s_theshire_controlplane
 
 backend k8s_homelab_controlplane
   option httpchk GET /healthz
@@ -41,13 +41,13 @@ backend k8s_homelab_controlplane
   balance roundrobin
   server shadowfax 10.1.1.61:6443 check
 
-backend k8s_erebor_controlplane
+backend k8s_theshire_controlplane
   option httpchk GET /healthz
   http-check expect status 200
   mode tcp
   option ssl-hello-chk
   balance roundrobin
-  server nenya 10.1.1.81:6443 check
-  server vilya 10.1.1.82:6443 check
-  server narya 10.1.1.83:6443 check
+  server nenya 10.1.1.62:6443 check
+  server vilya 10.1.1.63:6443 check
+  server narya 10.1.1.64:6443 check
 ''
