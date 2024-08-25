@@ -24,8 +24,8 @@ in
     ];
 
     networking.firewall = {
-      # dhcp ports
-      allowedUDPPorts = [ 67 68 ]; # server/client
+      # dhcp ports | tftp port
+      allowedUDPPorts = [ 67 68 69 ]; # server/client/tftp
     };
 
     # Proxy DHCP for PXE booting. This leaves DHCP address allocation alone and dhcp clients
