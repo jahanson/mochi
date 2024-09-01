@@ -119,7 +119,7 @@ in
       };
 
       # Unifi & Lego-Auto
-      unifi.enable = true;
+      # unifi.enable = true;
       lego-auto = {
         enable = true;
         dnsimpleTokenPath = "${config.sops.secrets."lego/dnsimple/token".path}";
