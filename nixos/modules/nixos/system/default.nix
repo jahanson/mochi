@@ -3,6 +3,7 @@
     ./borg
     ./fingerprint-laptop-lid.nix
     ./impermanence.nix
+    ./incus
     ./motd
     ./nfs
     ./nix.nix

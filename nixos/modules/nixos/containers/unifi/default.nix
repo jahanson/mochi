@@ -14,9 +14,14 @@ in
   };
 
   config = mkIf cfg.enable {
-    networking.firewall.interfaces.podman0 = {
-      allowedTCPPorts = [ 8080 8443 8880 8843 ];
-      allowedUDPPorts = [ 3478 ];
+    networking.firewall.interfaces = {
+      enp130s0f0 = {
+        allowedTCPPorts = [ 8443 ];
+      };
+      podman0 = {
+        allowedTCPPorts = [ 8080 8443 8880 8843 ];
+        allowedUDPPorts = [ 3478 ];
+      };
     };
     virtualisation.oci-containers.containers.${app} = {
       image = "ghcr.io/goofball222/unifi:${version}";

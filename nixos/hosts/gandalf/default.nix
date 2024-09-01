@@ -31,6 +31,30 @@ in
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBROTzSefJGJeCNUgNLbE5l4sHHg2fHUO4sCwqvP+zAd root@Gollum"
   ];
 
+  # VSCode Compatibility Settings
+  programs.nix-ld.enable = true;
+  services.vscode-server = {
+    enable = true;
+  };
+
+  # Home Manager
+  home-manager.users.jahanson = {
+    # Git settings
+    # TODO: Move to config module.
+    programs.git = {
+      enable = true;
+      userName = "Joseph Hanson";
+      userEmail = "joe@veri.dev";
+
+      extraConfig = {
+        core.autocrlf = "input";
+        init.defaultBranch = "main";
+        pull.rebase = true;
+        rebase.autoStash = true;
+      };
+    };
+  };
+
   # Network settings
   networking = {
     hostName = "gandalf";
@@ -45,11 +69,11 @@ in
     };
 
     # For VMs
-    bridges = {
-      "br0" = {
-        interfaces = [ "enp130s0f1" ];
-      };
-    };
+    # bridges = {
+    #   "br0" = {
+    #     interfaces = [ "enp130s0f1" ];
+    #   };
+    # };
   };
 
   swapDevices = [ ];
@@ -82,6 +106,10 @@ in
     purpose = "Production";
     system = {
       motd.networkInterfaces = [ "enp130s0f0" "enp130s0f1" ];
+      # Incus
+      incus = {
+        enable = true;
+      };
       # ZFS
       zfs.enable = true;
       zfs.mountPoolsAtBoot = [ "eru" ];

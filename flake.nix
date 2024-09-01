@@ -83,10 +83,12 @@
     ghostty = {
       url = "git+ssh://git@github.com/ghostty-org/ghostty";
     };
+
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
   };
 
   outputs =
-    { self, nixpkgs, sops-nix, home-manager, nix-vscode-extensions, impermanence, disko, talhelper, lix-module, ghostty, ... } @ inputs:
+    { self, nixpkgs, sops-nix, home-manager, nix-vscode-extensions, impermanence, disko, talhelper, lix-module, ghostty, vscode-server, ... } @ inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs [
         "aarch64-linux"
@@ -251,6 +253,8 @@
               ./nixos/profiles/hw-supermicro.nix
             ];
             profileModules = [
+              vscode-server.nixosModules.default
+              ./nixos/profiles/role-dev.nix
               ./nixos/profiles/role-server.nix
               { home-manager.users.jahanson = ./nixos/home/jahanson/server.nix; }
             ];

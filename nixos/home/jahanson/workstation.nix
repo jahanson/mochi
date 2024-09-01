@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, inputs, ... }:
 with config;
 {
   imports = [
@@ -40,6 +40,7 @@ with config;
         unstable.peazip
         unstable.telegram-desktop
         unstable.tidal-hifi
+        inputs.ghostty.packages.${pkgs.system}.default
         vlc
 
         # cli
