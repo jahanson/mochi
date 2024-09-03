@@ -128,13 +128,14 @@ in
         remote.noWarning = true;
       };
       # Borg
-      borgbackup = {
-        enable = true;
-        paths = [ "/eru/containers/volumes/unifi/" ];
-        exclude = [ ];
-        repo = "ssh://t3zvn0dd@t3zvn0dd.repo.borgbase.com/./repo";
-        repoKeyPath = config.sops.secrets."borg/repository/passphrase".path;
-      };
+      # My only borg backup was for the Unifi controller. I've since installed a UDM SE.
+      # borgbackup = {
+      #   enable = true;
+      #   paths = [ "/eru/containers/volumes/unifi/" ];
+      #   exclude = [ ];
+      #   repo = "ssh://t3zvn0dd@t3zvn0dd.repo.borgbase.com/./repo";
+      #   repoKeyPath = config.sops.secrets."borg/repository/passphrase".path;
+      # };
     };
     services = {
       podman.enable = true;
