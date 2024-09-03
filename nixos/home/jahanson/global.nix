@@ -68,9 +68,10 @@ with config;
         # system tools
         sysstat
         lm_sensors # for `sensors` command
-        ethtool
+        ethtool # modify network interface settings or firmware
         pciutils # lspci
         usbutils # lsusb
+        lshw # lshw
 
         # system call monitoring
         strace # system call monitoring
