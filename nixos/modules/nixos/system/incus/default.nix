@@ -72,7 +72,7 @@ in
     # systemd.services.incus-preseed.postStart = "${oidcSetup}";
 
     networking = {
-      nftables.enable = true;
+      # nftables.enable = true;
       firewall = {
         allowedTCPPorts = [
           8445
