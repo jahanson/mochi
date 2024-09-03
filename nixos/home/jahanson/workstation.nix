@@ -38,6 +38,7 @@ with config;
         unstable.httpie
         unstable.mods
         unstable.peazip
+        unstable.seabird
         unstable.telegram-desktop
         unstable.tidal-hifi
         inputs.ghostty.packages.${pkgs.system}.default

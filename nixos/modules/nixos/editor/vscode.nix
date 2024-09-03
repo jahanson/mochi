@@ -5,6 +5,7 @@ let
   # VSCode Community Extensions. These are updated daily.
   vscodeCommunityExtensions = [
     "ahmadalli.vscode-nginx-conf"
+    "astro-build.astro-vscode"
     "dracula-theme.theme-dracula"
     "editorconfig.editorconfig"
     "esbenp.prettier-vscode"
@@ -22,9 +23,10 @@ let
     "redhat.vscode-yaml"
     "signageos.signageos-vscode-sops"
     "tamasfe.even-better-toml"
+    "task.vscode-task"
     "tyriar.sort-lines"
     "yzhang.markdown-all-in-one"
-    "astro-build.astro-vscode"
+
     # "github.copilot-chat"
   ];
   # Nixpkgs Extensions. These are updated whenver they get around to it.
