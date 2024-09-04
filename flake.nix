@@ -160,7 +160,7 @@
         {
           "durincore" = mkNixosConfig {
             # T470 Thinkpad Intel i7-6600U
-            # Nix dev laptop
+            # Backup Nix dev laptop
             hostname = "durincore";
             system = "x86_64-linux";
             hardwareModules = [
@@ -251,6 +251,23 @@
             hardwareModules = [
               lix-module.nixosModules.default
               ./nixos/profiles/hw-supermicro.nix
+            ];
+            profileModules = [
+              vscode-server.nixosModules.default
+              ./nixos/profiles/role-dev.nix
+              ./nixos/profiles/role-server.nix
+              { home-manager.users.jahanson = ./nixos/home/jahanson/server.nix; }
+            ];
+          };
+
+          "shadowfax" = mkNixosConfig {
+            # Pro WS WRX80E-SAGE SE WIFI - AMD Ryzen Threadripper PRO 3955WX 16-Cores
+            # Workloads server
+            hostname = "shadowfax";
+            system = "x86_64-linux";
+            hardwareModules = [
+              lix-module.nixosModules.default
+              ./nixos/profiles/hw-threadripperpro.nix
             ];
             profileModules = [
               vscode-server.nixosModules.default
