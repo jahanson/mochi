@@ -9,7 +9,7 @@ in
   imports =
     [
       inputs.disko.nixosModules.disko
-      (import ../../profiles/disko-nixos.nix { disks = [ "/dev/nvme4n1" ]; })
+      (import ../../profiles/disko-nixos.nix { disks = [ "/dev/sda|/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_500GB_S58SNM0W406409E" ]; })
     ];
 
   boot = {
