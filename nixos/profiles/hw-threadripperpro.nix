@@ -28,5 +28,4 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   # not supported
   services.smartd.enable = false;
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

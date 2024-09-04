@@ -2,6 +2,9 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 { config, lib, inputs, ... }:
+let
+  sanoidConfig = import ./config/sanoid.nix { };
+in
 {
   imports =
     [
@@ -25,6 +28,7 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO/W445gX2IINRbE6crIMwgN6Ks8LTzAXR86pS9xp335 root@Sting"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBROTzSefJGJeCNUgNLbE5l4sHHg2fHUO4sCwqvP+zAd root@Gollum"
   ];
+
 
   # VSCode Compatibility Settings
   programs.nix-ld.enable = true;
@@ -52,39 +56,23 @@
 
   # Network settings
   networking = {
-    hostName = "gandalf";
-    hostId = "e2fc95cd";
+    hostName = "shadowfax";
+    hostId = "a885fabe";
     useDHCP = false; # needed for bridge
     networkmanager.enable = true;
-    # TODO: Add ports specifically.
     firewall.enable = false;
     interfaces = {
-      "enp130s0f0".useDHCP = true;
-      "enp130s0f1".useDHCP = true;
+      "enp36s0f0".useDHCP = true;
+      "enp36s0f1".useDHCP = true;
     };
-
-    # For VMs
-    # bridges = {
-    #   "br0" = {
-    #     interfaces = [ "enp130s0f1" ];
-    #   };
-    # };
   };
 
   swapDevices = [ ];
 
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   sops = {
-    secrets = {
-      "lego/dnsimple/token" = {
-        mode = "0444";
-        sopsFile = ./secrets.sops.yaml;
-      };
-      "borg/repository/passphrase" = {
-        sopsFile = ./secrets.sops.yaml;
-      };
-    };
+    secrets = { };
   };
 
   # no de
@@ -100,38 +88,27 @@
   mySystem = {
     purpose = "Production";
     system = {
-      motd.networkInterfaces = [ "enp130s0f0" "enp130s0f1" ];
+      motd.networkInterfaces = [ "enp36s0f0" "enp36s0f1" ];
       # Incus
       incus = {
         enable = true;
       };
+
       # ZFS
       zfs.enable = true;
-      zfs.mountPoolsAtBoot = [ "eru" ];
+      # zfs.mountPoolsAtBoot = [ "eru" ];
+
       # NFS
       nfs.enable = true;
-      # Samba
-      samba = {
-        enable = true;
-        shares = import ./config/samba-shares.nix { };
-        extraConfig = import ./config/samba-config.nix { };
-      };
+
       resticBackup = {
         local.enable = false;
         remote.enable = false;
         local.noWarning = true;
         remote.noWarning = true;
       };
-      # Borg
-      # My only borg backup was for the Unifi controller. I've since installed a UDM SE.
-      # borgbackup = {
-      #   enable = true;
-      #   paths = [ "/eru/containers/volumes/unifi/" ];
-      #   exclude = [ ];
-      #   repo = "ssh://t3zvn0dd@t3zvn0dd.repo.borgbase.com/./repo";
-      #   repoKeyPath = config.sops.secrets."borg/repository/passphrase".path;
-      # };
     };
+
     services = {
       podman.enable = true;
       libvirt-qemu.enable = true;
@@ -140,16 +117,6 @@
       sanoid = {
         enable = true;
         inherit (sanoidConfig.outputs) templates datasets;
-      };
-
-      # Unifi & Lego-Auto
-      # unifi.enable = true;
-      lego-auto = {
-        enable = true;
-        dnsimpleTokenPath = "${config.sops.secrets."lego/dnsimple/token".path}";
-        domains = "gandalf.jahanson.tech";
-        email = "joe@veri.dev";
-        provider = "dnsimple";
       };
     };
   };
