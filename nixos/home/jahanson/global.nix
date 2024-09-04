@@ -73,6 +73,10 @@ with config;
         usbutils # lsusb
         lshw # lshw
 
+        # filesystem tools
+        gptfdisk # sgdisk
+
+
         # system call monitoring
         strace # system call monitoring
         ltrace # library call monitoring
