@@ -9,62 +9,24 @@ in
   # };
   options.mySystem.system.incus = {
     enable = lib.mkEnableOption "incus";
+    preseed = lib.mkOption {
+      type = lib.types.unspecified;
+      default = "";
+      description = "Incus preseed configuration. Generate with `incus admin init`.";
+    };
+    webuiport = lib.mkOption {
+      type = lib.types.int;
+      default = 8443;
+      description = "Port for the Incus Web UI";
+    };
   };
 
   config = lib.mkIf cfg.enable {
 
     virtualisation.incus = {
+      inherit (cfg) preseed;
       enable = true;
       ui.enable = true;
-
-      preseed = {
-        config = {
-          "core.https_address" = "10.1.1.15:8445"; # Need quotes around key
-        };
-        networks = [
-          {
-            config = {
-              "ipv4.address" = "auto"; # Need quotes around key
-              "ipv6.address" = "auto"; # Need quotes around key
-            };
-            description = "";
-            name = "incusbr0";
-            type = "";
-            project = "default";
-          }
-        ];
-        storage_pools = [
-          {
-            config = {
-              source = "eru/incus";
-            };
-            description = "";
-            name = "default";
-            driver = "zfs";
-          }
-        ];
-        profiles = [
-          {
-            config = { };
-            description = "";
-            devices = {
-              eth0 = {
-                name = "eth0";
-                network = "incusbr0";
-                type = "nic";
-              };
-              root = {
-                path = "/";
-                pool = "default";
-                type = "disk";
-              };
-            };
-            name = "default";
-          }
-        ];
-        projects = [ ];
-        cluster = null;
-      };
     };
 
     users.users.${user}.extraGroups = [ "incus-admin" ];
@@ -75,7 +37,7 @@ in
       # nftables.enable = true;
       firewall = {
         allowedTCPPorts = [
-          8445
+          cfg.webuiport
           53
           67
         ];

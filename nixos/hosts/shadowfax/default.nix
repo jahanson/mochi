@@ -95,6 +95,7 @@ in
       # Incus
       incus = {
         enable = true;
+        preseed = import ./config/incus-preseed.nix { };
       };
 
       # ZFS
