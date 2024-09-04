@@ -67,13 +67,6 @@ in
       "enp130s0f0".useDHCP = true;
       "enp130s0f1".useDHCP = true;
     };
-
-    # For VMs
-    # bridges = {
-    #   "br0" = {
-    #     interfaces = [ "enp130s0f1" ];
-    #   };
-    # };
   };
 
   swapDevices = [ ];
@@ -109,6 +102,8 @@ in
       # Incus
       incus = {
         enable = true;
+        preseed = import ./config/incus-preseed.nix { };
+        webuiport = 8445;
       };
       # ZFS
       zfs.enable = true;
@@ -127,15 +122,6 @@ in
         local.noWarning = true;
         remote.noWarning = true;
       };
-      # Borg
-      # My only borg backup was for the Unifi controller. I've since installed a UDM SE.
-      # borgbackup = {
-      #   enable = true;
-      #   paths = [ "/eru/containers/volumes/unifi/" ];
-      #   exclude = [ ];
-      #   repo = "ssh://t3zvn0dd@t3zvn0dd.repo.borgbase.com/./repo";
-      #   repoKeyPath = config.sops.secrets."borg/repository/passphrase".path;
-      # };
     };
     services = {
       podman.enable = true;
