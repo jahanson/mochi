@@ -13,7 +13,7 @@ in
     ];
 
   # Debug
-  boot.zfs.forceImportRoot = true;
+  boot.zfs.forceImportRoot = lib.mkForce true;
 
   boot = {
     initrd = {
