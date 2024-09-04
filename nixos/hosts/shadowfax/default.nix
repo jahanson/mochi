@@ -13,7 +13,7 @@ in
     ];
 
   # Debug
-  boot.zfs.forceImportRoot = lib.mkForce true;
+  # boot.zfs.forceImportRoot = lib.mkForce true;
 
   boot = {
     initrd = {
@@ -99,7 +99,7 @@ in
 
       # ZFS
       zfs.enable = true;
-      # zfs.mountPoolsAtBoot = [ "eru" ];
+      zfs.mountPoolsAtBoot = [ "nahar" ];
 
       # NFS
       nfs.enable = true;
