@@ -27,23 +27,22 @@ with config;
         #apps
         discord
         flameshot
+        inputs.ghostty.packages.${pkgs.system}.default
         jetbrains.datagrip
         obsidian
         parsec-bin
         solaar
-        talosctl
-        termius
         unstable.bruno
         unstable.fractal
         unstable.httpie
         unstable.mods
         unstable.peazip
         unstable.seabird
+        unstable.talosctl
         unstable.telegram-desktop
+        unstable.termius
         unstable.tidal-hifi
-        inputs.ghostty.packages.${pkgs.system}.default
         vlc
-
         # cli
         brightnessctl
 

@@ -13,8 +13,8 @@ let
 in
 {
   nur = inputs.nur.overlay;
-  termius = termiusOverlay;
-  talosctl = talosctlOverlay;
+  # termius = termiusOverlay;
+  # talosctl = talosctlOverlay;
 
   # Wasteland of old overlays
   # warp-terminal = warpTerminalOverlay;
