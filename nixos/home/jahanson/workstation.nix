@@ -31,7 +31,7 @@ with config;
         parsec-bin
         solaar # open source manager for logitech unifying receivers
         unstable.bruno
-        unstable.flameshot
+        (unstable.flameshot.override { enableWlrSupport = true; })
         unstable.fractal
         unstable.httpie
         unstable.jetbrains.datagrip
