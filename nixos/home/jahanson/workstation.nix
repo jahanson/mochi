@@ -26,15 +26,15 @@ with config;
       [
         #apps
         discord
-        flameshot
         inputs.ghostty.packages.${pkgs.system}.default
-        jetbrains.datagrip
         obsidian
         parsec-bin
-        solaar
+        solaar # open source manager for logitech unifying receivers
         unstable.bruno
+        unstable.flameshot
         unstable.fractal
         unstable.httpie
+        unstable.jetbrains.datagrip
         unstable.mods
         unstable.peazip
         unstable.seabird
