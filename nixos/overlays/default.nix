@@ -2,6 +2,12 @@
 let
   inherit (inputs.nixpkgs) lib;
   termiusOverlay = import ./termius { };
+  # vivaldiOverlay = import ./vivaldi { };
+
+  vivaldiOverlay = self: super: {
+    vivaldi = super.callPackage ./vivaldi { };
+  };
+
   talosctlOverlay = self: super: {
     talosctl = super.callPackage ./talosctl/talosctl-custom.nix { };
   };
@@ -13,6 +19,7 @@ let
 in
 {
   nur = inputs.nur.overlay;
+  vivaldi = vivaldiOverlay;
   # termius = termiusOverlay;
   # talosctl = talosctlOverlay;
 
