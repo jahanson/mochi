@@ -21,9 +21,9 @@ in
       supportedFilesystems = [ "nfs" ];
     };
 
-    kernelModules = [ "kvm-intel" "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd" ];
+    kernelModules = [ "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd" ];
     extraModulePackages = [ ];
-    kernelParams = [ "iommu=pt" "intel_iommu=on" "zfs.zfs_arc_max=107374182400" ]; # 100GB
+    kernelParams = [ "zfs.zfs_arc_max=107374182400" ]; # 100GB
   };
 
   users.users.root.openssh.authorizedKeys.keys = [
