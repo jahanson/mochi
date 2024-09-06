@@ -1,32 +1,19 @@
 { inputs, ... }:
 let
   inherit (inputs.nixpkgs) lib;
-  termiusOverlay = import ./termius { };
-  # vivaldiOverlay = import ./vivaldi { };
 
   vivaldiOverlay = self: super: {
     vivaldi = super.callPackage ./vivaldi { };
   };
 
-  talosctlOverlay = self: super: {
-    talosctl = super.callPackage ./talosctl/talosctl-custom.nix { };
+  termiusOverlay = self: super: {
+    termius = super.callPackage ./termius { };
   };
-
-  # Wasteland of old overlays
-  # warpTerminalOverlay = import ./warp-terminal {};
-  # goOverlay = import ./go { };
-  # zedEditorOverlay = import ./zed-editor { };
 in
 {
   nur = inputs.nur.overlay;
   vivaldi = vivaldiOverlay;
-  # termius = termiusOverlay;
-  # talosctl = talosctlOverlay;
-
-  # Wasteland of old overlays
-  # warp-terminal = warpTerminalOverlay;
-  # go = goOverlay;
-  # zed-editor = zedEditorOverlay;
+  termius = termiusOverlay;
 
   # The unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'

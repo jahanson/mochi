@@ -40,7 +40,7 @@ with config;
         unstable.seabird
         unstable.talosctl
         unstable.telegram-desktop
-        unstable.termius
+        termius
         unstable.tidal-hifi
         vlc
         # cli
