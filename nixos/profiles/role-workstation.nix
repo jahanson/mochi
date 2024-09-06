@@ -50,6 +50,7 @@ with config;
     cpupower-gui
     vivaldi
     gparted
+    termius
   ];
 
   i18n = {
