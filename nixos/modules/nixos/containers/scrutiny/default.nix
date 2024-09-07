@@ -59,6 +59,9 @@ in
   };
 
   config = mkIf cfg.enable {
+    # TODO: Add automatic restarting of the container when disks.nix changes.
+    # - https://github.com/nix-community/home-manager/issues/3865#issuecomment-1631998032
+    # - https://github.com/NixOS/nixpkgs/blob/6f6c45b5134a8ee2e465164811e451dcb5ad86e3/nixos/modules/virtualisation/oci-containers.nix
     virtualisation.oci-containers.containers.${app} = {
       image = "ghcr.io/analogj/scrutiny:${version}-omnibus";
       autoStart = true;
