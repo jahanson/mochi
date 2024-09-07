@@ -36,6 +36,8 @@ with lib;
       dnsutils
       jq
       yq
+      nvme-cli
+      smartmontools
     ];
 
     networking.useDHCP = lib.mkDefault true;
