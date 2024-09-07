@@ -4,6 +4,8 @@
 { config, lib, inputs, ... }:
 let
   sanoidConfig = import ./config/sanoid.nix { };
+  disks = import ./config/disks.nix;
+  smartdDevices = map (device: { inherit device; }) disks;
 in
 {
   imports =
@@ -116,6 +118,15 @@ in
     services = {
       podman.enable = true;
       libvirt-qemu.enable = true;
+
+      # Scrutiny
+      scrutiny = {
+        enable = true;
+        devices = disks;
+        extraCapabilities = [ "SYS_RAWIO" ];
+        containerVolumeLocation = "/nahar/containers/volumes/scrutiny";
+        port = 8585;
+      };
 
       # Sanoid
       sanoid = {
