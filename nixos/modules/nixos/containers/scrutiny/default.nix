@@ -10,6 +10,16 @@ in
   options.mySystem.services.${app} = {
     enable = mkEnableOption "${app}";
 
+    # Port to expose the web ui on.
+    port = mkOption {
+      type = types.int;
+      default = 8080;
+      description = ''
+        Port to expose the web ui on.
+      '';
+      example = 8080;
+    };
+    # Location where the container will store its data.
     containerVolumeLocation = mkOption {
       type = types.str;
       default = "/mnt/data/containers/${app}";
@@ -18,6 +28,7 @@ in
       '';
       example = "/mnt/data/containers/${app}";
     };
+
     # podman equivalent:
     # --device /dev/disk/by-id/nvme-XXXXXXXXXXXXXXXXXXXXXXXXXXXX
     devices = mkOption {
@@ -53,7 +64,7 @@ in
       autoStart = true;
 
       ports = [
-        "8585:8585" # web ui
+        "${toString cfg.port}:8080" # web ui
         "8086:8086" # influxdb2
       ];
 

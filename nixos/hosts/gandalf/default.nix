@@ -134,6 +134,7 @@ in
         devices = disks;
         extraCapabilities = [ "SYS_RAWIO" ];
         containerVolumeLocation = "/eru/containers/volumes/scrutiny";
+        port = 8585;
       };
 
       # Sanoid
