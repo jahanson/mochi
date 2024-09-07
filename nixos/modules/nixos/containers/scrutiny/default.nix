@@ -49,7 +49,7 @@ in
 
   config = mkIf cfg.enable {
     virtualisation.oci-containers.containers.${app} = {
-      image = "ghcr.io/AnalogJ/scrutiny:${version}-omnibus";
+      image = "ghcr.io/analogj/scrutiny:${version}-omnibus";
       autoStart = true;
 
       ports = [
