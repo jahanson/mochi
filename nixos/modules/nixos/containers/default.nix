@@ -3,5 +3,6 @@
     ./backrest
     ./lego-auto
     ./unifi
+    ./scrutiny
   ];
 }
