@@ -92,6 +92,8 @@ with config;
 
         # nix tools
         nvd
+        # charmbracelet tools
+        gum
       ];
     };
   };
