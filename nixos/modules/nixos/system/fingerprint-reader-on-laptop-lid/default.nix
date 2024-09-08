@@ -11,6 +11,7 @@
 # ID 27c6:609c Shenzhen Goodix Technology Co.,Ltd
 # On Framework 16 the USB is:
 # Bus 005 Device 007: ID 27c6:609c Shenzhen Goodix Technology Co.,Ltd
+# Use `findfp.sh` to find the correct USB device.
 { config, lib, pkgs, ... }:
 let
   cfg = config.mySystem.system.fingerprint-reader-on-laptop-lid;
