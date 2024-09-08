@@ -1,4 +1,4 @@
-# From https://github.com/fzakaria/nix-home/blob/framework-laptop/modules/nixos/fprint-laptop-lid.nix
+# Pertially from: https://github.com/fzakaria/nix-home/blob/framework-laptop/modules/nixos/fprint-laptop-lid.nix
 # Originally this file was based on
 # https://unix.stackexchange.com/questions/678609/how-to-disable-fingerprint-authentication-when-laptop-lid-is-closed
 # However I found this not to work as the fprintd is started via dbus and masking it doesn't seem to do anything.
@@ -9,6 +9,8 @@
 # On framework 13 the USB is:
 # Port 004: Dev 003, If 0, Class=Vendor Specific Class, Driver=[none], 12M
 # ID 27c6:609c Shenzhen Goodix Technology Co.,Ltd
+# On Framework 16 the USB is:
+# Bus 005 Device 007: ID 27c6:609c Shenzhen Goodix Technology Co.,Ltd
 { config, lib, pkgs, ... }:
 let
   cfg = config.mySystem.system.fingerprint-reader-on-laptop-lid;
