@@ -35,7 +35,7 @@ with config;
         unstable.fractal
         unstable.httpie
         unstable.jetbrains.datagrip
-        unstable.mods
+        mods
         unstable.peazip
         unstable.seabird
         unstable.talosctl
