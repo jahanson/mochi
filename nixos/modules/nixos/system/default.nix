@@ -1,7 +1,7 @@
 {
   imports = [
     ./borg
-    ./fingerprint-laptop-lid.nix
+    ./fingerprint-reader-on-laptop-lid
     ./impermanence.nix
     ./incus
     ./motd
