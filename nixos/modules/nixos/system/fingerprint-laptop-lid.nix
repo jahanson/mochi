@@ -1,3 +1,4 @@
+# From https://github.com/fzakaria/nix-home/blob/framework-laptop/modules/nixos/fprint-laptop-lid.nix
 # Originally this file was based on
 # https://unix.stackexchange.com/questions/678609/how-to-disable-fingerprint-authentication-when-laptop-lid-is-closed
 # However I found this not to work as the fprintd is started via dbus and masking it doesn't seem to do anything.
@@ -12,18 +13,18 @@
 let
   cfg = config.mySystem.system.fingerprint-reader-on-laptop-lid;
   laptop-lid = pkgs.writeShellScript "laptop-lid" ''
-    lock=$HOME/fingerprint-reader-disabled
+    lock=/var/lock/fingerprint-reader-disabled
 
     # match for either display port or hdmi port
     if grep -Fq closed /proc/acpi/button/lid/LID0/state &&
-       (grep -Fxq connected /sys/class/drm/card1-DP-*/status ||
-        grep -Fxq connected /sys/class/drm/card1-HDMI-*/status)
+       (grep -Fxq connected /sys/class/drm/card*-DP-*/status ||
+        grep -Fxq connected /sys/class/drm/card*-HDMI-*/status)
     then
       touch "$lock"
-      echo 0 > /sys/bus/usb/devices/1-4/authorized
+      echo 0 > /sys/bus/usb/devices/5-4.1/authorized
     elif [ -f "$lock" ]
     then
-      echo 1 > /sys/bus/usb/devices/1-4/authorized
+      echo 1 > /sys/bus/usb/devices/5-4.1/authorized
       rm "$lock"
     fi
   '';
