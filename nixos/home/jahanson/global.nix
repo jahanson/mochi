@@ -1,8 +1,9 @@
-{ pkgs, config, ... }:
+{ pkgs, config, inputs, ... }:
 with config;
 {
   imports = [
     ../modules
+    inputs.krewfile.homeManagerModules.krewfile
   ];
 
   config = {
@@ -20,7 +21,17 @@ with config;
       EDITOR = "vim";
     };
 
+    programs.krewfile = {
+      enable = true;
+      krewPackage = pkgs.krew;
+      plugins = [
+        "resource-capacity"
+        "rook-ceph"
+      ];
+    };
+
     home = {
+
       # Install these packages for my user
       packages = with pkgs; [
         # misc
@@ -92,6 +103,7 @@ with config;
 
         # nix tools
         nvd
+
         # charmbracelet tools
         gum
       ];

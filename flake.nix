@@ -85,10 +85,17 @@
     };
 
     vscode-server.url = "github:nix-community/nixos-vscode-server";
+
+    # krewfile - Declarative krew plugin management
+    krewfile = {
+      url = "github:ajgon/krewfile?ref=feat/fix-deps";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
-    { self, nixpkgs, sops-nix, home-manager, nix-vscode-extensions, impermanence, disko, talhelper, lix-module, ghostty, vscode-server, ... } @ inputs:
+    { self, nixpkgs, sops-nix, home-manager, nix-vscode-extensions, impermanence, disko, talhelper, lix-module, ghostty, vscode-server, krewfile, ... } @ inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs [
         "aarch64-linux"
