@@ -9,11 +9,15 @@ let
   termiusOverlay = self: super: {
     termius = super.callPackage ./termius { };
   };
+  modsOverlay = self: super: {
+    mods = super.callPackage ./charm-mods { };
+  };
 in
 {
   nur = inputs.nur.overlay;
   vivaldi = vivaldiOverlay;
   termius = termiusOverlay;
+  mods = modsOverlay;
 
   # The unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'
