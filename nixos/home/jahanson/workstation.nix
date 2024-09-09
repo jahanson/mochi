@@ -42,10 +42,12 @@ with config;
         unstable.telegram-desktop
         unstable.tidal-hifi
         vlc
+
         # cli
         brightnessctl
 
         # dev utils
+        kubectl
         minio-client # S3 management
         pre-commit # Pre-commit tasks for git
         shellcheck # shell script linting

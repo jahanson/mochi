@@ -47,10 +47,12 @@ in
             end
           end
 
+          # Krew
+          set -q KREW_ROOT; and set -gx PATH $PATH $KREW_ROOT/.krew/bin; or set -gx PATH $PATH $HOME/.krew/bin
+
           # Paths are in reverse priority order
           update_path /opt/homebrew/opt/postgresql@16/bin
           update_path /opt/homebrew/bin
-          update_path ${homeDirectory}/.krew/bin
           update_path /nix/var/nix/profiles/default/bin
           update_path /run/current-system/sw/bin
           update_path /etc/profiles/per-user/${username}/bin
