@@ -47,11 +47,21 @@
   # System settings and services.
   mySystem = {
     purpose = "Development";
+
+    # System config
     system = {
       motd.networkInterfaces = [ "wlp1s0" ];
       fingerprint-reader-on-laptop-lid.enable = true;
       borg.pika-backup.enable = true;
     };
+
+    # Services config
+    services = {
+      vault = {
+        enable = true;
+      };
+    };
+
     security._1password.enable = true;
     framework_wifi_swap.enable = true;
   };

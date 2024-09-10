@@ -52,6 +52,7 @@ with config;
         unstable.talosctl
         unstable.telegram-desktop
         unstable.tidal-hifi
+        unstable.vault
         vlc
 
         # cli

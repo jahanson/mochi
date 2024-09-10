@@ -15,5 +15,6 @@
     ./reboot-required-check.nix
     ./restic
     ./sanoid
+    ./vault
   ];
 }
