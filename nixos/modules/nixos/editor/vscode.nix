@@ -27,6 +27,7 @@ let
     "tyriar.sort-lines"
     "yzhang.markdown-all-in-one"
     "bmalehorn.vscode-fish"
+    "hashicorp.hcl"
     # "github.copilot-chat"
   ];
   # Nixpkgs Extensions. These are updated whenver they get around to it.

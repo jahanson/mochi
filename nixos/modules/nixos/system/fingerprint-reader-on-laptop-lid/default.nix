@@ -14,6 +14,7 @@
 # Use `findfp.sh` to find the correct USB device.
 { config, lib, pkgs, ... }:
 let
+  usbdevice = "1-4.1";
   cfg = config.mySystem.system.fingerprint-reader-on-laptop-lid;
   laptop-lid = pkgs.writeShellScript "laptop-lid" ''
     lock=/var/lock/fingerprint-reader-disabled
@@ -24,10 +25,10 @@ let
         grep -Fxq connected /sys/class/drm/card*-HDMI-*/status)
     then
       touch "$lock"
-      echo 0 > /sys/bus/usb/devices/5-4.1/authorized
+      echo 0 > /sys/bus/usb/devices/${usbdevice}/authorized
     elif [ -f "$lock" ]
     then
-      echo 1 > /sys/bus/usb/devices/5-4.1/authorized
+      echo 1 > /sys/bus/usb/devices/${usbdevice}/authorized
       rm "$lock"
     fi
   '';
