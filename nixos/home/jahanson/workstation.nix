@@ -26,6 +26,7 @@ with config;
       [
         #apps
         discord
+        unstable.vesktop
         inputs.ghostty.packages.${pkgs.system}.default
         obsidian
         parsec-bin
