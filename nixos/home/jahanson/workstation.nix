@@ -36,7 +36,6 @@ with config;
     packages = with pkgs;
       [
         #apps
-        discord
         unstable.vesktop
         inputs.ghostty.packages.${pkgs.system}.default
         obsidian
