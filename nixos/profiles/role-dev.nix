@@ -21,9 +21,13 @@ with config;
     shfmt
     statix
 
-    # bind # for dns utils like named-checkconf
+    # flake imports
     inputs.nix-inspect.packages.${pkgs.system}.default
     inputs.talhelper.packages.${pkgs.system}.default
+
+    # charmbracelet tools
+    gum
+    vhs
   ];
 
   programs.direnv = {

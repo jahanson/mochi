@@ -3,7 +3,18 @@ with config;
 {
   imports = [
     ./global.nix
+    inputs.krewfile.homeManagerModules.krewfile
   ];
+
+  # Krewfile management
+  programs.krewfile = {
+    enable = true;
+    krewPackage = pkgs.krew;
+    plugins = [
+      "resource-capacity"
+      "rook-ceph"
+    ];
+  };
 
   myHome = {
     programs.firefox.enable = true;
