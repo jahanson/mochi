@@ -14,7 +14,6 @@
 # Use `findfp.sh` to find the correct USB device.
 { config, lib, pkgs, ... }:
 let
-  usbdevice = "1-4.1";
   cfg = config.mySystem.system.fingerprint-reader-on-laptop-lid;
   laptop-lid = pkgs.writeShellScript "laptop-lid" ''
     lock=/var/lock/fingerprint-reader-disabled
@@ -25,10 +24,10 @@ let
         grep -Fxq connected /sys/class/drm/card*-HDMI-*/status)
     then
       touch "$lock"
-      echo 0 > /sys/bus/usb/devices/${usbdevice}/authorized
+      echo 0 > /dev/fingerprint_sensor/authorized
     elif [ -f "$lock" ]
     then
-      echo 1 > /sys/bus/usb/devices/${usbdevice}/authorized
+      echo 1 > /dev/fingerprint_sensor/authorized
       rm "$lock"
     fi
   '';
@@ -39,9 +38,19 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    services.acpid = {
-      enable = true;
-      lidEventCommands = "${laptop-lid}";
+    services = {
+      acpid = {
+        enable = true;
+        lidEventCommands = "${laptop-lid}";
+      };
+      # Add udev rule to create symlink for fingerprint sensor
+      # when usb device 27c6:609c is connected or disconnected.
+      # Reason: hubs like caldigit re-orient the device number on each boot.
+      # May requires a reboot to take effect.
+      # or sudo udevadm control --reload-rules && sudo udevadm trigger
+      udev.extraRules = ''
+        SUBSYSTEM=="usb", ATTRS{idVendor}=="27c6", ATTRS{idProduct}=="609c", RUN+="/bin/sh -c 'ln -sf /sys$devpath /dev/fingerprint_sensor'"
+      '';
     };
 
     # Disable fingerprint reader at login since you can't put in a password when fprintd is running.
