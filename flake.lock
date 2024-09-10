@@ -264,16 +264,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1725822077,
-        "narHash": "sha256-N+1mHVZoFwiuDUBqhWVWSINmAGpKTdH9jYPIkXNcqj4=",
-        "owner": "ajgon",
+        "lastModified": 1725897020,
+        "narHash": "sha256-0mJ37QZpUz44d0uolv9XQKDHwxUwqslz5ZSgwbdxmlo=",
+        "owner": "brumhard",
         "repo": "krewfile",
-        "rev": "d4db6ad2cc1c23513d691f63ac4aae6d8c9b1b8b",
+        "rev": "e7773854b19a4288df5502946ccec79c4af57adf",
         "type": "github"
       },
       "original": {
-        "owner": "ajgon",
-        "ref": "feat/fix-deps",
+        "owner": "brumhard",
         "repo": "krewfile",
         "type": "github"
       }

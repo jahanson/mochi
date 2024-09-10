@@ -106,6 +106,7 @@ with config;
 
         # charmbracelet tools
         gum
+        vhs
       ];
     };
   };

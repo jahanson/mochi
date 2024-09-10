@@ -26,7 +26,7 @@ let
     "task.vscode-task"
     "tyriar.sort-lines"
     "yzhang.markdown-all-in-one"
-
+    "bmalehorn.vscode-fish"
     # "github.copilot-chat"
   ];
   # Nixpkgs Extensions. These are updated whenver they get around to it.
