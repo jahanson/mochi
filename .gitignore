@@ -7,3 +7,5 @@ result*
 .github
 .profile
 .idea
+.secrets
+.op

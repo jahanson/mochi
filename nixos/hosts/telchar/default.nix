@@ -58,7 +58,7 @@
     # Services config
     services = {
       vault = {
-        enable = true;
+        enable = false;
       };
     };
 
