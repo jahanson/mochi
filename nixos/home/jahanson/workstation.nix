@@ -10,8 +10,10 @@ with config;
   programs.krewfile = {
     enable = true;
     krewPackage = pkgs.krew;
+    indexes = {
+      "netshoot" = "https://github.com/nilic/kubectl-netshoot.git";
+    };
     plugins = [
-      "index netshoot https://github.com/nilic/kubectl-netshoot.git"
       "netshoot/netshoot"
       "resource-capacity"
       "rook-ceph"
