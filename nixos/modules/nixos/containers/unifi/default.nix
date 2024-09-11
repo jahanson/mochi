@@ -3,7 +3,7 @@ with lib;
 let
   app = "unifi";
   # renovate: depName=goofball222/unifi datasource=github-releases
-  version = "8.4.59";
+  version = "8.4.62";
   cfg = config.mySystem.services.${app};
   appFolder = "/eru/containers/volumes/${app}";
   # persistentFolder = "${config.mySystem.persistentFolder}/var/lib/${appFolder}";
