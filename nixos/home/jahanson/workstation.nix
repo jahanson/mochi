@@ -11,6 +11,8 @@ with config;
     enable = true;
     krewPackage = pkgs.krew;
     plugins = [
+      "index netshoot https://github.com/nilic/kubectl-netshoot.git"
+      "netshoot/netshoot"
       "resource-capacity"
       "rook-ceph"
     ];
