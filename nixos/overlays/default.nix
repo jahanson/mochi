@@ -14,7 +14,7 @@ let
     mods = super.callPackage ./charm-mods { };
   };
 
-   smartmontoolsOverlay = import ./smartmontools { };
+  smartmontoolsOverlay = import ./smartmontools { };
 in
 {
   comm-packages = inputs.nix-vscode-extensions.overlays.default;
