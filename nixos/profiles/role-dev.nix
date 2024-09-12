@@ -12,6 +12,7 @@ with config;
     jq
     nix
     yq
+    unstable.ncdu
 
     # TODO Move
     gh
