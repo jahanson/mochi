@@ -40,24 +40,25 @@ with config;
     packages = with pkgs;
       [
         #apps
-        unstable.vesktop
+        (unstable.flameshot.override { enableWlrSupport = true; })
         inputs.ghostty.packages.${pkgs.system}.default
+        mods
         obsidian
         parsec-bin
         solaar # open source manager for logitech unifying receivers
         unstable.bruno
-        (unstable.flameshot.override { enableWlrSupport = true; })
         unstable.fractal
         unstable.httpie
         unstable.jetbrains.datagrip
-        mods
         unstable.peazip
         unstable.seabird
         unstable.talosctl
         unstable.telegram-desktop
         unstable.tidal-hifi
         unstable.vault
+        unstable.vesktop
         vlc
+        yt-dlp
 
         # cli
         brightnessctl
