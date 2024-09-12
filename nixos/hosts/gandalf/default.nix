@@ -108,10 +108,7 @@ in
       };
       # ZFS
       zfs.enable = true;
-      zfs.mountPoolsAtBoot = [
-        "eru"
-        "moria"
-      ];
+      zfs.mountPoolsAtBoot = [ "eru" ];
       # NFS
       nfs.enable = true;
       # Samba

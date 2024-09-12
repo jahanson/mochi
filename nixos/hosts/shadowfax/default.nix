@@ -99,7 +99,10 @@ in
 
       # ZFS
       zfs.enable = true;
-      zfs.mountPoolsAtBoot = [ "nahar" ];
+      zfs.mountPoolsAtBoot = [
+        "nahar"
+        "moria"
+      ];
 
       # NFS
       nfs.enable = true;
