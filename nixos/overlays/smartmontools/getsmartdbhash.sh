@@ -2,7 +2,7 @@
 #!nix-shell -I nixpkgs=/etc/nix/inputs/nixpkgs/ -i bash -p nix
 set -euo pipefail
 
-dbrev="5530"
+dbrev="5607"
 drivedbBranch="RELEASE_7_4"
 url="https://sourceforge.net/p/smartmontools/code/${dbrev}/tree/tags/${drivedbBranch}/smartmontools/drivedb.h?format=raw"
 
