@@ -90,7 +90,7 @@ in
   mySystem = {
     purpose = "Production";
     system = {
-      motd.networkInterfaces = [ "enp36s0f0" "enp36s0f1" ];
+      motd.networkInterfaces = [ "enp36s0f0" ];
       # Incus
       incus = {
         enable = true;
