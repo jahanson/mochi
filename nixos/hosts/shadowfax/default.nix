@@ -35,11 +35,12 @@ in
   ];
 
 
-  # VSCode Compatibility Settings
   programs = {
     _1password.enable = true;
+    # VSCode Compatibility Settings
     nix-ld.enable = true;
   };
+  # VSCode Compatibility Settings
   services.vscode-server = {
     enable = true;
   };
