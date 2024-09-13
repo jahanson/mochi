@@ -36,7 +36,10 @@ in
 
 
   # VSCode Compatibility Settings
-  programs.nix-ld.enable = true;
+  programs = {
+    _1password.enable = true;
+    nix-ld.enable = true;
+  };
   services.vscode-server = {
     enable = true;
   };
