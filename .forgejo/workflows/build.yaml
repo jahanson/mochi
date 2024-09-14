@@ -28,6 +28,8 @@ jobs:
             os: native-x86_64
           - system: telperion
             os: native-x86_64
+          - system: shadowfax
+            os: native-x86_64
     runs-on: ${{ matrix.os }}
     env:
       PATH: ${{ format('{0}:{1}', '/run/current-system/sw/bin', env.PATH) }}
@@ -46,55 +48,8 @@ jobs:
       - name: Garbage collect build dependencies
         run: nix-collect-garbage
 
-      - name: Build previous ${{ matrix.system }} system
-        shell: bash
-        run: |
-          nix build git+https://git.hsn.dev/jahanson/mochi#top.${{ matrix.system }} \
-            -v --log-format raw --profile ./profile
       - name: Build new ${{ matrix.system }} system
         shell: bash
         run: |
           nix build ".#top.${{ matrix.system }}" --profile ./profile --fallback -v \
             > >(tee stdout.log) 2> >(tee /tmp/nix-build-err.log >&2)
-      - name: Check for build failure
-        if: failure()
-        run: |
-          drv=$(grep "For full logs, run" /tmp/nix-build-err.log | grep -oE "/nix/store/.*.drv")
-          if [ -n $drv ]; then
-            nix log $drv
-            echo $drv
-          fi
-          exit 1
-      - name: Diff profile
-        id: diff
-        run: |
-          nix profile diff-closures --profile ./profile
-          delimiter="$(openssl rand -hex 16)"
-          echo "diff<<${delimiter}" >> "${GITHUB_OUTPUT}"
-          nix profile diff-closures --profile ./profile | perl -pe 's/\e\[[0-9;]*m(?:\e\[K)?//g' >> "${GITHUB_OUTPUT}"
-          echo "${delimiter}" >> "${GITHUB_OUTPUT}"
-      # - name: Comment report in pr
-      #   uses: https://github.com/marocchino/sticky-pull-request-comment@v2
-      #   with:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     header: ".#top.${{ matrix.system }}"
-      #     message: |
-      #       ### Report for `${{ matrix.system }}`
-
-      #       <summary> Version changes </summary> <br>
-      #       <pre> ${{ steps.diff.outputs.diff }} </pre>
-      # - name: Push to Cachix
-      #   if: success()
-      #   env:
-      #     CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      #   run: nix build ".#top.${{ matrix.system }}" --json | jq -r .[].drvPath | cachix push hsndev
-  nix-build-success:
-    if: ${{ always() }}
-    needs:
-      - nix-build
-    name: Nix Build Successful
-    runs-on: docker
-    steps:
-      - if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
-        name: Check matrix status
-        run: exit 1
