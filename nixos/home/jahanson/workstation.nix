@@ -41,7 +41,6 @@ with config;
       [
         #apps
         (unstable.flameshot.override { enableWlrSupport = true; })
-        inputs.ghostty.packages.${pkgs.system}.default
         mods
         obsidian
         parsec-bin
