@@ -31,6 +31,7 @@ with config;
     gum
     vhs
     mods
+    soft-serve
   ];
 
   programs.direnv = {
