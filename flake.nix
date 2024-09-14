@@ -80,9 +80,11 @@
     };
 
     # ghostty - 👻
-    ghostty = {
-      url = "git+ssh://git@github.com/ghostty-org/ghostty";
-    };
+    # ghostty = {
+    #   url = "git+ssh://git@github.com/ghostty-org/ghostty";
+    # };
+    # just manually installing it, private repo gives me a lot of headaches.disko
+    # nix profile install git+ssh://git@github.com/ghostty-org/ghostty
 
     vscode-server.url = "github:nix-community/nixos-vscode-server";
 
@@ -96,7 +98,7 @@
   };
 
   outputs =
-    { self, nixpkgs, sops-nix, home-manager, nix-vscode-extensions, impermanence, disko, talhelper, lix-module, ghostty, vscode-server, krewfile, ... } @ inputs:
+    { self, nixpkgs, sops-nix, home-manager, nix-vscode-extensions, impermanence, disko, talhelper, lix-module, vscode-server, krewfile, ... } @ inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs [
         "aarch64-linux"
