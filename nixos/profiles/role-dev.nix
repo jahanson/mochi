@@ -9,10 +9,11 @@ with config;
     btop
     dnsutils
     fira-code-nerdfont
+    jo
     jq
     nix
-    yq
     unstable.ncdu
+    yq
 
     # TODO Move
     gh
@@ -29,6 +30,7 @@ with config;
     # charmbracelet tools
     gum
     vhs
+    mods
   ];
 
   programs.direnv = {

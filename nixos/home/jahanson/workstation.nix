@@ -41,7 +41,6 @@ with config;
       [
         #apps
         (unstable.flameshot.override { enableWlrSupport = true; })
-        mods
         obsidian
         parsec-bin
         solaar # open source manager for logitech unifying receivers
