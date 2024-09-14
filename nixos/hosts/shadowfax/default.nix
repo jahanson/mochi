@@ -38,9 +38,18 @@ in
     # VSCode Compatibility Settings
     nix-ld.enable = true;
   };
-  # VSCode Compatibility Settings
-  services.vscode-server = {
-    enable = true;
+
+  services = {
+    # Soft Serve
+    soft-serve = {
+      enable = true;
+      settings = import ./config/soft-serve.nix { };
+    };
+
+    # VSCode Compatibility Settings
+    vscode-server = {
+      enable = true;
+    };
   };
 
   # Home Manager
