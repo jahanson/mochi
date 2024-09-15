@@ -9,6 +9,10 @@ in
 {
   options.mySystem.services.forgejo = {
     enable = mkEnableOption "Forgejo";
+    package = mkOption {
+      type = types.package;
+      default = pkgs.forgejo;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -25,6 +29,7 @@ in
 
     services.forgejo = {
       enable = true;
+      package = cfg.package;
       # enable sql db dumps daily
       dump.enable = true;
       database.type = "postgres";

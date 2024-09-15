@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, ... }: {
   imports = [ ];
 
   networking.hostId = "cdab8473";
@@ -28,7 +28,10 @@
     system.motd.networkInterfaces = [ "enp1s0" ];
     security.acme.enable = true;
     services = {
-      forgejo.enable = true;
+      forgejo = {
+        enable = true;
+        package = pkgs.unstable.forgejo;
+      };
       nginx.enable = true;
     };
   };
