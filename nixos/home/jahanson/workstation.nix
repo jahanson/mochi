@@ -48,6 +48,7 @@ with config;
         unstable.fractal
         unstable.httpie
         unstable.jetbrains.datagrip
+        unstable.jetbrains.rust-rover
         unstable.peazip
         unstable.seabird
         unstable.talosctl
@@ -69,6 +70,8 @@ with config;
         unstable.act # run GitHub actions locally
         unstable.nodePackages_latest.prettier # code formatter
         unstable.tailspin # logfile highlighter
+        coder
+
       ];
   };
 }

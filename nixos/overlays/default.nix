@@ -14,9 +14,14 @@ let
     mods = super.callPackage ./charm-mods { };
   };
 
+  coderOverlay = self: super: {
+    coder = super.callPackage ./coder { };
+  };
+
   smartmontoolsOverlay = import ./smartmontools { };
 in
 {
+  coder = coderOverlay;
   comm-packages = inputs.nix-vscode-extensions.overlays.default;
   mods = modsOverlay;
   nur = inputs.nur.overlay;
