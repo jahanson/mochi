@@ -6,11 +6,14 @@ let
   vscodeCommunityExtensions = [
     "ahmadalli.vscode-nginx-conf"
     "astro-build.astro-vscode"
+    "bmalehorn.vscode-fish"
+    "coder.coder-remote"
     "dracula-theme.theme-dracula"
     "editorconfig.editorconfig"
     "esbenp.prettier-vscode"
     "foxundermoon.shell-format"
     "github.copilot"
+    "hashicorp.hcl"
     "jnoortheen.nix-ide"
     "mikestead.dotenv"
     "mrmlnc.vscode-json5"
@@ -26,8 +29,6 @@ let
     "task.vscode-task"
     "tyriar.sort-lines"
     "yzhang.markdown-all-in-one"
-    "bmalehorn.vscode-fish"
-    "hashicorp.hcl"
     # "github.copilot-chat"
   ];
   # Nixpkgs Extensions. These are updated whenver they get around to it.
