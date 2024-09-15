@@ -29,6 +29,9 @@ let
     "task.vscode-task"
     "tyriar.sort-lines"
     "yzhang.markdown-all-in-one"
+    "fill-labs.dependi"
+    "rust-lang.rust-analyzer"
+    "dustypomerleau.rust-syntax"
     # "github.copilot-chat"
   ];
   # Nixpkgs Extensions. These are updated whenver they get around to it.
@@ -49,8 +52,8 @@ let
       # The latest generally targets insiders build of vs code right now and it won't load on stable.
       name = "copilot-chat";
       publisher = "github";
-      version = "0.18.2";
-      sha256 = "sha256-cku6FV88jMwWoxSiMAufZy00H9Wc1XnJJDBrfWAwXPg=";
+      version = "0.20.1";
+      sha256 = "sha256-HCPUufTZdukDmvP4/90K1x6bPq281Y02RpRds0vDL3U=";
     }
     {
       name = "remote-ssh";
