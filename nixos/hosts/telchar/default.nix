@@ -13,7 +13,7 @@
   networking.hostName = "telchar";
   boot = {
     initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usbhid" "usb_storage" "sd_mod" ];
-    initrd.kernelModules = [ ];
+    initrd.kernelModules = [ "amdgpu" ];
     kernelModules = [ "kvm-amd" ];
     extraModulePackages = [ ];
   };
@@ -62,7 +62,8 @@
       };
     };
 
-    security._1password.enable = true;
     framework_wifi_swap.enable = true;
+    programs.flameshot.enable = true;
+    security._1password.enable = true;
   };
 }

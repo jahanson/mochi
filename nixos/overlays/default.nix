@@ -27,7 +27,7 @@ in
   nur = inputs.nur.overlay;
   smartmontools = smartmontoolsOverlay;
   termius = termiusOverlay;
-  vivaldi = vivaldiOverlay;
+  # vivaldi = vivaldiOverlay;
 
   # The unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'
