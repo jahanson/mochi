@@ -63,7 +63,6 @@
     };
 
     framework_wifi_swap.enable = true;
-    programs.flameshot.enable = true;
     security._1password.enable = true;
   };
 }

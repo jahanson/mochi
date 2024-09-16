@@ -1,6 +1,5 @@
 {
   imports = [
-    ./flameshot
     ./shell
   ];
 }
