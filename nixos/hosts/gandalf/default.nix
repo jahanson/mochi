@@ -124,8 +124,9 @@ in
       };
     };
     services = {
-      podman.enable = true;
+      glances.enable = true;
       libvirt-qemu.enable = true;
+      podman.enable = true;
 
       # Scrutiny
       scrutiny = {

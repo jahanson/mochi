@@ -4,6 +4,7 @@
     ./cockpit
     ./dnsmasq
     ./forgejo
+    ./glances
     ./haproxy
     ./libvirt-qemu
     ./matchbox
