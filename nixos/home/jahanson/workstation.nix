@@ -39,7 +39,7 @@ with config;
     # Install these packages for my user
     packages = with pkgs;
       [
-        #apps
+        # apps
         obsidian
         parsec-bin
         solaar # open source manager for logitech unifying receivers

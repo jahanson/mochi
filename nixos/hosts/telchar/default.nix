@@ -44,6 +44,8 @@
   virtualisation.docker.enable = true;
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  services.flatpak.enable = true;
   # System settings and services.
   mySystem = {
     purpose = "Development";

@@ -15,13 +15,14 @@ with config;
     unstable.ncdu
     yq
 
-    # TODO Move
+    # dev
     gh
     go
     nil
     nixpkgs-fmt
     shfmt
     statix
+    unstable.helix
 
     # flake imports
     inputs.nix-inspect.packages.${pkgs.system}.default
