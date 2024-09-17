@@ -91,6 +91,8 @@ in
   services = {
     smartd = {
       devices = smartdDevices;
+      # Short test every day at 2:00 AM and long test every Sunday at 4:00 AM.
+      defaults.monitored = "-a -o on -s (S/../.././02|L/../../7/04)";
     };
   };
 
