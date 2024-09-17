@@ -124,7 +124,6 @@ in
       };
     };
     services = {
-      glances.enable = true;
       libvirt-qemu.enable = true;
       podman.enable = true;
 
