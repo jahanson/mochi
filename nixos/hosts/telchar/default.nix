@@ -18,28 +18,6 @@
     extraModulePackages = [ ];
   };
 
-  fileSystems = {
-    "/" = {
-      device = "zroot/root";
-      fsType = "zfs";
-    };
-
-    "/nix" = {
-      device = "zroot/nix";
-      fsType = "zfs";
-    };
-
-    "/var" = {
-      device = "zroot/var";
-      fsType = "zfs";
-    };
-
-    "/home" = {
-      device = "zroot/home";
-      fsType = "zfs";
-    };
-  };
-
   swapDevices = [ ];
   virtualisation.docker.enable = true;
 
@@ -55,13 +33,6 @@
       motd.networkInterfaces = [ "wlp1s0" ];
       fingerprint-reader-on-laptop-lid.enable = true;
       borg.pika-backup.enable = true;
-    };
-
-    # Services config
-    services = {
-      vault = {
-        enable = false;
-      };
     };
 
     framework_wifi_swap.enable = true;
