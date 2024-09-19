@@ -18,7 +18,7 @@ let
     "mikestead.dotenv"
     "mrmlnc.vscode-json5"
     "ms-azuretools.vscode-docker"
-    "ms-python.python" # Python extensions *required* for redhat.ansible/vscode-yaml
+    # "ms-python.python" # Python extensions *required* for redhat.ansible/vscode-yaml
     "ms-python.vscode-pylance"
     "ms-vscode-remote.remote-ssh-edit"
     "pkief.material-icon-theme"
@@ -61,6 +61,13 @@ let
       version = "0.113.1";
       sha256 = "sha256-/tyyjf3fquUmjdEX7Gyt3MChzn1qMbijyej8Lskt6So=";
 
+    }
+    {
+      # Same issue as the above -- auto pulling nightly builds not compatible with vscode stable.
+      name = "python";
+      publisher = "ms-python";
+      version = "2024.14.1";
+      sha256 = "sha256-NhE3xATR4D6aAqIT/hToZ/qzMvZxjTmpTyDoIrdvuTE=";
     }
   ];
   # Extract extension strings and coerce them to a list of valid attribute paths.
