@@ -44,6 +44,9 @@ with lib.hm.gvariant; {
         clock-format = "12h";
         show-battery-percentage = true;
       };
+      "org/gnome/settings-daemon/plugins/power" = {
+        ambient-enabled = false;
+      };
     };
   };
 }
