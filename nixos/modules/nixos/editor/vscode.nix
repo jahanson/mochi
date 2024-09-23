@@ -32,6 +32,8 @@ let
     "fill-labs.dependi"
     "rust-lang.rust-analyzer"
     "dustypomerleau.rust-syntax"
+    "mattheworford.hocon-tools"
+    "pgourlain.erlang"
     # "github.copilot-chat"
   ];
   # Nixpkgs Extensions. These are updated whenver they get around to it.

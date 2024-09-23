@@ -7,4 +7,14 @@
     "editor.guides.highlightActiveBracketPair": true,
     "files.trimTrailingWhitespace": true,
     "sops.defaults.ageKeyFile": "age.key",
+    "nix.enableLanguageServer": true,
+    "nix.serverPath": "/run/current-system/sw/bin/nil",
+    "nix.formatterPath": "/run/current-system/sw/bin/nixpkgs-fmt",
+    "nix.serverSettings": {
+        "nil": {
+            "formatting": {
+              "command": ["nixpkgs-fmt"]
+            }
+          }
+    },
 }
