@@ -23,12 +23,6 @@
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-
-  # KDE
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
-  services.desktopManager.plasma6.enable = true;
-
   # Enable Flatpak support
   services.flatpak.enable = true;
 
@@ -39,6 +33,8 @@
     # Desktop Environment
     # Gnome
     # de.gnome.enable = true;
+    # KDE
+    de.kde.enable = true;
 
     # System config
     system = {

@@ -86,17 +86,10 @@
       url = "github:ajgon/krewfile?ref=feat/indexes";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # NixOS Cosmic
-    nixos-cosmic = {
-      url = "github:lilyinstarlight/nixos-cosmic";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
   };
 
   outputs =
-    { self, nixpkgs, sops-nix, home-manager, nix-vscode-extensions, impermanence, disko, talhelper, lix-module, vscode-server, krewfile, nixos-cosmic, ... } @ inputs:
+    { self, nixpkgs, sops-nix, home-manager, nix-vscode-extensions, impermanence, disko, talhelper, lix-module, vscode-server, krewfile, ... } @ inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs [
         "aarch64-linux"
@@ -173,7 +166,6 @@
             system = "x86_64-linux";
             hardwareModules = [
               inputs.nixos-hardware.nixosModules.framework-16-7040-amd
-              # nixos-cosmic.nixosModules.default
               ./nixos/profiles/hw-framework-16-7840hs.nix
               disko.nixosModules.disko
               (import ./nixos/profiles/disko-telchar.nix)
