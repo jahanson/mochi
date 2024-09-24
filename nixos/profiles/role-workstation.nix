@@ -6,7 +6,6 @@
 with config;
 {
   mySystem = {
-    de.gnome.enable = true;
     shell.fish.enable = true;
     editor.vscode.enable = true;
 

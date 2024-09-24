@@ -71,20 +71,12 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-
     # NixVirt for qemu & libvirt
     # https://github.com/AshleyYakeley/NixVirt
     nixvirt-git = {
       url = "github:AshleyYakeley/NixVirt/v0.5.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # ghostty - 👻
-    # ghostty = {
-    #   url = "git+ssh://git@github.com/ghostty-org/ghostty";
-    # };
-    # just manually installing it, private repo gives me a lot of headaches.disko
-    # nix profile install git+ssh://git@github.com/ghostty-org/ghostty
 
     vscode-server.url = "github:nix-community/nixos-vscode-server";
 
@@ -95,10 +87,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # NixOS Cosmic
+    nixos-cosmic = {
+      url = "github:lilyinstarlight/nixos-cosmic";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
-    { self, nixpkgs, sops-nix, home-manager, nix-vscode-extensions, impermanence, disko, talhelper, lix-module, vscode-server, krewfile, ... } @ inputs:
+    { self, nixpkgs, sops-nix, home-manager, nix-vscode-extensions, impermanence, disko, talhelper, lix-module, vscode-server, krewfile, nixos-cosmic, ... } @ inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs [
         "aarch64-linux"
@@ -175,6 +173,7 @@
             system = "x86_64-linux";
             hardwareModules = [
               inputs.nixos-hardware.nixosModules.framework-16-7040-amd
+              # nixos-cosmic.nixosModules.default
               ./nixos/profiles/hw-framework-16-7840hs.nix
               disko.nixosModules.disko
               (import ./nixos/profiles/disko-telchar.nix)

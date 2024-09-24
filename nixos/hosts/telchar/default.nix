@@ -28,6 +28,9 @@
   mySystem = {
     purpose = "Development";
 
+    # Desktop Environment
+    de.gnome.enable = true;
+
     # System config
     system = {
       motd.networkInterfaces = [ "wlp1s0" ];
