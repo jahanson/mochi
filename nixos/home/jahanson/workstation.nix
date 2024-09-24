@@ -54,7 +54,7 @@ with config;
         unstable.telegram-desktop
         unstable.tidal-hifi
         unstable.vault
-        unstable.vesktop
+        # unstable.vesktop # gpu issues. Using the flatpak version solves this issue.
         vlc
         yt-dlp
 
