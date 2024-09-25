@@ -2,6 +2,7 @@
 with lib;
 let
   cfg = config.mySystem.de.kde;
+  flameshotOverride = pkgs.unstable.flameshot.override { enableWlrSupport = true; };
 in
 {
   options = {
@@ -31,6 +32,7 @@ in
       systemPackages = with pkgs; [
         wl-clipboard # ls ~/Downloads | wl-copy or wl-paste > clipboard.txt
         playerctl # gsconnect play/pause command
+        flameshotOverride
       ];
     };
 
