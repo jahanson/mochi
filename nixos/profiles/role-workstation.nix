@@ -2,7 +2,12 @@
 # Role for workstations
 # Covers desktops/laptops, expected to have a GUI and do workloads
 # Will have home-manager installs
-
+let
+  vivaldiOverride = pkgs.unstable.vivaldi.override {
+    proprietaryCodecs = true;
+    enableWidevine = true;
+  };
+in
 with config;
 {
   mySystem = {
@@ -47,7 +52,7 @@ with config;
     lm_sensors
     cpufrequtils
     cpupower-gui
-    vivaldi
+    vivaldiOverride
     gparted
     termius
   ];
