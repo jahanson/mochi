@@ -26,6 +26,9 @@
   # Enable Flatpak support
   services.flatpak.enable = true;
 
+  # KDE Wallet PAM integration for unlocking the default wallet on login
+  security.pam.services."jahanson".kwallet.enable = true;
+
   # System settings and services.
   mySystem = {
     purpose = "Development";
@@ -35,6 +38,7 @@
     # de.gnome.enable = true;
     # KDE
     de.kde.enable = true;
+
 
     # System config
     system = {
