@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  imports = [ ];
+  imports = [ ./resources/prune-backup.nix ];
 
   networking.hostId = "cdab8473";
   networking.hostName = "varda"; # Define your hostname.
@@ -21,6 +21,7 @@
   };
 
   swapDevices = [ ];
+
 
   # System settings and services.
   mySystem = {
