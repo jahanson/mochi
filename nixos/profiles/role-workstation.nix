@@ -3,7 +3,7 @@
 # Covers desktops/laptops, expected to have a GUI and do workloads
 # Will have home-manager installs
 let
-  vivaldiOverride = pkgs.unstable.vivaldi.override {
+  vivaldiOverride = pkgs.vivaldi.override {
     proprietaryCodecs = true;
     enableWidevine = true;
   };
