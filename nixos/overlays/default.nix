@@ -25,7 +25,7 @@ in
   comm-packages = inputs.nix-vscode-extensions.overlays.default;
   mods = modsOverlay;
   nur = inputs.nur.overlay;
-  smartmontools = smartmontoolsOverlay;
+  # smartmontools = smartmontoolsOverlay;
   termius = termiusOverlay;
   # vivaldi = vivaldiOverlay;
 
