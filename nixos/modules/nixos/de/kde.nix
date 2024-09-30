@@ -46,6 +46,7 @@ in
         playerctl # gsconnect play/pause command
         flameshotOverride # screenshot tool
         libsForQt5.qt5.qtbase # for vivaldi compatibility
+        kdePackages.discover # KDE software center -- mainly for flatpak updates
       ];
     };
 
