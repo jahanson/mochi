@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 # Set the backup directory
 BACKUP_DIR="/var/lib/forgejo/dump"
 

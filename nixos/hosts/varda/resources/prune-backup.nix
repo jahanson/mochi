@@ -13,7 +13,7 @@ in
   };
 
   systemd.services.cleanup-backups = {
-    script = "${cleanupScript}";
+    script = "${cleanupScript}/bin/cleanup-backups.sh";
     serviceConfig = {
       Type = "oneshot";
       User = "forgejo";
