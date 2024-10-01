@@ -76,9 +76,9 @@ in
           atuin init fish | source
 
           # Ghostty shell integration for Bash. This must be at the top of your fish!!!
-          if [ -n "${GHOSTTY_RESOURCES_DIR}" ]; then
-              builtin source "${GHOSTTY_RESOURCES_DIR}/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish"
-          fi
+          if set -q GHOSTTY_RESOURCES_DIR
+              source "$GHOSTTY_RESOURCES_DIR/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish"
+          end
         '';
       };
 
