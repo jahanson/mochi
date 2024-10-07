@@ -1,4 +1,7 @@
 { pkgs, config, inputs, ... }:
+let
+  coderMainline = pkgs.coder.override { channel = "mainline"; };
+in
 with config;
 {
   imports = [
@@ -69,8 +72,7 @@ with config;
         unstable.act # run GitHub actions locally
         unstable.nodePackages_latest.prettier # code formatter
         unstable.tailspin # logfile highlighter
-        coder
-
+        coderMainline # VSCode in the browser -- has overlay
       ];
   };
 }
