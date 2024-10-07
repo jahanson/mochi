@@ -26,6 +26,9 @@
   # Enable Flatpak support
   services.flatpak.enable = true;
 
+  # Enablet Wireshark
+  programs.wireshark.enable = true;
+
   # KDE Wallet PAM integration for unlocking the default wallet on login
   security.pam.services."jahanson".kwallet.enable = true;
 
@@ -38,7 +41,6 @@
     # de.gnome.enable = true;
     # KDE
     de.kde.enable = true;
-
 
     # System config
     system = {

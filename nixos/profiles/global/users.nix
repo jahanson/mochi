@@ -39,6 +39,7 @@ in
             "podman"
             "audio" # pulseaudio
             "libvirtd"
+            "wireshark"
           ];
 
         openssh.authorizedKeys.keys = [
