@@ -30,7 +30,7 @@
   programs.wireshark.enable = true;
 
   # KDE Wallet PAM integration for unlocking the default wallet on login
-  security.pam.services."jahanson".kwallet.enable = true;
+  security.pam.services."sddm".kwallet.enable = true;
 
   # System settings and services.
   mySystem = {
