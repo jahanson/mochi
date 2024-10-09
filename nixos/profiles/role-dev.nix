@@ -22,6 +22,7 @@ with config;
     nixpkgs-fmt
     shfmt
     statix
+    tmux
     unstable.helix
 
     # flake imports
