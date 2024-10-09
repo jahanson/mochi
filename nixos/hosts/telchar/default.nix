@@ -29,9 +29,9 @@
   ## Base config programs.
   programs = {
     # Enable Wireshark
-    wireshark = {
-      enable = true;
-    };
+    wireshark.enable = true;
+    # Enable OpenJDK
+    java.enable = true;
   };
 
   # KDE Wallet PAM integration for unlocking the default wallet on login
