@@ -28,6 +28,7 @@ in
   # smartmontools = smartmontoolsOverlay;
   termius = termiusOverlay;
   # vivaldi = vivaldiOverlay;
+  nix-minecraft = inputs.nix-minecraft.overlay;
 
   # The unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'
