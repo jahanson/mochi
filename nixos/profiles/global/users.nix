@@ -40,6 +40,7 @@ in
             "audio" # pulseaudio
             "libvirtd"
             "wireshark"
+            "minecraft"
           ];
 
         openssh.authorizedKeys.keys = [
