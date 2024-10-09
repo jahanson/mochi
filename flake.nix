@@ -66,6 +66,7 @@
     };
 
     # talhelper - A tool to help creating Talos kubernetes cluster
+    # https://github.com/budimanjojo/talhelper
     talhelper = {
       url = "github:budimanjojo/talhelper";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -84,6 +85,13 @@
     krewfile = {
       # url = "github:brumhard/krewfile";
       url = "github:ajgon/krewfile?ref=feat/indexes";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # nix-minecraft - Minecraft server management
+    # https://github.com/infinidoge/nix-minecraft
+    nix-minecraft = {
+      url = "github:Infinidoge/nix-minecraft";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
