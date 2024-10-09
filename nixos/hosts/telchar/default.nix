@@ -26,23 +26,31 @@
   # Enable Flatpak support
   services.flatpak.enable = true;
 
-  # Enablet Wireshark
-  programs.wireshark.enable = true;
+  ## Base config programs.
+  programs = {
+    # Enable Wireshark
+    wireshark = {
+      enable = true;
+    };
+  };
 
   # KDE Wallet PAM integration for unlocking the default wallet on login
   security.pam.services."sddm".kwallet.enable = true;
 
-  # System settings and services.
+  ## System settings and services.
   mySystem = {
     purpose = "Development";
 
-    # Desktop Environment
-    # Gnome
+    ## Desktop Environment
+    ## Gnome
     # de.gnome.enable = true;
-    # KDE
+    ## KDE
     de.kde.enable = true;
 
-    # System config
+    ## Games
+    games.steam.enable = true;
+
+    ## System config
     system = {
       motd.networkInterfaces = [ "wlp1s0" ];
       fingerprint-reader-on-laptop-lid.enable = true;

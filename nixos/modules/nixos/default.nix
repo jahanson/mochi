@@ -5,6 +5,7 @@ with lib;
     ./containers
     ./de
     ./editor
+    ./games
     ./hardware
     ./lib.nix
     ./programs
