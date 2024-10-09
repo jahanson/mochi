@@ -102,11 +102,15 @@ in
 
   ## Minecraft
   services.minecraft-servers = {
+    # Me cc858467-2744-4c22-8514-86568fefd03b
     enable = true;
     eula = true;
     servers.eregion = {
       enable = true;
       package = pkgs.paper-server;
+      serverProperties = {
+        motd = "§6§lEregion§r §7- §6§lMinecraft§r";
+      };
     };
   };
 
