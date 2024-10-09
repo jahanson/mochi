@@ -92,7 +92,7 @@
     # https://github.com/infinidoge/nix-minecraft
     nix-minecraft = {
       url = "github:Infinidoge/nix-minecraft";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 
