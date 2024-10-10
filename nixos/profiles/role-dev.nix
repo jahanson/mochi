@@ -23,6 +23,7 @@ with config;
     shfmt
     statix
     tmux
+    unstable.cyme
     unstable.helix
 
     # flake imports

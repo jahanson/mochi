@@ -21,6 +21,7 @@ in
           lt = "${pkgs.lsd}/bin/lsd --tree";
           lla = "${pkgs.lsd}/bin/lsd -la";
           tm = "tmux attach -t (basename $PWD) || tmux new -s (basename $PWD)";
+          lsusb = "cyme --headings --tree --hide-buses";
           x = "exit";
         };
 
