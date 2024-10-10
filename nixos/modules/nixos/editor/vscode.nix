@@ -54,8 +54,8 @@ let
       # The latest generally targets insiders build of vs code right now and it won't load on stable.
       name = "copilot-chat";
       publisher = "github";
-      version = "0.20.1";
-      sha256 = "sha256-HCPUufTZdukDmvP4/90K1x6bPq281Y02RpRds0vDL3U=";
+      version = "0.21.1";
+      sha256 = "sha256-8naCDn6esc1ZR30aX7/+F6ClFjQLPQ3k3r6jyVZ3iNg=";
     }
     {
       name = "remote-ssh";
