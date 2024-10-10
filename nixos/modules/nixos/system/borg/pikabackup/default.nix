@@ -11,7 +11,7 @@ in
   config = lib.mkIf cfg.enable {
     # Add package
     environment.systemPackages = [
-      pkgs.pika-backup
+      pkgs.unstable.pika-backup
     ];
     # Setup auto start at login.
     home-manager.users.${user} = {
