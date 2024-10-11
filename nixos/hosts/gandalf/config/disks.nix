@@ -1,7 +1,7 @@
 [
   "/dev/disk/by-id/ata-Seagate_IronWolfPro_ZA240NX10001-2ZH100_7TF002RA"
   "/dev/disk/by-id/nvme-Samsung_SSD_960_EVO_250GB_S3ESNX0K308438J"
-  "/dev/disk/by-id/scsi-350000c0f01da4b40"
+  "/dev/disk/by-id/scsi-350000c0f02f0830c"
   "/dev/disk/by-id/scsi-350000c0f01e7d190"
   "/dev/disk/by-id/scsi-350000c0f01ea443c"
   "/dev/disk/by-id/scsi-350000c0f01f8230c"
