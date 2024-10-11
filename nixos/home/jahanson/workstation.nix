@@ -46,6 +46,7 @@ with config;
         obsidian
         parsec-bin
         solaar # open source manager for logitech unifying receivers
+        talosctl # overlay override
         unstable.bruno
         unstable.fractal
         unstable.httpie
@@ -53,7 +54,6 @@ with config;
         unstable.jetbrains.rust-rover
         unstable.peazip
         unstable.seabird
-        unstable.talosctl
         unstable.telegram-desktop
         unstable.tidal-hifi
         # unstable.vesktop # gpu issues. Using the flatpak version solves this issue.
