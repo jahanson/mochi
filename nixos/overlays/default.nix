@@ -1,11 +1,9 @@
 { inputs, ... }:
 let
-  inherit (inputs.nixpkgs) lib;
   # smartmontoolsOverlay = import ./smartmontools { };
   # vivaldiOverlay = self: super: { vivaldi = super.callPackage ./vivaldi { }; };
   coderOverlay = self: super: { coder = super.callPackage ./coder { }; };
   modsOverlay = self: super: { mods = super.callPackage ./charm-mods { }; };
-  talosctlOverlay = import ./talosctl { };
   termiusOverlay = self: super: { termius = super.callPackage ./termius { }; };
 in
 {
@@ -16,15 +14,20 @@ in
   mods = modsOverlay;
   nix-minecraft = inputs.nix-minecraft.overlay;
   nur = inputs.nur.overlay;
-  talosctl = talosctlOverlay;
   termius = termiusOverlay;
 
   # The unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'
-  unstable-packages = final: _prev: {
-    unstable = import inputs.nixpkgs-unstable {
-      inherit (final) system;
-      config.allowUnfree = true;
+  unstable-packages = final: prev: {
+    unstable = import inputs.nixpkgs-unstable
+      {
+        inherit (final) system;
+        config.allowUnfree = true;
+      } // {
+      # Add talosctl to the unstable set
+      talosctl = final.unstable.callPackage ./talosctl/talosctl-full.nix {
+        inherit (final.unstable) lib buildGoModule fetchFromGitHub installShellFiles;
+      };
     };
   };
 }
