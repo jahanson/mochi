@@ -1,34 +1,23 @@
 { inputs, ... }:
 let
   inherit (inputs.nixpkgs) lib;
-
-  vivaldiOverlay = self: super: {
-    vivaldi = super.callPackage ./vivaldi { };
-  };
-
-  termiusOverlay = self: super: {
-    termius = super.callPackage ./termius { };
-  };
-
-  modsOverlay = self: super: {
-    mods = super.callPackage ./charm-mods { };
-  };
-
-  coderOverlay = self: super: {
-    coder = super.callPackage ./coder { };
-  };
-
-  smartmontoolsOverlay = import ./smartmontools { };
+  # smartmontoolsOverlay = import ./smartmontools { };
+  # vivaldiOverlay = self: super: { vivaldi = super.callPackage ./vivaldi { }; };
+  coderOverlay = self: super: { coder = super.callPackage ./coder { }; };
+  modsOverlay = self: super: { mods = super.callPackage ./charm-mods { }; };
+  talosctlOverlay = import ./talosctl { };
+  termiusOverlay = self: super: { termius = super.callPackage ./termius { }; };
 in
 {
+  # smartmontools = smartmontoolsOverlay;
+  # vivaldi = vivaldiOverlay;
   coder = coderOverlay;
   comm-packages = inputs.nix-vscode-extensions.overlays.default;
   mods = modsOverlay;
-  nur = inputs.nur.overlay;
-  # smartmontools = smartmontoolsOverlay;
-  termius = termiusOverlay;
-  # vivaldi = vivaldiOverlay;
   nix-minecraft = inputs.nix-minecraft.overlay;
+  nur = inputs.nur.overlay;
+  talosctl = talosctlOverlay;
+  termius = termiusOverlay;
 
   # The unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'
@@ -38,5 +27,4 @@ in
       config.allowUnfree = true;
     };
   };
-
 }
