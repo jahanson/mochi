@@ -18,6 +18,7 @@ with config;
     # dev
     gh
     go
+    hadolint
     nil
     nixpkgs-fmt
     shfmt

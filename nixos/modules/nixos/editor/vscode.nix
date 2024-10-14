@@ -34,6 +34,7 @@ let
     "dustypomerleau.rust-syntax"
     "mattheworford.hocon-tools"
     "pgourlain.erlang"
+    "exiasr.hadolint"
     # "github.copilot-chat"
   ];
   # Nixpkgs Extensions. These are updated whenver they get around to it.
