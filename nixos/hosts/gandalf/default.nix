@@ -78,10 +78,6 @@ in
 
   sops = {
     secrets = {
-      "lego/dnsimple/token" = {
-        mode = "0444";
-        sopsFile = ./secrets.sops.yaml;
-      };
       "borg/repository/passphrase" = {
         sopsFile = ./secrets.sops.yaml;
       };
@@ -142,15 +138,6 @@ in
       sanoid = {
         enable = true;
         inherit (sanoidConfig.outputs) templates datasets;
-      };
-
-      # Lego-Auto for SSL Certificates
-      lego-auto = {
-        enable = true;
-        dnsimpleTokenPath = "${config.sops.secrets."lego/dnsimple/token".path}";
-        domains = "gandalf.jahanson.tech";
-        email = "joe@veri.dev";
-        provider = "dnsimple";
       };
     };
   };
