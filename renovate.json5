@@ -4,6 +4,7 @@
   "nix": {
     "enabled": true
   },
+  "ignorePaths": ["**/*.sops.*", "**/.archive/**", "**/resources/**"],
   // "lockFileMaintenance": {
   //   "enabled": true,
   //   "extends": [
