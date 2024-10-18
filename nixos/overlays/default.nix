@@ -25,7 +25,7 @@ in
         config.allowUnfree = true;
       } // {
       # Add talosctl to the unstable set
-      talosctl = final.unstable.callPackage ./talosctl/talosctl-full.nix {
+      talosctl = final.unstable.callPackage ./talosctl {
         inherit (final.unstable) lib buildGoModule fetchFromGitHub installShellFiles;
       };
     };
