@@ -15,9 +15,6 @@ in
       inputs.nix-minecraft.nixosModules.minecraft-servers
     ];
 
-  # Debug
-  # boot.zfs.forceImportRoot = lib.mkForce true;
-
   boot = {
     initrd = {
       kernelModules = [ "nfs" ];
@@ -29,28 +26,30 @@ in
     kernelParams = [ "zfs.zfs_arc_max=107374182400" ]; # 100GB
   };
 
+  swapDevices = [ ];
+
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAGSFTSVPt43PBpSMSF1dGTzN2JbxztDZUml7g4+PnWe CSI-Driver@talos"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBROTzSefJGJeCNUgNLbE5l4sHHg2fHUO4sCwqvP+zAd root@Gollum"
   ];
 
-  programs = {
-    _1password.enable = true;
-    # VSCode Compatibility Settings
-    nix-ld.enable = true;
+  # Network settings
+  networking = {
+    hostName = "shadowfax";
+    hostId = "a885fabe";
+    useDHCP = false; # needed for bridge
+    networkmanager.enable = true;
+    firewall.enable = false;
+    interfaces = {
+      "enp36s0f0".useDHCP = true;
+      "enp36s0f1".useDHCP = true;
+    };
   };
 
-  services = {
-    # Soft Serve
-    soft-serve = {
-      enable = true;
-      settings = import ./config/soft-serve.nix { };
-    };
-
-    # VSCode Compatibility Settings
-    vscode-server = {
-      enable = true;
-    };
+  sops = {
+    secrets = { };
   };
 
   # Home Manager
@@ -71,47 +70,50 @@ in
     };
   };
 
-  # Network settings
-  networking = {
-    hostName = "shadowfax";
-    hostId = "a885fabe";
-    useDHCP = false; # needed for bridge
-    networkmanager.enable = true;
-    firewall.enable = false;
-    interfaces = {
-      "enp36s0f0".useDHCP = true;
-      "enp36s0f1".useDHCP = true;
-    };
-  };
+  programs = {
+    # 1Password cli
+    _1password.enable = true;
 
-  swapDevices = [ ];
-
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
-  sops = {
-    secrets = { };
+    # VSCode Compatibility Settings
+    nix-ld.enable = true;
   };
 
   services = {
+
+    # Minecraft
+    minecraft-servers = {
+      # Me cc858467-2744-4c22-8514-86568fefd03b
+      enable = true;
+      eula = true;
+      servers.eregion = {
+        enable = true;
+        package = pkgs.paper-server;
+        serverProperties = {
+          motd = "§6§lEregion§r §7- §6§lMinecraft§r";
+        };
+      };
+    };
+
+    # Smart daemon for monitoring disk health.
     smartd = {
       devices = smartdDevices;
       # Short test every day at 2:00 AM and long test every Sunday at 4:00 AM.
       defaults.monitored = "-a -o on -s (S/../.././02|L/../../7/04)";
     };
-  };
 
-  ## Minecraft
-  services.minecraft-servers = {
-    # Me cc858467-2744-4c22-8514-86568fefd03b
-    enable = true;
-    eula = true;
-    servers.eregion = {
+    # Soft Serve - SSH git server
+    soft-serve = {
       enable = true;
-      package = pkgs.paper-server;
-      serverProperties = {
-        motd = "§6§lEregion§r §7- §6§lMinecraft§r";
-      };
+      settings = import ./config/soft-serve.nix { };
     };
+
+    # VSCode Compatibility Settings
+    vscode-server = {
+      enable = true;
+    };
+
+    # ZFS Exporter
+    prometheus.exporters.zfs.enable = true;
   };
 
   # System settings and services.
