@@ -28,10 +28,29 @@ in
     kernelParams = [ "iommu=pt" "intel_iommu=on" "zfs.zfs_arc_max=107374182400" ]; # 100GB
   };
 
+  swapDevices = [ ];
+
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAGSFTSVPt43PBpSMSF1dGTzN2JbxztDZUml7g4+PnWe CSI-Driver@talos"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBROTzSefJGJeCNUgNLbE5l4sHHg2fHUO4sCwqvP+zAd root@Gollum"
   ];
+
+  # Network settings
+  networking = {
+    hostName = "gandalf";
+    hostId = "e2fc95cd";
+    useDHCP = false; # needed for bridge
+    networkmanager.enable = true;
+    # TODO: Add ports specifically.
+    firewall.enable = false;
+    nftables.enable = false;
+    interfaces = {
+      "enp130s0f0".useDHCP = true;
+      "enp130s0f1".useDHCP = true;
+    };
+  };
+
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # VSCode Compatibility Settings
   programs.nix-ld.enable = true;
@@ -57,24 +76,6 @@ in
     };
   };
 
-  # Network settings
-  networking = {
-    hostName = "gandalf";
-    hostId = "e2fc95cd";
-    useDHCP = false; # needed for bridge
-    networkmanager.enable = true;
-    # TODO: Add ports specifically.
-    firewall.enable = false;
-    nftables.enable = false;
-    interfaces = {
-      "enp130s0f0".useDHCP = true;
-      "enp130s0f1".useDHCP = true;
-    };
-  };
-
-  swapDevices = [ ];
-
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   sops = {
     secrets = {
@@ -85,11 +86,14 @@ in
   };
 
   services = {
+    # Smart daemon for monitoring disk health.
     smartd = {
       devices = smartdDevices;
       # Short test every day at 2:00 AM and long test every Sunday at 4:00 AM.
       defaults.monitored = "-a -o on -s (S/../.././02|L/../../7/04)";
     };
+    # ZFS Exporter
+    prometheus.exporters.zfs.enable = true;
   };
 
   # System settings and services.
