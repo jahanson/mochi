@@ -1,20 +1,20 @@
 {
-    "editor.fontFamily": "FiraCode Nerd Font",
-    "editor.hover.delay": 1500,
-    "editor.bracketPairColorization.enabled": true,
-    "editor.guides.bracketPairs": true,
-    "editor.guides.bracketPairsHorizontal": true,
-    "editor.guides.highlightActiveBracketPair": true,
-    "files.trimTrailingWhitespace": true,
-    "sops.defaults.ageKeyFile": "age.key",
-    "nix.enableLanguageServer": true,
-    "nix.serverPath": "/run/current-system/sw/bin/nil",
-    "nix.formatterPath": "/run/current-system/sw/bin/nixpkgs-fmt",
-    "nix.serverSettings": {
-        "nil": {
-            "formatting": {
-              "command": ["nixpkgs-fmt"]
-            }
-          }
-    },
+  "editor.fontFamily": "FiraCode Nerd Font",
+  "editor.hover.delay": 1500,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+  "editor.guides.bracketPairsHorizontal": true,
+  "editor.guides.highlightActiveBracketPair": true,
+  "files.trimTrailingWhitespace": true,
+  "sops.defaults.ageKeyFile": "age.key",
+  "nix.enableLanguageServer": true,
+  "nix.serverPath": "/run/current-system/sw/bin/nixd",
+  "nix.formatterPath": "/run/current-system/sw/bin/nixfmt",
+  "nix.serverSettings": {
+    "nixd": {
+      "formatting": {
+        "command": ["nixfmt"]
+      }
+    }
+  }
 }
