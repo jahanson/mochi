@@ -46,7 +46,7 @@ in
     nftables.enable = false;
     interfaces = {
       "enp130s0f0".useDHCP = true;
-      "enp130s0f1".useDHCP = true;
+      "eno1".useDHCP = true;
     };
   };
 
