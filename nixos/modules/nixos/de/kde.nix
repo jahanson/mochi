@@ -43,6 +43,7 @@ in
       systemPackages = with pkgs; [
         wl-clipboard # ls ~/Downloads | wl-copy or wl-paste > clipboard.txt
         playerctl # gsconnect play/pause command
+        vorta # Borg backup tool
         flameshotOverride # screenshot tool
         libsForQt5.qt5.qtbase # for vivaldi compatibility
         kdePackages.discover # KDE software center -- mainly for flatpak updates
