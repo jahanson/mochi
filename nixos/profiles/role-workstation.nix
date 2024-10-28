@@ -55,7 +55,6 @@ with config;
     vivaldiOverride
     gparted
     termius
-    unstable.xpipe
   ];
 
   i18n = {
