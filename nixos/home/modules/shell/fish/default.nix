@@ -73,7 +73,11 @@ in
           update_path ${homeDirectory}/.local/bin
 
           set -gx EDITOR "vim"
-          set -gx VISUAL "code"
+
+          if test (hostname) = "telchar"
+            set -gx VISUAL "code"
+          end
+
           set -gx SSH_ASKPASS_REQUIRE "prefer" # This is for git to use the ssh-askpass
           set -gx ATUIN_SYNC_ADDRESS "https://sh.hsn.dev"
 
