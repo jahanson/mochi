@@ -17,10 +17,10 @@ buildGoModule rec {
     owner = "charmbracelet";
     repo = "mods";
     rev = commitHash;
-    hash = "sha256-VYe6qEDcsgr1E/Gtt+4lad2qtPeMKGINmhEk5Ed98Pw=";
+    hash = "sha256-23gtb8BOx/0c643/paRt7VFHEyMyF4Q4a5b5+a4+kNU=";
   };
 
-  vendorHash = "sha256-sLpFOoZq/xE0co5XegScUIOt8Ax/N3ROwQJIPvu8jts=";
+  vendorHash = "sha256-RV/Nr60BpCLcUL2Yy1Dd2ScwoI0BhGhTb/igCEcJPjI=";
 
   nativeBuildInputs = [
     installShellFiles
