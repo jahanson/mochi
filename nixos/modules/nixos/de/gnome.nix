@@ -1,18 +1,28 @@
-{ lib, config, pkgs, ... }:
-with lib;
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   cfg = config.mySystem.de.gnome;
 in
 {
   options = {
     mySystem.de.gnome = {
-      enable = mkEnableOption "GNOME" // { default = false; };
-      systrayicons = mkEnableOption "Enable systray icons" // { default = true; };
-      gsconnect = mkEnableOption "Enable gsconnect (KDEConnect for GNOME)" // { default = true; };
+      enable = lib.mkEnableOption "GNOME" // {
+        default = false;
+      };
+      systrayicons = lib.mkEnableOption "Enable systray icons" // {
+        default = true;
+      };
+      gsconnect = lib.mkEnableOption "Enable gsconnect (KDEConnect for GNOME)" // {
+        default = true;
+      };
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     # Ref: https://nixos.wiki/wiki/GNOME
 
     # GNOME plz
@@ -38,41 +48,44 @@ in
         };
       };
 
-      udev.packages = optionals cfg.systrayicons [ pkgs.gnome.gnome-settings-daemon ]; # support appindicator
+      udev.packages = lib.optionals cfg.systrayicons [ pkgs.gnome.gnome-settings-daemon ]; # support appindicator
     };
 
     # systyray icons
     # extra pkgs and extensions
     environment = {
-      systemPackages = with pkgs; [
-        wl-clipboard # ls ~/Downloads | wl-copy or wl-paste > clipboard.txt
-        playerctl # gsconnect play/pause command
-        pamixer # gcsconnect volume control
-        gnome.gnome-tweaks
-        gnome.dconf-editor
+      systemPackages =
+        with pkgs;
+        [
+          wl-clipboard # ls ~/Downloads | wl-copy or wl-paste > clipboard.txt
+          playerctl # gsconnect play/pause command
+          pamixer # gcsconnect volume control
+          gnome.gnome-tweaks
+          gnome.dconf-editor
 
-        # This installs the extension packages, but
-        # dont forget to enable them per-user in dconf settings -> "org/gnome/shell"
-        gnomeExtensions.vitals
-        gnomeExtensions.caffeine
-        gnomeExtensions.dash-to-dock
-      ]
-      ++ optionals cfg.systrayicons [ pkgs.gnomeExtensions.appindicator ];
+          # This installs the extension packages, but
+          # dont forget to enable them per-user in dconf settings -> "org/gnome/shell"
+          gnomeExtensions.vitals
+          gnomeExtensions.caffeine
+          gnomeExtensions.dash-to-dock
+        ]
+        ++ optionals cfg.systrayicons [ pkgs.gnomeExtensions.appindicator ];
     };
+
+    # enable pika backup
+    mySystem.borg.pika-backup.enable = true;
 
     # enable gsconnect
     # this method also opens the firewall ports required when enable = true
-    programs.kdeconnect = mkIf
-      cfg.gsconnect
-      {
-        enable = true;
-        package = pkgs.gnomeExtensions.gsconnect;
-      };
+    programs.kdeconnect = lib.mkIf cfg.gsconnect {
+      enable = true;
+      package = pkgs.gnomeExtensions.gsconnect;
+    };
 
     # GNOME connection to browsers - requires flag on browser as well
-    services.gnome.gnome-browser-connector.enable = lib.any
-      (user: user.programs.firefox.enable)
-      (lib.attrValues config.home-manager.users);
+    services.gnome.gnome-browser-connector.enable = lib.any (user: user.programs.firefox.enable) (
+      lib.attrValues config.home-manager.users
+    );
 
     # And dconf
     programs.dconf.enable = true;
@@ -99,6 +112,4 @@ in
         atomix # puzzle game
       ]);
   };
-
-
 }

@@ -54,7 +54,6 @@
     system = {
       motd.networkInterfaces = [ "wlp1s0" ];
       fingerprint-reader-on-laptop-lid.enable = true;
-      borg.pika-backup.enable = true;
     };
 
     framework_wifi_swap.enable = true;
