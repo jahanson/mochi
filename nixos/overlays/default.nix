@@ -3,7 +3,7 @@ let
   # smartmontoolsOverlay = import ./smartmontools { };
   # vivaldiOverlay = self: super: { vivaldi = super.callPackage ./vivaldi { }; };
   coderOverlay = self: super: { coder = super.callPackage ./coder { }; };
-  modsOverlay = self: super: { mods = super.callPackage ./charm-mods { }; };
+  modsOverlay = self: super: { mods = super.callPackage ./charms-mods { }; };
   termiusOverlay = self: super: { termius = super.callPackage ./termius { }; };
 in
 {

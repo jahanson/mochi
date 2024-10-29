@@ -20,6 +20,7 @@ in
         default = true;
       };
     };
+
   };
 
   config = lib.mkIf cfg.enable {
@@ -71,9 +72,6 @@ in
         ]
         ++ optionals cfg.systrayicons [ pkgs.gnomeExtensions.appindicator ];
     };
-
-    # enable pika backup
-    mySystem.borg.pika-backup.enable = true;
 
     # enable gsconnect
     # this method also opens the firewall ports required when enable = true
