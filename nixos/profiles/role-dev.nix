@@ -41,6 +41,7 @@
 
       # charmbracelet tools
       gum
+      unstable.glow
       vhs
       mods
       soft-serve

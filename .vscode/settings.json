@@ -8,12 +8,25 @@
   "files.trimTrailingWhitespace": true,
   "sops.defaults.ageKeyFile": "age.key",
   "nix.enableLanguageServer": true,
-  "nix.serverPath": "/run/current-system/sw/bin/nixd",
+  "nix.serverPath": "/run/current-system/sw/bin/nil",
   "nix.formatterPath": "/run/current-system/sw/bin/nixfmt",
   "nix.serverSettings": {
-    "nixd": {
+    "nil": {
       "formatting": {
         "command": ["nixfmt"]
+      },
+      "diagnostics": {
+        "ignored": [],
+        "excludedFiles": []
+      },
+    },
+    "nix": {
+      "binary": "/run/current-system/sw/bin/nix",
+      "maxMemoryMB": null, // disable memory limit
+      "flake": {
+        "autoEvalInputs": true,
+        "autoArchive": true,
+        "nixpkgsInputName": "nixpkgs"
       }
     }
   }
