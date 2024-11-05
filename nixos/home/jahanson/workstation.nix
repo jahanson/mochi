@@ -53,7 +53,6 @@ in
         unstable.httpie
         unstable.jetbrains.datagrip
         unstable.jetbrains.rust-rover
-        unstable.peazip
         unstable.seabird
         unstable.talosctl # overlay override
         unstable.telegram-desktop
@@ -73,7 +72,6 @@ in
         unstable.act # run GitHub actions locally
         unstable.kubebuilder # k8s controller development
         unstable.nodePackages_latest.prettier # code formatter
-        unstable.tailspin # logfile highlighter
         coderMainline # VSCode in the browser -- has overlay
       ];
     };
