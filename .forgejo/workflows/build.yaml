@@ -8,6 +8,7 @@ on:
     paths:
       - ".forgejo/workflows/build.yaml"
       - "flake.lock"
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
