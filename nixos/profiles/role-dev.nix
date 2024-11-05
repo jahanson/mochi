@@ -33,6 +33,7 @@
       statix
       tmux
       unstable.cyme
+      unstable.go-task
       unstable.helix
 
       # flake imports

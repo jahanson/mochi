@@ -49,7 +49,7 @@ in
         parsec-bin
         solaar # open source manager for logitech unifying receivers
         unstable.bruno
-        unstable.fractal
+        # unstable.fractal
         unstable.httpie
         unstable.jetbrains.datagrip
         unstable.jetbrains.rust-rover
