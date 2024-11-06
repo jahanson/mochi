@@ -35,7 +35,7 @@ with lib;
       wget
       dnsutils
       jq
-      yq
+      yq-go
       nvme-cli
       smartmontools
     ];

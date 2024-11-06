@@ -17,7 +17,7 @@
       jq
       nix
       unstable.ncdu
-      yq
+      yq-go
 
       # nix lsp/formatters
       nil
