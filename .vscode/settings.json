@@ -6,7 +6,7 @@
   "editor.guides.bracketPairsHorizontal": true,
   "editor.guides.highlightActiveBracketPair": true,
   "files.trimTrailingWhitespace": true,
-  "sops.defaults.ageKeyFile": "age.key",
+  "sops.defaults.ageKeyFile": "/home/jahanson/projects/mochi/age.key",
   "nix.enableLanguageServer": true,
   "nix.serverPath": "/run/current-system/sw/bin/nil",
   "nix.formatterPath": "/run/current-system/sw/bin/nixfmt",

@@ -1,5 +1,8 @@
-# Shell for bootstrapping flake-enabled nix and home-manager
-{ pkgs ? import <nixpkgs> {} }:
+# Need the unstable nixpkgs to get latest dev tools
+let
+  nixpkgs = fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
+  pkgs = import nixpkgs { allowUnfree = true; };
+in
 pkgs.mkShell {
   # Enable experimental features without having to specify the argument
   NIX_CONFIG = "experimental-features = nix-command flakes";
