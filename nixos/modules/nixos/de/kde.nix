@@ -13,6 +13,7 @@ in
   config = lib.mkIf cfg.enable {
     # Ref: https://wiki.nixos.org/wiki/KDE
 
+
     # KDE
     services = {
       displayManager = {
@@ -25,8 +26,13 @@ in
       };
       desktopManager.plasma6.enable = true;
     };
-    # realtime process priority
-    security.rtkit.enable = true;
+
+    security = {
+      # realtime process priority
+      rtkit.enable = true;
+      # KDE Wallet PAM integration for unlocking the default wallet on login
+      pam.services."sddm".kwallet.enable = true;
+    };
 
     # enable pipewire for sound
     services.pipewire = {

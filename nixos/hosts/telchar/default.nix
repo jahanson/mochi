@@ -45,12 +45,31 @@
     java.enable = true;
   };
 
-  # KDE Wallet PAM integration for unlocking the default wallet on login
-  security.pam.services."sddm".kwallet.enable = true;
+  # sops
+  sops.secrets = {
+    "syncthing/publicCert" = {
+      sopsFile = ./secrets.sops.yaml;
+      owner = "syncthing";
+      mode = "400";
+      restartUnits = [ "syncthing.service" ];
+    };
+    "syncthing/privateKey" = {
+      sopsFile = ./secrets.sops.yaml;
+      owner = "syncthing";
+      mode = "400";
+      restartUnits = [ "syncthing.service" ];
+    };
+  };
 
   ## System settings and services.
   mySystem = {
     purpose = "Development";
+
+    services.syncthing = {
+      enable = true;
+      publicCertPath = config.sops.secrets."syncthing/publicCert".path;
+      privateKeyPath = config.sops.secrets."syncthing/privateKey".path;
+    };
 
     ## Desktop Environment
     ## Gnome

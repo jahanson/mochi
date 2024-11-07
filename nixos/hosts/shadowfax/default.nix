@@ -116,6 +116,21 @@ in
     prometheus.exporters.zfs.enable = true;
   };
 
+  # sops
+  sops.secrets = {
+    "syncthing/publicCert" = {
+      sopsFile = ./secrets.sops.yaml;
+      owner = "syncthing";
+      mode = "400";
+      restartUnits = [ "syncthing.service" ];
+    };
+    "syncthing/privateKey" = {
+      sopsFile = ./secrets.sops.yaml;
+      owner = "syncthing";
+      mode = "400";
+      restartUnits = [ "syncthing.service" ];
+    };
+  };
   # System settings and services.
   mySystem = {
     purpose = "Production";
@@ -148,6 +163,13 @@ in
     services = {
       podman.enable = true;
       libvirt-qemu.enable = true;
+
+      # Syncthing
+      syncthing = {
+        enable = true;
+        publicCertPath = config.sops.secrets."syncthing/publicCert".path;
+        privateKeyPath = config.sops.secrets."syncthing/privateKey".path;
+      };
 
       # Scrutiny
       scrutiny = {
