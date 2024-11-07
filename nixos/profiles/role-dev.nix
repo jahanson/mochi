@@ -35,6 +35,7 @@
       unstable.cyme
       unstable.go-task
       unstable.helix
+      unstable.sops
 
       # flake imports
       inputs.nix-inspect.packages.${pkgs.system}.default
