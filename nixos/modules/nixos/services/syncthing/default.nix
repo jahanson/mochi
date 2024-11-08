@@ -17,6 +17,10 @@ in
       type = lib.types.path;
       description = "The private key for Syncthing";
     };
+    user = lib.mkOption {
+      type = lib.types.str;
+      description = "The user to run Syncthing as";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -24,13 +28,13 @@ in
     sops.secrets = {
       "username" = {
         sopsFile = ./secrets.sops.yaml;
-        owner = "syncthing";
+        owner = "jahanson";
         mode = "400";
         restartUnits = [ "syncthing.service" ];
       };
       "password" = {
         sopsFile = ./secrets.sops.yaml;
-        owner = "syncthing";
+        owner = "jahanson";
         mode = "400";
         restartUnits = [ "syncthing.service" ];
       };
@@ -39,9 +43,11 @@ in
     services = {
       syncthing = {
         enable = true;
+        user = cfg.user;
+        dataDir = "/home/${cfg.user}/";
         openDefaultPorts = true;
-        key = lib.mkIf (cfg.privateKeyPath != null) "${cfg.privateKeyPath}";
-        cert = lib.mkIf (cfg.publicCertPath != null) "${cfg.publicCertPath}";
+        key = "${cfg.privateKeyPath}";
+        cert = "${cfg.publicCertPath}";
         settings = import ./config { inherit (config) sops; };
       };
     };

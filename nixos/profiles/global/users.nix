@@ -41,7 +41,6 @@ in
             "libvirtd"
             "wireshark"
             "minecraft"
-            "syncthing"
           ];
 
         openssh.authorizedKeys.keys = [

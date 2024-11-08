@@ -1,5 +1,6 @@
 **/*.tmp.sops.yaml
 **/*.sops.tmp.yaml
+**/*sync-conflict*
 age.key
 result*
 .direnv

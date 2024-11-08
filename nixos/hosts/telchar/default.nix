@@ -49,13 +49,13 @@
   sops.secrets = {
     "syncthing/publicCert" = {
       sopsFile = ./secrets.sops.yaml;
-      owner = "syncthing";
+      owner = "jahanson";
       mode = "400";
       restartUnits = [ "syncthing.service" ];
     };
     "syncthing/privateKey" = {
       sopsFile = ./secrets.sops.yaml;
-      owner = "syncthing";
+      owner = "jahanson";
       mode = "400";
       restartUnits = [ "syncthing.service" ];
     };
@@ -67,6 +67,7 @@
 
     services.syncthing = {
       enable = true;
+      user = "jahanson";
       publicCertPath = config.sops.secrets."syncthing/publicCert".path;
       privateKeyPath = config.sops.secrets."syncthing/privateKey".path;
     };
