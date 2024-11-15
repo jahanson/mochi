@@ -28,6 +28,7 @@ in
       talosctl = final.unstable.callPackage ./talosctl {
         inherit (final.unstable) lib buildGoModule fetchFromGitHub installShellFiles;
       };
+      xpipe = final.unstable.callPackage ./xpipe/ptb.nix {};
     };
   };
 }
