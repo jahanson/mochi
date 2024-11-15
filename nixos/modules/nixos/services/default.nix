@@ -1,18 +1,14 @@
 {
   imports = [
     ./bind
-    ./cockpit
     ./dnsmasq
     ./forgejo
-    ./glances
     ./haproxy
     ./libvirt-qemu
     ./matchbox
     ./nginx
     ./onepassword-connect
     ./podman
-    ./postgresql
-    ./radicale
     ./reboot-required-check.nix
     ./restic
     ./sanoid

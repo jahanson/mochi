@@ -6,7 +6,6 @@ with lib;
     mySystem = {
       services.rebootRequiredCheck.enable = true;
       security.wheelNeedsSudoPassword = false;
-      services.cockpit.enable = true;
       system.motd.enable = true;
     };
 

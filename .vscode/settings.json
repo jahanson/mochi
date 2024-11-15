@@ -8,8 +8,8 @@
   "files.trimTrailingWhitespace": true,
   "sops.defaults.ageKeyFile": "/home/jahanson/projects/mochi/age.key",
   "nix.enableLanguageServer": true,
-  "nix.serverPath": "/run/current-system/sw/bin/nil",
-  "nix.formatterPath": "/run/current-system/sw/bin/nixfmt",
+  "nix.serverPath": "/home/jahanson/.nix-profile/bin/nil",
+  "nix.formatterPath": "/home/jahanson/.nix-profile/bin/nixfmt",
   "nix.serverSettings": {
     "nil": {
       "formatting": {
@@ -21,7 +21,7 @@
       },
     },
     "nix": {
-      "binary": "/run/current-system/sw/bin/nix",
+      "binary": "/nix/var/nix/profiles/default/bin/nix",
       "maxMemoryMB": null, // disable memory limit
       "flake": {
         "autoEvalInputs": true,

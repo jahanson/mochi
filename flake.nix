@@ -167,25 +167,6 @@
             };
         in
         {
-          "telchar" = mkNixosConfig {
-            # Framework 16 Ryzen 7 7840HS - Radeon 780M Graphics
-            # Nix dev laptop
-            hostname = "telchar";
-            system = "x86_64-linux";
-            hardwareModules = [
-              inputs.nixos-hardware.nixosModules.framework-16-7040-amd
-              ./nixos/profiles/hw-framework-16-7840hs.nix
-              disko.nixosModules.disko
-              (import ./nixos/profiles/disko-telchar.nix)
-              lix-module.nixosModules.default
-            ];
-            profileModules = [
-              ./nixos/profiles/role-dev.nix
-              ./nixos/profiles/role-workstation.nix
-              { home-manager.users.jahanson = ./nixos/home/jahanson/workstation.nix; }
-            ];
-          };
-
           "varda" = mkNixosConfig {
             # Arm64 cax21 @ Hetzner
             # forgejo server

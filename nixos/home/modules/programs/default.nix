@@ -1,7 +1,6 @@
 { ... }: {
   imports = [
     ./browsers
-    ./de
     ./thunderbird
   ];
 }
