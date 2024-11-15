@@ -23,8 +23,6 @@ jobs:
         include:
           - system: varda
             os: native-aarch64
-          - system: telchar
-            os: native-x86_64
           - system: gandalf
             os: native-x86_64
           - system: telperion
