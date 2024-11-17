@@ -20,14 +20,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - system: varda
-            os: native-x86_64
           - system: gandalf
             os: native-x86_64
           - system: telperion
             os: native-x86_64
           - system: shadowfax
             os: native-x86_64
+          # - system: varda
+          #   os: native-x86_64
     runs-on: ${{ matrix.os }}
     env:
       PATH: ${{ format('{0}:{1}', '/run/current-system/sw/bin', env.PATH) }}
