@@ -21,7 +21,7 @@ jobs:
       matrix:
         include:
           - system: varda
-            os: native-aarch64
+            os: native-x86_64
           - system: gandalf
             os: native-x86_64
           - system: telperion
