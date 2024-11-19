@@ -7,7 +7,7 @@ with lib;
 let
   app = "plex";
   # renovate: depName=ghcr.io/onedr0p/plex datasource=docker versioning=loose
-  version = "1.40.1.8227-c0dd5a73e@sha256:a60bc6352543b4453b117a8f2b89549e458f3ed8960206d2f3501756b6beb519";
+  version = "1.41.2.9200-c6bbc1b53";
   image = "ghcr.io/onedr0p/plex:${version}";
   user = "kah"; # string
   group = "kah"; # string
