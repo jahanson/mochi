@@ -9,12 +9,12 @@ in
     apiVersion = lib.mkOption {
       type = lib.types.str;
       # renovate: depName=docker.io/1password/connect-api datasource=docker
-      default = "1.7.3@sha256:0601c7614e102eada268dbda6ba4b5886ce77713be2c332ec6a2fd0f028484ba";
+      default = "1.7.3";
     };
     syncVersion = lib.mkOption {
       type = lib.types.str;
       # renovate: depName=docker.io/1password/connect-sync datasource=docker
-      default = "1.7.3@sha256:2f17621c7eb27bbcb1f86bbc5e5a5198bf54ac3b9c2ffac38064d03c932b07d5";
+      default = "1.7.3";
     };
     credentialsFile = lib.mkOption {
       type = lib.types.path;
