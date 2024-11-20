@@ -34,7 +34,7 @@ in
       image = "${image}";
       user = "568:568";
       volumes = [
-        "/nahar/containers/volumes/${app}:/config/Library/Application Support/Plex Media Server:rw"
+        "/nahar/containers/volumes/plex:/config/Library/Application Support/Plex Media Server:rw"
         "/moria/media:/media:rw"
         "tmpfs:/config/Library/Application Support/Plex Media Server/Logs:rw"
         "tmpfs:/tmp:rw"
