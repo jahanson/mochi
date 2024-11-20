@@ -12,11 +12,11 @@ let
   user = "kah"; # string
   group = "kah"; # string
   port = 32400; # int
-  cfg = config.mySystem.services.${app};
+  cfg = config.mySystem.containers.${app};
 in
 {
   # Options
-  options.mySystem.services.${app} = {
+  options.mySystem.containers.${app} = {
     enable = mkEnableOption "${app}";
     # TODO add to homepage
     # addToHomepage = mkEnableOption "Add ${app} to homepage" // {
@@ -34,16 +34,17 @@ in
       image = "${image}";
       user = "568:568";
       volumes = [
-        "/nahar/containers/volumes/${app}:/config:rw"
+        "/nahar/containers/volumes/${app}:/config/Library/Application Support/Plex Media Server:rw"
         "/moria/media:/media:rw"
-        # "/eru/backup/apps/plex:/config:rw"
+        "tmpfs:/config/Library/Application Support/Plex Media Server/Logs:rw"
+        "tmpfs:/tmp:rw"
       ];
       environment = {
         TZ = "America/Chicago";
-        PLEX_ADVERTISE_URL = "https://${app}.hsn.dev";
-        PLEX_NO_AUTH_NETWORKS = "10.1.1.0/24";
+        # PLEX_ADVERTISE_URL = "https://${app}.hsn.dev";
+        PLEX_NO_AUTH_NETWORKS = "10.1.1.0/24,10.1.2.0/24";
       };
-      ports = [ "${port}:${port}" ]; # expose port
+      ports = [ "${toString port}:${toString port}" ]; # expose port
     };
 
     # Firewall

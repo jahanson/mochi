@@ -134,6 +134,15 @@ in
   # System settings and services.
   mySystem = {
     purpose = "Production";
+
+    # Containers
+    containers = {
+      plex = {
+        enable = true;
+      };
+    };
+
+    # System
     system = {
       motd.networkInterfaces = [ "enp36s0f0" ];
       # Incus
@@ -160,6 +169,7 @@ in
       };
     };
 
+    # Services
     services = {
       podman.enable = true;
       libvirt-qemu.enable = true;
