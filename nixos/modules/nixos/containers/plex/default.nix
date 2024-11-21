@@ -31,17 +31,24 @@ in
     virtualisation.oci-containers.containers.${app} = {
       image = "${image}";
       user = "568:568";
+
       volumes = [
         "/nahar/containers/volumes/plex:/config/Library/Application Support/Plex Media Server:rw"
         "/moria/media:/media:rw"
         "tmpfs:/config/Library/Application Support/Plex Media Server/Logs:rw"
         "tmpfs:/tmp:rw"
       ];
+
+      extraOptions = [
+        "--runtime=nvidia"
+      ];
+
       environment = {
         TZ = "America/Chicago";
         # PLEX_ADVERTISE_URL = "https://${app}.hsn.dev";
         PLEX_NO_AUTH_NETWORKS = "10.1.1.0/24,10.1.2.0/24";
       };
+
       ports = [ "${toString port}:${toString port}" ]; # expose port
     };
 
