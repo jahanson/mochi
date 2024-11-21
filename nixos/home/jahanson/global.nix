@@ -94,6 +94,10 @@ with config;
         # nix tools
         nvd
 
+        # backup tools
+        unstable.rclone
+        unstable.restic
+
       ];
     };
   };

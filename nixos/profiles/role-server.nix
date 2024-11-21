@@ -31,7 +31,6 @@ with lib;
       nixos.enable = mkDefault false;
     };
 
-    sound.enable = false;
     hardware.pulseaudio.enable = false;
 
     services.udisks2.enable = mkDefault false;

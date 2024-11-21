@@ -5,11 +5,11 @@
 }:
 with lib;
 let
-  app = "plex";
-  # renovate: depName=ghcr.io/onedr0p/plex datasource=docker versioning=loose
-  version = "1.41.2.9200-c6bbc1b53";
-  image = "ghcr.io/onedr0p/plex:${version}";
-  port = 32400; # int
+  app = "scrypted";
+  # renovate: depName=ghcr.io/koush/scrypted datasource=docker versioning=docker
+  version = "v0.123.30-jammy-nvidia";
+  image = "ghcr.io/koush/scrypted:${version}";
+  port = 11080; # int
   cfg = config.mySystem.containers.${app};
 in
 {
@@ -30,18 +30,26 @@ in
     # Container
     virtualisation.oci-containers.containers.${app} = {
       image = "${image}";
-      user = "568:568";
+
       volumes = [
-        "/nahar/containers/volumes/plex:/config/Library/Application Support/Plex Media Server:rw"
-        "/moria/media:/media:rw"
-        "tmpfs:/config/Library/Application Support/Plex Media Server/Logs:rw"
+        "/nahar/containers/volumes/scrypted:/server/volume:rw"
+        # "/nahar/scrypted:/recordings:rw"
+        "tmpfs:/.cache:rw"
+        "tmpfs:/.npm:rw"
         "tmpfs:/tmp:rw"
       ];
+
+      extraOptions = [
+        # all usb devices, such as coral tpu
+        "--device=/dev/bus/usb"
+        "--network=host"
+        # "--runtime=nvidia"
+      ];
+
       environment = {
         TZ = "America/Chicago";
-        # PLEX_ADVERTISE_URL = "https://${app}.hsn.dev";
-        PLEX_NO_AUTH_NETWORKS = "10.1.1.0/24,10.1.2.0/24";
       };
+
       ports = [ "${toString port}:${toString port}" ]; # expose port
     };
 

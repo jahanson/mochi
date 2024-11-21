@@ -28,7 +28,12 @@ in
 
   swapDevices = [ ];
 
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware = {
+    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    nvidia.open = true;
+    graphics.enable = true;
+    nvidia-container-toolkit.enable = true;
+  };
 
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAGSFTSVPt43PBpSMSF1dGTzN2JbxztDZUml7g4+PnWe CSI-Driver@talos"
@@ -79,6 +84,7 @@ in
   };
 
   services = {
+    xserver.videoDrivers = [ "nvidia" ];
 
     # Minecraft
     minecraft-servers = {
@@ -137,9 +143,9 @@ in
 
     # Containers
     containers = {
-      plex = {
-        enable = true;
-      };
+      plex.enable = true;
+      scrypted.enable = true;
+      jellyfin.enable = true;
     };
 
     # System

@@ -5,11 +5,11 @@
 }:
 with lib;
 let
-  app = "plex";
-  # renovate: depName=ghcr.io/onedr0p/plex datasource=docker versioning=loose
-  version = "1.41.2.9200-c6bbc1b53";
-  image = "ghcr.io/onedr0p/plex:${version}";
-  port = 32400; # int
+  app = "jellyfin";
+  # renovate: depName=ghcr.io/jellyfin/jellyfin datasource=docker
+  version = "10.10.2";
+  image = "ghcr.io/jellyfin/jellyfin:${version}";
+  port = 8096; # int
   cfg = config.mySystem.containers.${app};
 in
 {
@@ -31,18 +31,27 @@ in
     virtualisation.oci-containers.containers.${app} = {
       image = "${image}";
       user = "568:568";
+
       volumes = [
-        "/nahar/containers/volumes/plex:/config/Library/Application Support/Plex Media Server:rw"
+        "/nahar/containers/volumes/jellyfin:/config:rw"
         "/moria/media:/media:rw"
-        "tmpfs:/config/Library/Application Support/Plex Media Server/Logs:rw"
+        "tmpfs:/cache:rw"
+        "tmpfs:/transcode:rw"
         "tmpfs:/tmp:rw"
       ];
+
       environment = {
         TZ = "America/Chicago";
-        # PLEX_ADVERTISE_URL = "https://${app}.hsn.dev";
-        PLEX_NO_AUTH_NETWORKS = "10.1.1.0/24,10.1.2.0/24";
+        DOTNET_SYSTEM_IO_DISABLEFILELOCKING = "true";
+        JELLYFIN_FFmpeg__probesize = "50000000";
+        JELLYFIN_FFmpeg__analyzeduration = "50000000";
       };
+
       ports = [ "${toString port}:${toString port}" ]; # expose port
+
+      extraOptions = [
+        # "--runtime=nvidia"
+      ];
     };
 
     # Firewall
