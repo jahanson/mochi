@@ -43,7 +43,7 @@ in
         # all usb devices, such as coral tpu
         "--device=/dev/bus/usb"
         "--network=host"
-        "--runtime=nvidia"
+        "--device nvidia.com/gpu=all"
       ];
 
       environment = {

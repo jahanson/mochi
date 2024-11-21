@@ -50,7 +50,7 @@ in
       ports = [ "${toString port}:${toString port}" ]; # expose port
 
       extraOptions = [
-        # "--runtime=nvidia"
+        "--device nvidia.com/gpu=all"
       ];
     };
 
