@@ -3,7 +3,7 @@
 
   inputs = {
     # Nixpkgs and unstable
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Lix - Substitution of the Nix package manager, focused on correctness, usability, and growth – and committed to doing right by its community.
@@ -33,7 +33,7 @@
     # home-manager - Manage user configuration with nix
     # https://github.com/nix-community/home-manager
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
