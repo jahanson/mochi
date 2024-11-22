@@ -40,7 +40,7 @@ in
       ];
 
       extraOptions = [
-        "--device nvidia.com/gpu=all"
+        # "--device nvidia.com/gpu=all"
       ];
 
       environment = {
