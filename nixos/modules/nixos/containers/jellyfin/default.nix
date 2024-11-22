@@ -50,7 +50,7 @@ in
       ports = [ "${toString port}:${toString port}" ]; # expose port
 
       extraOptions = [
-        "--device nvidia.com/gpu=all"
+        # "--device nvidia.com/gpu=all"
       ];
     };
 
