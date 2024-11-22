@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 with lib;
@@ -9,7 +10,6 @@ let
   # renovate: depName=ghcr.io/koush/scrypted datasource=docker versioning=docker
   version = "v0.123.30-jammy-nvidia";
   image = "ghcr.io/koush/scrypted:${version}";
-  port = 11080; # int
   cfg = config.mySystem.containers.${app};
 in
 {
@@ -27,36 +27,57 @@ in
 
   # Implementation
   config = mkIf cfg.enable {
-    # Container
-    virtualisation.oci-containers.containers.${app} = {
-      image = "${image}";
+    # Systemd service for container
+    systemd.services.${app} = {
+      description = "Scrypted Home Security";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network.target" ];
 
-      volumes = [
-        "/nahar/containers/volumes/scrypted:/server/volume:rw"
-        # "/nahar/scrypted:/recordings:rw"
-        "tmpfs:/.cache:rw"
-        "tmpfs:/.npm:rw"
-        "tmpfs:/tmp:rw"
-      ];
+      serviceConfig = {
+        ExecStartPre = "${pkgs.writeShellScript "scrypted-start-pre" ''
+          set -o errexit
+          set -o nounset
+          set -o pipefail
 
-      extraOptions = [
-        # all usb devices, such as coral tpu
-        "--device=/dev/bus/usb"
-        "--network=host"
-        "--device nvidia.com/gpu=all"
-      ];
-
-      environment = {
-        TZ = "America/Chicago";
+          podman rm -f ${app} || true
+          rm -f /run/${app}.ctr-id
+        ''}";
+        ExecStart = ''
+          ${pkgs.podman}/bin/podman run \
+            --rm \
+            --name=${app} \
+            --device=/dev/bus/usb \
+            --device='nvidia.com/gpu=all' \
+            --log-driver=journald \
+            --cidfile=/run/${app}.ctr-id \
+            --cgroups=no-conmon \
+            --sdnotify=conmon \
+            --volume="/nahar/containers/volumes/scrypted:/server/volume:rw" \
+            --volume="tmpfs:/.cache:rw" \
+            --volume="tmpfs:/.npm:rw" \
+            --volume="tmpfs:/tmp:rw" \
+            --env=TZ=America/Chicago \
+            --network=host \
+            ${image}
+        '';
+        ExecStop = "${pkgs.podman}/bin/podman stop --ignore --cidfile=/run/${app}.ctr-id";
+        ExecStopPost = "${pkgs.podman}/bin/podman rm --force --ignore --cidfile=/run/${app}.ctr-id";
+        Type = "simple";
+        Restart = "always";
       };
-
-      ports = [ "${toString port}:${toString port}" ]; # expose port
     };
 
     # Firewall
     networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [ port ];
-      allowedUDPPorts = [ port ];
+      allowedTCPPorts = [
+        11080 # Main Scrypted interface
+        10443 # HTTPS interface
+        8554 # RTSP server
+      ];
+      allowedUDPPorts = [
+        10443 # HTTPS interface
+        8554 # RTSP server
+      ];
     };
 
     # TODO add nginx proxy

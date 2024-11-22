@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 with lib;
@@ -9,7 +10,6 @@ let
   # renovate: depName=ghcr.io/jellyfin/jellyfin datasource=docker
   version = "10.10.2";
   image = "ghcr.io/jellyfin/jellyfin:${version}";
-  port = 8096; # int
   cfg = config.mySystem.containers.${app};
 in
 {
@@ -27,37 +27,64 @@ in
 
   # Implementation
   config = mkIf cfg.enable {
-    # Container
-    virtualisation.oci-containers.containers.${app} = {
-      image = "${image}";
-      user = "568:568";
+    # Systemd service for container
+    systemd.services.${app} = {
+      description = "Jellyfin Media Server";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network.target" ];
 
-      volumes = [
-        "/nahar/containers/volumes/jellyfin:/config:rw"
-        "/moria/media:/media:rw"
-        "tmpfs:/cache:rw"
-        "tmpfs:/transcode:rw"
-        "tmpfs:/tmp:rw"
-      ];
+      serviceConfig = {
+        ExecStartPre = "${pkgs.writeShellScript "jellyfin-start-pre" ''
+          set -o errexit
+          set -o nounset
+          set -o pipefail
 
-      environment = {
-        TZ = "America/Chicago";
-        DOTNET_SYSTEM_IO_DISABLEFILELOCKING = "true";
-        JELLYFIN_FFmpeg__probesize = "50000000";
-        JELLYFIN_FFmpeg__analyzeduration = "50000000";
+          podman rm -f ${app} || true
+          rm -f /run/${app}.ctr-id
+        ''}";
+        ExecStart = ''
+          ${pkgs.podman}/bin/podman run \
+            --rm \
+            --name=${app} \
+            --user=568:568 \
+            --device='nvidia.com/gpu=all' \
+            --log-driver=journald \
+            --cidfile=/run/${app}.ctr-id \
+            --cgroups=no-conmon \
+            --sdnotify=conmon \
+            --volume="/nahar/containers/volumes/jellyfin:/config:rw" \
+            --volume="/moria/media:/media:rw" \
+            --volume="tmpfs:/cache:rw" \
+            --volume="tmpfs:/transcode:rw" \
+            --volume="tmpfs:/tmp:rw" \
+            --env=TZ=America/Chicago \
+            --env=DOTNET_SYSTEM_IO_DISABLEFILELOCKING=true \
+            --env=JELLYFIN_FFmpeg__probesize=50000000 \
+            --env=JELLYFIN_FFmpeg__analyzeduration=50000000 \
+            --env=JELLYFIN_PublishedServerUrl=http://10.1.1.61:8096 \
+            -p 8096:8096 \
+            -p 8920:8920 \
+            -p 1900:1900/udp \
+            -p 7359:7359/udp \
+            ${image}
+        '';
+        ExecStop = "${pkgs.podman}/bin/podman stop --ignore --cidfile=/run/${app}.ctr-id";
+        ExecStopPost = "${pkgs.podman}/bin/podman rm --force --ignore --cidfile=/run/${app}.ctr-id";
+        Type = "simple";
+        Restart = "always";
       };
-
-      ports = [ "${toString port}:${toString port}" ]; # expose port
-
-      extraOptions = [
-        # "--device nvidia.com/gpu=all"
-      ];
     };
 
     # Firewall
     networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [ port ];
-      allowedUDPPorts = [ port ];
+      allowedTCPPorts = [
+        8096    # HTTP web interface
+        8920    # HTTPS web interface
+      ];
+      allowedUDPPorts = [
+        1900    # DLNA discovery
+        7359    # Jellyfin auto-discovery
+      ];
     };
 
     # TODO add nginx proxy
