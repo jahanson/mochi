@@ -8,7 +8,7 @@ with lib;
 let
   app = "jellyfin";
   # renovate: depName=ghcr.io/jellyfin/jellyfin datasource=docker
-  version = "10.10.2";
+  version = "10.10.3";
   image = "ghcr.io/jellyfin/jellyfin:${version}";
   cfg = config.mySystem.containers.${app};
 in
