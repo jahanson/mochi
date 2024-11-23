@@ -9,7 +9,6 @@ let
   # renovate: depName=ghcr.io/onedr0p/plex datasource=docker versioning=loose
   version = "1.41.2.9200-c6bbc1b53";
   image = "ghcr.io/onedr0p/plex:${version}";
-  port = 32400; # int
   cfg = config.mySystem.containers.${app};
 in
 {
@@ -27,35 +26,52 @@ in
 
   # Implementation
   config = mkIf cfg.enable {
-    # Container
-    virtualisation.oci-containers.containers.${app} = {
-      image = "${image}";
-      user = "568:568";
+    # Systemd service for container
+    systemd.services.${app} = {
+      description = "Plex Media Server";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network.target" ];
 
-      volumes = [
-        "/nahar/containers/volumes/plex:/config/Library/Application Support/Plex Media Server:rw"
-        "/moria/media:/media:rw"
-        "tmpfs:/config/Library/Application Support/Plex Media Server/Logs:rw"
-        "tmpfs:/tmp:rw"
-      ];
+      serviceConfig = {
+        ExecStartPre = ''
+          set -o errexit
+          set -o nounset
+          set -o pipefail
 
-      extraOptions = [
-        # "--device nvidia.com/gpu=all"
-      ];
-
-      environment = {
-        TZ = "America/Chicago";
-        PLEX_ADVERTISE_URL = "https://10.1.1.61:32400";
-        PLEX_NO_AUTH_NETWORKS = "10.1.1.0/24";
+          podman rm -f ${app} || true
+          rm -f /run/${app}.ctr-id
+        '';
+        ExecStart = ''
+          ${pkgs.podman}/bin/podman run \
+            --rm \
+            --name=${app} \
+            --device='nvidia.com/gpu=all' \
+            --log-driver=journald \
+            --cidfile=/run/${app}.ctr-id \
+            --cgroups=no-conmon \
+            --sdnotify=conmon \
+            --user=568:568 \
+            --volume="/nahar/containers/volumes/plex:/config/Library/Application Support/Plex Media Server:rw" \
+            --volume="/moria/media:/media:rw" \
+            --volume="tmpfs:/config/Library/Application Support/Plex Media Server/Logs:rw" \
+            --volume="tmpfs:/tmp:rw" \
+            --env=TZ=America/Chicago \
+            --env=PLEX_ADVERTISE_URL=https://10.1.1.61:32400 \
+            --env=PLEX_NO_AUTH_NETWORKS=10.1.1.0/24 \
+            -p 32400:32400 \
+            ${image}
+        '';
+        ExecStop = "${pkgs.podman}/bin/podman stop --ignore --cidfile=/run/${app}.ctr-id";
+        ExecStopPost = "${pkgs.podman}/bin/podman rm --force --ignore --cidfile=/run/${app}.ctr-id";
+        Type = "simple";
+        Restart = "always";
       };
 
-      ports = [ "${toString port}:${toString port}" ]; # expose port
-    };
-
-    # Firewall
-    networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [ port ];
-      allowedUDPPorts = [ port ];
+      networking.firewall = mkIf cfg.openFirewall {
+        allowedTCPPorts = [
+          32400  # Primary Plex port
+        ];
+      };
     };
 
     # TODO add nginx proxy
