@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 with lib;
@@ -33,14 +34,14 @@ in
       after = [ "network.target" ];
 
       serviceConfig = {
-        ExecStartPre = ''
+        ExecStartPre = "${pkgs.writeShellScript "scrypted-start-pre" ''
           set -o errexit
           set -o nounset
           set -o pipefail
 
           podman rm -f ${app} || true
           rm -f /run/${app}.ctr-id
-        '';
+        ''}";
         ExecStart = ''
           ${pkgs.podman}/bin/podman run \
             --rm \
@@ -66,12 +67,12 @@ in
         Type = "simple";
         Restart = "always";
       };
+    };
 
-      networking.firewall = mkIf cfg.openFirewall {
-        allowedTCPPorts = [
-          32400  # Primary Plex port
-        ];
-      };
+    networking.firewall = mkIf cfg.openFirewall {
+      allowedTCPPorts = [
+        32400 # Primary Plex port
+      ];
     };
 
     # TODO add nginx proxy
