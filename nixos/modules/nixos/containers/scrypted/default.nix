@@ -53,6 +53,7 @@ in
             --cgroups=no-conmon \
             --sdnotify=conmon \
             --volume="/nahar/containers/volumes/scrypted:/server/volume:rw" \
+            --volume="/nahar/scrypted/:/recordings:rw" \
             --volume="tmpfs:/.cache:rw" \
             --volume="tmpfs:/.npm:rw" \
             --volume="tmpfs:/tmp:rw" \
