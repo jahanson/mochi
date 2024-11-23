@@ -39,7 +39,7 @@ in
           set -o nounset
           set -o pipefail
 
-          podman rm -f ${app} || true
+          ${pkgs.podman}/bin/podman rm -f ${app} || true
           rm -f /run/${app}.ctr-id
         ''}";
         ExecStart = ''

@@ -5,7 +5,6 @@
   config,
   lib,
   inputs,
-  pkgs,
   ...
 }:
 let
@@ -167,9 +166,10 @@ in
 
     # Containers
     containers = {
+      jellyfin.enable = true;
+      ollama.enable = true;
       plex.enable = true;
       scrypted.enable = true;
-      jellyfin.enable = true;
     };
 
     # System
