@@ -56,9 +56,12 @@ in
             --volume="/moria/media:/media:rw" \
             --volume="tmpfs:/config/Library/Application Support/Plex Media Server/Logs:rw" \
             --volume="tmpfs:/tmp:rw" \
+            --volume="tmpfs:/transcode:rw" \
             --env=TZ=America/Chicago \
             --env=PLEX_ADVERTISE_URL=https://10.1.1.61:32400 \
             --env=PLEX_NO_AUTH_NETWORKS=10.1.1.0/24 \
+            # nvidia-container-runtime mounts the nvidia libraries here.
+            --env=LD_LIBRARY_PATH=/usr/local/nvidia/lib:/usr/local/nvidia/lib64 \
             -p 32400:32400 \
             ${image}
         '';
