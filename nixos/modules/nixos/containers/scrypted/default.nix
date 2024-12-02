@@ -58,6 +58,7 @@ in
             --volume="tmpfs:/.npm:rw" \
             --volume="tmpfs:/tmp:rw" \
             --env=TZ=America/Chicago \
+            --env=LD_LIBRARY_PATH=/usr/local/nvidia/lib:/usr/local/nvidia/lib64 \
             --network=host \
             ${image}
         '';
