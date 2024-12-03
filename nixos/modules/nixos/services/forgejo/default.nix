@@ -84,10 +84,10 @@ in
           SIGNING_KEY = "default";
         };
       };
-      mailerPasswordFile = config.sops.secrets."services/forgejo/smtp/password".path;
-      # secrets = {
-      #   mailer.PASSWD = config.sops.secrets."services/forgejo/smtp/password".path;
-      # };
+
+      secrets = {
+        mailer.PASSWD = config.sops.secrets."services/forgejo/smtp/password".path;
+      };
     };
     # sops
     sops.secrets."services/forgejo/smtp/password" = {
@@ -95,9 +95,6 @@ in
       owner = serviceUser;
       mode = "400";
       restartUnits = [ "forgejo.service" ];
-    };
-    environment.persistence."${config.mySystem.system.impermanence.persistPath}" = lib.mkIf config.mySystem.system.impermanence.enable {
-      directories = [ "/var/lib/forgejo" ];
     };
   };
 }

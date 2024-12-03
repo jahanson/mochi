@@ -34,9 +34,5 @@ in
         rm -rf ${config.services.bind.directory}/*.jnl
       '';
     };
-
-    environment.persistence."${config.mySystem.system.impermanence.persistPath}" = mkIf config.mySystem.system.impermanence.enable {
-      directories = [ services.bind.directory ];
-    };
   };
 }

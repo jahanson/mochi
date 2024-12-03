@@ -42,9 +42,8 @@ in
   hardware = {
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     nvidia.open = true;
-    # TODO: Swap these once I switch to 24.11
-    # graphics.enable = true;
-    opengl.enable = true;
+    graphics.enable = true;
+    # opengl.enable = true;
     nvidia-container-toolkit.enable = true;
   };
 

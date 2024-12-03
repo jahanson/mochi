@@ -54,9 +54,5 @@ in
         ];
       };
     };
-
-    environment.persistence."${config.mySystem.system.impermanence.persistPath}" = lib.mkIf config.mySystem.system.impermanence.enable {
-      directories = [ cfg.dataDir ];
-    };
   };
 }

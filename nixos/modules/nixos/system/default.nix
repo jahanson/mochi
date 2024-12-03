@@ -2,14 +2,12 @@
   imports = [
     ./borg
     ./fingerprint-reader-on-laptop-lid
-    ./impermanence.nix
     ./incus
     ./motd
     ./nfs
     ./nix.nix
     ./openssh.nix
     ./pushover
-    ./samba
     ./security.nix
     ./systempackages.nix
     ./time.nix

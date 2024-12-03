@@ -129,6 +129,11 @@ in
     };
     # ZFS Exporter
     prometheus.exporters.zfs.enable = true;
+    samba = {
+      enable = true;
+      settings = import ./config/samba-config.nix { };
+      openFirewall = true;
+    };
   };
 
   # System settings and services.
@@ -150,12 +155,7 @@ in
       zfs.mountPoolsAtBoot = [ "eru" ];
       # NFS
       nfs.enable = true;
-      # Samba
-      samba = {
-        enable = true;
-        shares = import ./config/samba-shares.nix { };
-        extraConfig = import ./config/samba-config.nix { };
-      };
+      # Restic
       resticBackup = {
         local.enable = false;
         remote.enable = false;

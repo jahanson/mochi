@@ -64,12 +64,6 @@ in
       };
     };
 
-    environment.persistence = mkIf (cfg.local.enable || cfg.remote.enable) {
-      "${config.mySystem.system.impermanence.persistPath}" = {
-        directories = [ "/var/lib/containers" ];
-      };
-    };
-
     # useful commands:
     # view snapshots - zfs list -t snapshot
 

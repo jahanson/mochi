@@ -3,19 +3,15 @@
 
   inputs = {
     # Nixpkgs and unstable
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Lix - Substitution of the Nix package manager, focused on correctness, usability, and growth – and committed to doing right by its community.
     # https://git.lix.systems/lix-project/lix
     lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.0.tar.gz";
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1-2.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # impermanence
-    # https://github.com/nix-community/impermanence
-    impermanence.url = "github:nix-community/impermanence";
 
     # Nix User Repository: User contributed nix packages
     nur.url = "github:nix-community/NUR";
@@ -33,7 +29,7 @@
     # home-manager - Manage user configuration with nix
     # https://github.com/nix-community/home-manager
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -97,7 +93,7 @@
   };
 
   outputs =
-    { self, nixpkgs, sops-nix, home-manager, nix-vscode-extensions, impermanence, disko, talhelper, lix-module, vscode-server, krewfile, ... } @ inputs:
+    { self, nixpkgs, sops-nix, home-manager, nix-vscode-extensions, disko, talhelper, lix-module, vscode-server, krewfile, ... } @ inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs [
         "aarch64-linux"
@@ -135,7 +131,6 @@
             , baseModules ? [
                 sops-nix.nixosModules.sops
                 home-manager.nixosModules.home-manager
-                impermanence.nixosModules.impermanence
                 ./nixos/profiles/global.nix # all machines get a global profile
                 ./nixos/modules/nixos # all machines get nixos modules
                 ./nixos/hosts/${hostname}   # load this host's config folder for machine-specific config
@@ -198,6 +193,23 @@
             ];
           };
 
+          "shadowfax" = mkNixosConfig {
+            # Pro WS WRX80E-SAGE SE WIFI - AMD Ryzen Threadripper PRO 3955WX 16-Cores
+            # Workloads server
+            hostname = "shadowfax";
+            system = "x86_64-linux";
+            hardwareModules = [
+              lix-module.nixosModules.default
+              ./nixos/profiles/hw-threadripperpro.nix
+            ];
+            profileModules = [
+              vscode-server.nixosModules.default
+              ./nixos/profiles/role-dev.nix
+              ./nixos/profiles/role-server.nix
+              { home-manager.users.jahanson = ./nixos/home/jahanson/server.nix; }
+            ];
+          };
+
           "gandalf" = mkNixosConfig {
             # X9DRi-LN4+/X9DR3-LN4+ - Intel(R) Xeon(R) CPU E5-2650 v2
             # NAS
@@ -215,22 +227,6 @@
             ];
           };
 
-          "shadowfax" = mkNixosConfig {
-            # Pro WS WRX80E-SAGE SE WIFI - AMD Ryzen Threadripper PRO 3955WX 16-Cores
-            # Workloads server
-            hostname = "shadowfax";
-            system = "x86_64-linux";
-            hardwareModules = [
-              lix-module.nixosModules.default
-              ./nixos/profiles/hw-threadripperpro.nix
-            ];
-            profileModules = [
-              vscode-server.nixosModules.default
-              ./nixos/profiles/role-dev.nix
-              ./nixos/profiles/role-server.nix
-              { home-manager.users.jahanson = ./nixos/home/jahanson/server.nix; }
-            ];
-          };
         };
 
       # Convenience output that aggregates the outputs for home, nixos.
