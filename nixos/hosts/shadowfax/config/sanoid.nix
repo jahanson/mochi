@@ -12,6 +12,22 @@
         monthly = 12;
       };
     };
-    datasets = { };
+    datasets = {
+      "nahar/scrypted" = {
+        useTemplate = ["production"];
+      };
+      "nahar/containers/volumes/plex" = {
+        useTemplate = ["production"];
+      };
+      "nahar/containers/volumes/scrypted" = {
+        useTemplate = ["production"];
+      };
+      "nahar/containers/volumes/jellyfin" = {
+        useTemplate = ["production"];
+      };
+      "nahar/containers/volumes/scrutiny" = {
+        useTemplate = ["production"];
+      };
+    };
   };
 }
