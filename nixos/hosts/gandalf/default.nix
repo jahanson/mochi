@@ -64,7 +64,6 @@ in
     hostId = "e2fc95cd";
     useDHCP = false; # needed for bridge
     networkmanager.enable = true;
-    # TODO: Add ports specifically.
     firewall.enable = false;
     nftables.enable = false;
     interfaces = {
