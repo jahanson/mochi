@@ -27,6 +27,8 @@ in
       supportedFilesystems = [ "nfs" ];
     };
 
+    binfmt.emulatedSystems = [ "aarch64-linux" ]; # Enabled for arm compilation
+
     kernelModules = [
       "vfio"
       "vfio_iommu_type1"
