@@ -5,6 +5,7 @@
   config,
   lib,
   inputs,
+  pkgs,
   ...
 }:
 let
@@ -95,34 +96,19 @@ in
 
     # VSCode Compatibility Settings
     nix-ld.enable = true;
+
+    # Hyprland
+    hyprland = {
+      enable = true;
+      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+      portalPackage =
+        inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+      withUWSM = true;
+    };
   };
 
   services = {
     xserver.videoDrivers = [ "nvidia" ];
-
-    # # Minecraft
-    # minecraft-servers = {
-    #   # Me cc858467-2744-4c22-8514-86568fefd03b
-    #   enable = true;
-    #   eula = true;
-    #   servers.eregion = {
-    #     enable = true;
-    #     package = pkgs.fabricServers.fabric;
-    #     serverProperties = {
-    #       motd = "§6§lEregion§r §7- §6§lMinecraft§r";
-    #     };
-    #     symlinks = {
-    #       mods = pkgs.linkFarmFromDrvs "mods" (
-    #         builtins.attrValues {
-    #           LanAnnouncer = pkgs.fetchurl {
-    #             url = "https://cdn.modrinth.com/data/eVUWDaxc/versions/ZKZr8EfM/lanannouncer-1.0.2.jar";
-    #             sha512 = "f2833b12a2e07390c4969ce95c5c9b759e3ddff0b9610054ff4e731a287789280b2c1b801bd08efe685da0d16daebf0562f15af2c86edd481c62f47ec21699c6";
-    #           };
-    #         }
-    #       );
-    #     };
-    #   };
-    # };
 
     # Smart daemon for monitoring disk health.
     smartd = {
@@ -138,9 +124,7 @@ in
     };
 
     # VSCode Compatibility Settings
-    vscode-server = {
-      enable = true;
-    };
+    vscode-server.enable = true;
 
     # ZFS Exporter
     prometheus.exporters.zfs.enable = true;
@@ -161,6 +145,7 @@ in
       restartUnits = [ "syncthing.service" ];
     };
   };
+
   # System settings and services.
   mySystem = {
     purpose = "Production";

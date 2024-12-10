@@ -75,6 +75,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # vscode-server - NixOS module for running vscode-server
     vscode-server.url = "github:nix-community/nixos-vscode-server";
 
     # krewfile - Declarative krew plugin management
@@ -90,10 +91,30 @@
       url = "github:Infinidoge/nix-minecraft";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+
+    # Hyprland
+    hyprland.url = "github:hyprwm/Hyprland";
+    # Hyprland plugins
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
   };
 
   outputs =
-    { self, nixpkgs, sops-nix, home-manager, nix-vscode-extensions, disko, talhelper, lix-module, vscode-server, krewfile, ... } @ inputs:
+    {
+      self,
+      nixpkgs,
+      sops-nix,
+      home-manager,
+      nix-vscode-extensions,
+      disko,
+      talhelper,
+      lix-module,
+      vscode-server,
+      krewfile,
+      ...
+    }@inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs [
         "aarch64-linux"
@@ -111,7 +132,10 @@
       lib = nixpkgs.lib.extend (
         final: prev: {
           inherit inputs;
-          myLib = import ./nixos/lib { inherit inputs; lib = final; };
+          myLib = import ./nixos/lib {
+            inherit inputs;
+            lib = final;
+          };
         }
       );
 
@@ -122,18 +146,19 @@
           overlays = import ./nixos/overlays { inherit inputs; };
           # generate a base nixos configuration with the specified overlays, hardware modules, and any AerModules applied
           mkNixosConfig =
-            { hostname
-            , system ? "x86_64-linux"
-            , nixpkgs ? inputs.nixpkgs
-            , hardwareModules ? [ ]
+            {
+              hostname,
+              system ? "x86_64-linux",
+              nixpkgs ? inputs.nixpkgs,
+              hardwareModules ? [ ],
               # basemodules is the base of the entire machine building
               # here we import all the modules and setup home-manager
-            , baseModules ? [
+              baseModules ? [
                 sops-nix.nixosModules.sops
                 home-manager.nixosModules.home-manager
                 ./nixos/profiles/global.nix # all machines get a global profile
                 ./nixos/modules/nixos # all machines get nixos modules
-                ./nixos/hosts/${hostname}   # load this host's config folder for machine-specific config
+                ./nixos/hosts/${hostname} # load this host's config folder for machine-specific config
                 {
                   home-manager = {
                     useUserPackages = true;
@@ -143,8 +168,8 @@
                     };
                   };
                 }
-              ]
-            , profileModules ? [ ]
+              ],
+              profileModules ? [ ],
             }:
             nixpkgs.lib.nixosSystem {
               inherit system lib;
@@ -233,9 +258,9 @@
       # Also used in ci to build targets generally.
       top =
         let
-          nixtop = nixpkgs.lib.genAttrs
-            (builtins.attrNames inputs.self.nixosConfigurations)
-            (attr: inputs.self.nixosConfigurations.${attr}.config.system.build.toplevel);
+          nixtop = nixpkgs.lib.genAttrs (builtins.attrNames inputs.self.nixosConfigurations) (
+            attr: inputs.self.nixosConfigurations.${attr}.config.system.build.toplevel
+          );
         in
         nixtop;
     };
