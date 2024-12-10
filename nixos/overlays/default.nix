@@ -13,7 +13,7 @@ in
   comm-packages = inputs.nix-vscode-extensions.overlays.default;
   mods = modsOverlay;
   nix-minecraft = inputs.nix-minecraft.overlay;
-  nur = inputs.nur.overlay;
+  nur = inputs.nur.overlays.default;
   termius = termiusOverlay;
 
   # The unstable nixpkgs set (declared in the flake inputs) will

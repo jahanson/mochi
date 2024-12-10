@@ -10,6 +10,7 @@ in
   options.mySystem.editor.vim.enable = mkEnableOption "vim";
   config = mkIf cfg.enable {
     # Enable vim and set as default editor
+    programs.vim.enable = true;
     programs.vim.defaultEditor = true;
 
     # Visual mode off and syntax highlighting on
