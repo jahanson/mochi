@@ -1,7 +1,7 @@
 {
-  "editor.fontFamily": "FiraCode Nerd Font",
+  "editor.fontFamily": "CaskaydiaMono Nerd Font Mono",
   "files.associations": {
-    "*.json5": "jsonc",
+    "*.json5": "jsonc"
   },
   "editor.hover.delay": 1500,
   "editor.bracketPairColorization.enabled": true,
@@ -21,11 +21,11 @@
       "diagnostics": {
         "ignored": [],
         "excludedFiles": []
-      },
+      }
     },
     "nix": {
       "binary": "/run/current-system/sw/bin/nix",
-      "maxMemoryMB": null, // disable memory limit
+      "maxMemoryMB": null,
       "flake": {
         "autoEvalInputs": true,
         "autoArchive": true,
