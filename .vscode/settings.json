@@ -11,8 +11,8 @@
   "files.trimTrailingWhitespace": true,
   "sops.defaults.ageKeyFile": "/home/jahanson/projects/mochi/age.key",
   "nix.enableLanguageServer": true,
-  "nix.serverPath": "/home/jahanson/.nix-profile/bin/nil",
-  "nix.formatterPath": "/home/jahanson/.nix-profile/bin/nixfmt",
+  "nix.serverPath": "/run/current-system/sw/bin/nil",
+  "nix.formatterPath": "/run/current-system/sw/bin/nixfmt",
   "nix.serverSettings": {
     "nil": {
       "formatting": {
@@ -24,7 +24,7 @@
       },
     },
     "nix": {
-      "binary": "/nix/var/nix/profiles/default/bin/nix",
+      "binary": "/run/current-system/sw/bin/nix",
       "maxMemoryMB": null, // disable memory limit
       "flake": {
         "autoEvalInputs": true,
@@ -36,5 +36,5 @@
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "sops.binPath": "/home/jahanson/.nix-profile/bin/sops"
+  "sops.binPath": "/run/current-system/sw/bin/sops"
 }
