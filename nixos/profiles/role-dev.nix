@@ -18,6 +18,7 @@
       nix
       unstable.ncdu
       yq-go
+      hwinfo
 
       # nix lsp/formatters
       nil
@@ -29,6 +30,10 @@
       gh
       go
       hadolint
+      kubectl
+      minio-client # S3 management
+      pre-commit # Pre-commit tasks for git
+      shellcheck # shell script linting
       shfmt
       statix
       tmux
@@ -36,6 +41,7 @@
       unstable.go-task
       unstable.helix
       unstable.sops
+      unstable.talosctl # overlay override
 
       # flake imports
       inputs.nix-inspect.packages.${pkgs.system}.default
