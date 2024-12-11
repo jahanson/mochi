@@ -172,6 +172,7 @@ in
       zfs.mountPoolsAtBoot = [
         "nahar"
         "moria"
+        "eru"
       ];
 
       # NFS
