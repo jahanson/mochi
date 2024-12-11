@@ -19,6 +19,7 @@
       unstable.ncdu
       yq-go
       hwinfo
+      unstable.k9s
 
       # nix lsp/formatters
       nil
