@@ -8,12 +8,11 @@
   inputs,
   ...
 }:
-let
-  sanoidConfig = import ./config/sanoid.nix { };
-  disks = import ./config/disks.nix;
-  smartdDevices = map (device: { inherit device; }) disks;
-
-in
+# let
+  # sanoidConfig = import ./config/sanoid.nix { };
+  # disks = import ./config/disks.nix;
+  # smartdDevices = map (device: { inherit device; }) disks;
+# in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -122,17 +121,17 @@ in
   services = {
     # Smart daemon for monitoring disk health.
     smartd = {
-      devices = smartdDevices;
+      # devices = smartdDevices;
       # Short test every day at 2:00 AM and long test every Sunday at 4:00 AM.
       defaults.monitored = "-a -o on -s (S/../.././02|L/../../7/04)";
     };
     # ZFS Exporter
     prometheus.exporters.zfs.enable = true;
-    samba = {
-      enable = true;
-      settings = import ./config/samba-config.nix { };
-      openFirewall = true;
-    };
+    # samba = {
+    #   enable = true;
+    #   settings = import ./config/samba-config.nix { };
+    #   openFirewall = true;
+    # };
   };
 
   # System settings and services.
@@ -144,14 +143,14 @@ in
         "eno1"
       ];
       # Incus
-      incus = {
-        enable = true;
-        preseed = import ./config/incus-preseed.nix { };
-        webuiport = 8445;
-      };
+      # incus = {
+      #   enable = true;
+      #   preseed = import ./config/incus-preseed.nix { };
+      #   webuiport = 8445;
+      # };
       # ZFS
       zfs.enable = true;
-      zfs.mountPoolsAtBoot = [ "eru" ];
+      # zfs.mountPoolsAtBoot = [ "eru" ];
       # NFS
       nfs.enable = true;
       # Restic
@@ -174,20 +173,20 @@ in
         privateKeyPath = config.sops.secrets."syncthing/privateKey".path;
       };
 
-      # Scrutiny
-      scrutiny = {
-        enable = true;
-        devices = disks;
-        extraCapabilities = [ "SYS_RAWIO" ];
-        containerVolumeLocation = "/eru/containers/volumes/scrutiny";
-        port = 8585;
-      };
+      # # Scrutiny
+      # scrutiny = {
+      #   enable = true;
+      #   devices = disks;
+      #   extraCapabilities = [ "SYS_RAWIO" ];
+      #   containerVolumeLocation = "/eru/containers/volumes/scrutiny";
+      #   port = 8585;
+      # };
 
       # Sanoid
-      sanoid = {
-        enable = true;
-        inherit (sanoidConfig.outputs) templates datasets;
-      };
+      # sanoid = {
+      #   enable = true;
+      #   inherit (sanoidConfig.outputs) templates datasets;
+      # };
     };
   };
 }
