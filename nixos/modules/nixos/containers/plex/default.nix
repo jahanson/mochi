@@ -8,7 +8,7 @@ with lib;
 let
   app = "plex";
   # renovate: depName=ghcr.io/onedr0p/plex datasource=docker versioning=loose
-  version = "1.41.2.9200-c6bbc1b53";
+  version = "1.41.3.9292-bc7397402";
   image = "ghcr.io/onedr0p/plex:${version}";
   cfg = config.mySystem.containers.${app};
 in
