@@ -23,6 +23,7 @@ in
           tm = "tmux attach -t (basename $PWD) || tmux new -s (basename $PWD)";
           lsusb = "cyme --headings --tree --hide-buses";
           x = "exit";
+          ncdu = "ncdu --color dark";
         };
 
         shellAbbrs = {

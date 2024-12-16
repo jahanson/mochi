@@ -64,7 +64,7 @@ in
     firewall.enable = false;
     interfaces = {
       "enp36s0f0".useDHCP = true;
-      "enp36s0f1".useDHCP = true;
+      "enp36s0f1".useDHCP = false;
     };
   };
 
