@@ -1,20 +1,14 @@
 { lib, config, pkgs, ... }:
-with lib;
 {
 
   # container builder
   lib.mySystem.mkContainer = options: (
     let
-      # nix doesnt have an exhausive list of options for oci
-      # so here i try to get a robust list of security options for containers
-      # because everyone needs more tinfoild hat right?  RIGHT?
-
       containerExtraOptions = lib.optionals (lib.attrsets.attrByPath [ "caps" "privileged" ] false options) [ "--privileged" ]
         ++ lib.optionals (lib.attrsets.attrByPath [ "caps" "readOnly" ] false options) [ "--read-only" ]
-        ++ lib.optionals (lib.attrsets.attrByPath [ "caps" "tmpfs" ] false options) [ (map (folders: "--tmpfs=${folders}") tmpfsFolders) ]
+        ++ lib.optionals (lib.attrsets.attrByPath [ "caps" "tmpfs" ] false options) [ (map (folders: "--tmpfs=${folders}") lib.tmpfsFolders) ]
         ++ lib.optionals (lib.attrsets.attrByPath [ "caps" "noNewPrivileges" ] false options) [ "--security-opt=no-new-privileges" ]
         ++ lib.optionals (lib.attrsets.attrByPath [ "caps" "dropAll" ] false options) [ "--cap-drop=ALL" ];
-
     in
     {
       ${options.app} = {
