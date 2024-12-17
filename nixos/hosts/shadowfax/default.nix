@@ -110,6 +110,18 @@ in
   services = {
     xserver.videoDrivers = [ "nvidia" ];
 
+    # Prometheus exporters
+    prometheus.exporters = {
+      # Node Exporter - port 9100
+      node.enable = true;
+      # ZFS Exporter - port 9134
+      zfs.enable = true;
+    };
+
+    # Netdata
+    netdata = {
+      enable = true;
+    };
     # Smart daemon for monitoring disk health.
     smartd = {
       devices = smartdDevices;
@@ -126,8 +138,6 @@ in
     # VSCode Compatibility Settings
     vscode-server.enable = true;
 
-    # ZFS Exporter
-    prometheus.exporters.zfs.enable = true;
   };
 
   # sops
@@ -143,6 +153,12 @@ in
       owner = "jahanson";
       mode = "400";
       restartUnits = [ "syncthing.service" ];
+    };
+    "restic/password" = {
+      sopsFile = ./secrets.sops.yaml;
+      owner = "jahanson";
+      mode = "400";
+      # restartUnits = [ "restic-backup.service" ];
     };
   };
 
