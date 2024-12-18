@@ -68,10 +68,6 @@ in
     };
   };
 
-  sops = {
-    secrets = { };
-  };
-
   # Home Manager
   home-manager.users.jahanson = {
     # Git settings
@@ -122,6 +118,7 @@ in
     netdata = {
       enable = true;
     };
+
     # Smart daemon for monitoring disk health.
     smartd = {
       devices = smartdDevices;
@@ -154,7 +151,13 @@ in
       mode = "400";
       restartUnits = [ "syncthing.service" ];
     };
-    "restic/password" = {
+    "restic/plex/resticPassword" = {
+      sopsFile = ./secrets.sops.yaml;
+      owner = "jahanson";
+      mode = "400";
+      # restartUnits = [ "restic-plex.service" ];
+    };
+    "restic/plex/resticUri" = {
       sopsFile = ./secrets.sops.yaml;
       owner = "jahanson";
       mode = "400";
