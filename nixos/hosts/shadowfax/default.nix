@@ -118,6 +118,7 @@ in
     minio = {
       enable = true;
       dataDir = [ "/eru/minio" ];
+      rootCredentialsFile = config.sops.secrets."minio".path;
     };
 
     # Netdata
@@ -145,6 +146,13 @@ in
 
   # sops
   sops.secrets = {
+    "minio" = {
+      sopsFile = ./secrets.sops.yaml;
+      owner = "minio";
+      group = "minio";
+      mode = "400";
+      restartUnits = [ "minio.service" ];
+    };
     "syncthing/publicCert" = {
       sopsFile = ./secrets.sops.yaml;
       owner = "jahanson";
