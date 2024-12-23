@@ -114,6 +114,12 @@ in
       zfs.enable = true;
     };
 
+    # Minio
+    minio = {
+      enable = true;
+      dataDir = [ "/eru/minio" ];
+    };
+
     # Netdata
     netdata = {
       enable = true;
