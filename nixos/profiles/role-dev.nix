@@ -51,10 +51,11 @@
 
       # charmbracelet tools
       gum
+      mods
+      skate
+      soft-serve
       unstable.glow
       vhs
-      mods
-      soft-serve
     ];
 
     programs.direnv = {
