@@ -105,6 +105,7 @@
     {
       self,
       nixpkgs,
+      nixpkgs-unstable,
       sops-nix,
       home-manager,
       nix-vscode-extensions,
@@ -150,6 +151,7 @@
               hostname,
               system ? "x86_64-linux",
               nixpkgs ? inputs.nixpkgs,
+              disabledModules ? [ ],
               hardwareModules ? [ ],
               # basemodules is the base of the entire machine building
               # here we import all the modules and setup home-manager
@@ -167,6 +169,7 @@
                       inherit inputs hostname system;
                     };
                   };
+                  disabledModules = disabledModules;
                 }
               ],
               profileModules ? [ ],
@@ -223,12 +226,14 @@
             # Workloads server
             hostname = "shadowfax";
             system = "x86_64-linux";
+            disabledModules = [ "services/web-servers/minio.nix" ];
             hardwareModules = [
               lix-module.nixosModules.default
               ./nixos/profiles/hw-threadripperpro.nix
             ];
             profileModules = [
               vscode-server.nixosModules.default
+              "${nixpkgs-unstable}/nixos/modules/services/web-servers/minio.nix"
               ./nixos/profiles/role-dev.nix
               ./nixos/profiles/role-server.nix
               { home-manager.users.jahanson = ./nixos/home/jahanson/server.nix; }

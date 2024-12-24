@@ -141,7 +141,6 @@ in
 
     # VSCode Compatibility Settings
     vscode-server.enable = true;
-
   };
 
   # sops
