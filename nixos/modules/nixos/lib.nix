@@ -6,7 +6,7 @@
     let
       containerExtraOptions = lib.optionals (lib.attrsets.attrByPath [ "caps" "privileged" ] false options) [ "--privileged" ]
         ++ lib.optionals (lib.attrsets.attrByPath [ "caps" "readOnly" ] false options) [ "--read-only" ]
-        ++ lib.optionals (lib.attrsets.attrByPath [ "caps" "tmpfs" ] false options) [ (map (folders: "--tmpfs=${folders}") lib.tmpfsFolders) ]
+        ++ lib.optionals (lib.attrsets.attrByPath [ "caps" "tmpfs" ] false options) (map (folders: "--tmpfs=${folders}") options.caps.tmpfsFolders)
         ++ lib.optionals (lib.attrsets.attrByPath [ "caps" "noNewPrivileges" ] false options) [ "--security-opt=no-new-privileges" ]
         ++ lib.optionals (lib.attrsets.attrByPath [ "caps" "dropAll" ] false options) [ "--cap-drop=ALL" ];
     in
@@ -17,6 +17,9 @@
         environment = {
           TZ = config.time.timeZone;
         } // lib.attrsets.attrByPath [ "env" ] { } options;
+        dependsOn = lib.attrsets.attrByPath [ "dependsOn" ] [ ] options;
+        entrypoint = lib.attrsets.attrByPath [ "entrypoint" ] null options;
+        cmd = lib.attrsets.attrByPath [ "cmd" ] [ ] options;
         environmentFiles = lib.attrsets.attrByPath [ "envFiles" ] [ ] options;
         volumes = [ "/etc/localtime:/etc/localtime:ro" ]
           ++ lib.attrsets.attrByPath [ "volumes" ] [ ] options;
@@ -29,7 +32,7 @@
   # build a restic restore set for both local and remote
   lib.mySystem.mkRestic = options: (
     let
-      excludePath = if builtins.hasAttr "excludePath" options then options.excludePath else [ ];
+      excludePaths = if builtins.hasAttr "excludePaths" options then options.excludePaths else [ ];
       timerConfig = {
         OnCalendar = "02:05";
         Persistent = true;
@@ -54,7 +57,7 @@
         # Move the path to the zfs snapshot path
         paths = map (x: "${config.mySystem.system.resticBackup.mountPath}/${x}") options.paths;
         passwordFile = config.sops.secrets."services/restic/password".path;
-        exclude = excludePath;
+        exclude = excludePaths;
         repository = "${config.mySystem.system.resticBackup.local.location}/${options.appFolder}";
         # inherit (options) user;
       };
@@ -67,7 +70,7 @@
         environmentFile = config.sops.secrets."services/restic/env".path;
         passwordFile = config.sops.secrets."services/restic/password".path;
         repository = "${config.mySystem.system.resticBackup.remote.location}/${options.appFolder}";
-        exclude = excludePath;
+        exclude = excludePaths;
         # inherit (options) user;
       };
 
