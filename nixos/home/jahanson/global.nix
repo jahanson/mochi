@@ -45,7 +45,6 @@ with config;
         dbus
         direnv
         git
-        nix-index
         python3
         fzf
         ripgrep
