@@ -92,6 +92,9 @@
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
+
+    # Mise
+    mise.url = "github:jdx/mise";
   };
 
   outputs =
@@ -107,6 +110,7 @@
       lix-module,
       vscode-server,
       krewfile,
+      mise,
       ...
     }@inputs:
     let
@@ -117,7 +121,7 @@
     in
     rec {
       # Use nixpkgs-fmt for 'nix fmt'
-      formatter = forAllSystems (system: nixpkgs.legacyPackages."${system}".nixpkgs-fmt);
+      formatter = forAllSystems (system: nixpkgs.legacyPackages."${system}".nixfmt-rfc-style);
 
       # setup devshells against shell.nix
       # devShells = forAllSystems (pkgs: import ./shell.nix { inherit pkgs; });
