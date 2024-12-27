@@ -153,13 +153,6 @@
       # zfs.mountPoolsAtBoot = [ "eru" ];
       # NFS
       nfs.enable = true;
-      # Restic
-      resticBackup = {
-        local.enable = false;
-        remote.enable = false;
-        local.noWarning = true;
-        remote.noWarning = true;
-      };
     };
     services = {
       libvirt-qemu.enable = true;

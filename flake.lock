@@ -695,26 +695,6 @@
         "type": "github"
       }
     },
-    "nix-index-database": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1734234111,
-        "narHash": "sha256-icEMqBt4HtGH52PU5FHidgBrNJvOfXH6VQKNtnD1aw8=",
-        "owner": "nix-community",
-        "repo": "nix-index-database",
-        "rev": "311d6cf3ad3f56cb051ffab1f480b2909b3f754d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "nix-index-database",
-        "type": "github"
-      }
-    },
     "nix-inspect": {
       "inputs": {
         "nci": "nci",
@@ -1078,7 +1058,6 @@
         "hyprland-plugins": "hyprland-plugins",
         "krewfile": "krewfile",
         "lix-module": "lix-module",
-        "nix-index-database": "nix-index-database",
         "nix-inspect": "nix-inspect",
         "nix-minecraft": "nix-minecraft",
         "nix-vscode-extensions": "nix-vscode-extensions",

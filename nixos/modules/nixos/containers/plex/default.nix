@@ -7,19 +7,18 @@
 with lib;
 let
   app = "plex";
+  cfg = config.mySystem.containers.${app};
+  group = "kah";
+  image = "ghcr.io/onedr0p/plex:${version}";
+  user = "kah";
   # renovate: depName=ghcr.io/onedr0p/plex datasource=docker versioning=loose
   version = "1.41.3.9314-a0bfb8370";
-  image = "ghcr.io/onedr0p/plex:${version}";
-  cfg = config.mySystem.containers.${app};
+  volumeLocation = "/nahar/containers/volumes/plex";
 in
 {
   # Options
   options.mySystem.containers.${app} = {
     enable = mkEnableOption "${app}";
-    # TODO add to homepage
-    # addToHomepage = mkEnableOption "Add ${app} to homepage" // {
-    #   default = true;
-    # };
     openFirewall = mkEnableOption "Open firewall for ${app}" // {
       default = true;
     };
@@ -34,7 +33,7 @@ in
       after = [ "network.target" ];
 
       serviceConfig = {
-        ExecStartPre = "${pkgs.writeShellScript "scrypted-start-pre" ''
+        ExecStartPre = "${pkgs.writeShellScript "plex-start-pre" ''
           set -o errexit
           set -o nounset
           set -o pipefail
@@ -42,6 +41,7 @@ in
           ${pkgs.podman}/bin/podman rm -f ${app} || true
           rm -f /run/${app}.ctr-id
         ''}";
+        # TODO: mount /config instead of /config/Library/Application Support/Plex Media Server
         ExecStart = ''
           ${pkgs.podman}/bin/podman run \
             --rm \
@@ -51,8 +51,8 @@ in
             --cidfile=/run/${app}.ctr-id \
             --cgroups=no-conmon \
             --sdnotify=conmon \
-            --user=568:568 \
-            --volume="/nahar/containers/volumes/plex:/config/Library/Application Support/Plex Media Server:rw" \
+            --user="${toString config.users.users."${user}".uid}:${toString config.users.groups."${group}".gid}" \
+            --volume="${volumeLocation}:/config:rw" \
             --volume="/moria/media:/media:rw" \
             --volume="tmpfs:/config/Library/Application Support/Plex Media Server/Logs:rw" \
             --volume="tmpfs:/tmp:rw" \
@@ -76,6 +76,38 @@ in
       allowedTCPPorts = [
         32400 # Primary Plex port
       ];
+    };
+
+    sops.secrets ={
+      "restic/plex/env" = {
+        sopsFile = ./secrets.sops.yaml;
+        owner = user;
+        group = group;
+        mode = "0400";
+      };
+      "restic/plex/password" = {
+        sopsFile = ./secrets.sops.yaml;
+        owner = user;
+        group = group;
+        mode = "0400";
+      };
+      "restic/plex/template" = {
+        sopsFile = ./secrets.sops.yaml;
+        owner = user;
+        group = group;
+        mode = "0400";
+      };
+    };
+
+    # Restic backups for `plex-local` and `plex-remote`
+    services.restic.backups = config.lib.mySystem.mkRestic {
+      inherit app user;
+      environmentFile = config.sops.secrets."restic/plex/env".path;
+      excludePaths = [ "${volumeLocation}/Library/Application Support/Plex Media Server/Cache" ];
+      localResticTemplate = "/eru/restic/plex";
+      passwordFile = config.sops.secrets."restic/plex/password".path;
+      paths = [ "${volumeLocation}/Library" ];
+      remoteResticTemplateFile = config.sops.secrets."restic/plex/template".path;
     };
 
     # TODO add nginx proxy
@@ -123,13 +155,6 @@ in
     #   }
     # ];
 
-    # TODO add restic backup
-    # services.restic.backups = config.lib.mySystem.mkRestic {
-    #   inherit app user;
-    #   excludePaths = [ "Backups" ];
-    #   paths = [ appFolder ];
-    #   inherit appFolder;
-    # };
 
   };
 }

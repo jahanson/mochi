@@ -7,19 +7,18 @@
 with lib;
 let
   app = "jellyfin";
+  cfg = config.mySystem.containers.${app};
+  group = "kah";
+  image = "ghcr.io/jellyfin/jellyfin:${version}";
+  user = "kah";
   # renovate: depName=ghcr.io/jellyfin/jellyfin datasource=docker
   version = "10.10.3";
-  image = "ghcr.io/jellyfin/jellyfin:${version}";
-  cfg = config.mySystem.containers.${app};
+  volumeLocation = "/nahar/containers/volumes/jellyfin";
 in
 {
   # Options
   options.mySystem.containers.${app} = {
     enable = mkEnableOption "${app}";
-    # TODO add to homepage
-    # addToHomepage = mkEnableOption "Add ${app} to homepage" // {
-    #   default = true;
-    # };
     openFirewall = mkEnableOption "Open firewall for ${app}" // {
       default = true;
     };
@@ -46,13 +45,13 @@ in
           ${pkgs.podman}/bin/podman run \
             --rm \
             --name=${app} \
-            --user=568:568 \
+            --user="${toString config.users.users."${user}".uid}:${toString config.users.groups."${group}".gid}" \
             --device='nvidia.com/gpu=all' \
             --log-driver=journald \
             --cidfile=/run/${app}.ctr-id \
             --cgroups=no-conmon \
             --sdnotify=conmon \
-            --volume="/nahar/containers/volumes/jellyfin:/config:rw" \
+            --volume="${volumeLocation}:/config:rw" \
             --volume="/moria/media:/media:rw" \
             --volume="tmpfs:/cache:rw" \
             --volume="tmpfs:/transcode:rw" \
@@ -78,15 +77,46 @@ in
     # Firewall
     networking.firewall = mkIf cfg.openFirewall {
       allowedTCPPorts = [
-        8096    # HTTP web interface
-        8920    # HTTPS web interface
+        8096 # HTTP web interface
+        8920 # HTTPS web interface
       ];
       allowedUDPPorts = [
-        1900    # DLNA discovery
-        7359    # Jellyfin auto-discovery
+        1900 # DLNA discovery
+        7359 # Jellyfin auto-discovery
       ];
     };
 
+    sops.secrets = {
+      "restic/jellyfin/env" = {
+        sopsFile = ./secrets.sops.yaml;
+        owner = user;
+        group = group;
+        mode = "0400";
+      };
+      "restic/jellyfin/password" = {
+        sopsFile = ./secrets.sops.yaml;
+        owner = user;
+        group = group;
+        mode = "0400";
+      };
+      "restic/jellyfin/template" = {
+        sopsFile = ./secrets.sops.yaml;
+        owner = user;
+        group = group;
+        mode = "0400";
+      };
+    };
+
+    # Restic backups for `jellyfin-local` and `jellyfin-remote`
+    services.restic.backups = config.lib.mySystem.mkRestic {
+      inherit app user;
+      environmentFile = config.sops.secrets."restic/jellyfin/env".path;
+      excludePaths = [ ];
+      localResticTemplate = "/eru/restic/jellyfin";
+      passwordFile = config.sops.secrets."restic/jellyfin/password".path;
+      paths = [ volumeLocation ];
+      remoteResticTemplateFile = config.sops.secrets."restic/jellyfin/template".path;
+    };
     # TODO add nginx proxy
     # services.nginx.virtualHosts."${app}.${config.networking.domain}" = {
     #   useACMEHost = config.networking.domain;
@@ -131,14 +161,5 @@ in
     #     ];
     #   }
     # ];
-
-    # TODO add restic backup
-    # services.restic.backups = config.lib.mySystem.mkRestic {
-    #   inherit app user;
-    #   excludePaths = [ "Backups" ];
-    #   paths = [ appFolder ];
-    #   inherit appFolder;
-    # };
-
   };
 }

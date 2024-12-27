@@ -70,12 +70,6 @@
     purpose = "Production";
     system = {
       motd.networkInterfaces = [ "enp2s0" "wlp3s0" ];
-      resticBackup = {
-        local.enable = false;
-        remote.enable = false;
-        local.noWarning = true;
-        remote.noWarning = true;
-      };
     };
 
     services = {

@@ -1,5 +1,11 @@
-{ config, pkgs, lib, ... }:
-with lib; let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+with lib;
+let
   inherit (config.myHome) username homeDirectory;
   cfg = config.myHome.shell.fish;
 in
@@ -30,14 +36,22 @@ in
           nrs = "sudo nixos-rebuild switch --flake .";
           nvdiff = "nvd diff /run/current-system result";
           # rook & ceph versions.
-          rcv =
-            ''
-              kubectl \
-                -n rook-ceph \
-                get deployments \
-                -l rook_cluster=rook-ceph \
-                -o jsonpath='{range .items[*]}{.metadata.name}{"  \treq/upd/avl: "}{.spec.replicas}{"/"}{.status.updatedReplicas}{"/"}{.status.readyReplicas}{"  \trook-version="}{.metadata.labels.rook-version}{"  \tceph-version="}{.metadata.labels.ceph-version}{"\n"}{end}'
+          rcv = ''
+            kubectl \
+              -n rook-ceph \
+              get deployments \
+              -l rook_cluster=rook-ceph \
+              -o jsonpath='{range .items[*]}{.metadata.name}{"  \treq/upd/avl: "}{.spec.replicas}{"/"}{.status.updatedReplicas}{"/"}{.status.readyReplicas}{"  \trook-version="}{.metadata.labels.rook-version}{"  \tceph-version="}{.metadata.labels.ceph-version}{"\n"}{end}'
+          '';
+        };
+
+        functions = {
+          nix-which = {
+            body = ''
+              set -l cmd $argv[1]
+              nix-locate --whole-name --type x --type s "$cmd"
             '';
+          };
         };
 
         interactiveShellInit = ''

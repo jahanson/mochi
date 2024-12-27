@@ -47,13 +47,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # nix-index database
-    # https://github.com/nix-community/nix-index-database
-    nix-index-database = {
-      url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # nix-inspect - inspect nix derivations usingn a TUI interface
     # https://github.com/bluskript/nix-inspect
     nix-inspect = {
