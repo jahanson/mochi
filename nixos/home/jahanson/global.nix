@@ -54,7 +54,7 @@ with config;
         # terminal file managers
         nnn
         ranger
-        yazi
+        unstable.yazi-unwrapped
 
         # networking tools
         iperf3

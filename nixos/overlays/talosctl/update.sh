@@ -22,7 +22,7 @@ echo "Updating version in $nixFile from $currentVersion to $latestVersion"
 # Create a temporary nix expression to get the vendor hash
 tmpFile=$(mktemp)
 cat > "$tmpFile" <<EOF
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs ? import <nixpkgs> {}, lib ? pkgs.lib }:
 
 pkgs.buildGoModule rec {
   pname = "talosctl";

@@ -22,7 +22,7 @@ buildGoModule rec {
   # Configure offline build
   GOWORK = "off";
   GOPROXY = "off";
-  GO111MODULE = "on";
+  # GO111MODULE = "on";
   GOSUMDB = "off";
 
   # Use vendored dependencies
