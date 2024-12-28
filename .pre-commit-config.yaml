@@ -10,7 +10,7 @@ repos:
           - .yamllint.yaml
         id: yamllint
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
@@ -27,7 +27,7 @@ repos:
       - id: remove-tabs
         exclude: (Makefile)
   - repo: https://github.com/zricethezav/gitleaks
-    rev: v8.18.4
+    rev: v8.22.0
     hooks:
       - id: gitleaks
   - repo: https://github.com/yuvipanda/pre-commit-hook-ensure-sops

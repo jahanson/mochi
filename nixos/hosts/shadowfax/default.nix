@@ -84,6 +84,9 @@ in
     # 1Password cli
     _1password.enable = true;
 
+    # Mosh
+    mosh.enable = true;
+
     # VSCode Compatibility Settings
     nix-ld.enable = true;
 

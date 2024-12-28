@@ -45,6 +45,7 @@
       unstable.helix
       unstable.sops
       unstable.talosctl # overlay override
+      unstable.zellij
 
       # flake imports
       inputs.nix-inspect.packages.${pkgs.system}.default
