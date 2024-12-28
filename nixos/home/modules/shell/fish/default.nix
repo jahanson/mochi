@@ -96,6 +96,9 @@ in
           set -gx SSH_ASKPASS_REQUIRE "prefer" # This is for git to use the ssh-askpass
           set -gx ATUIN_SYNC_ADDRESS "https://sh.hsn.dev"
 
+          # Mise https://mise.jdx.dev
+          mise activate fish | source
+
           # One Password cli
           if test -e ~/.config/op/plugins.sh
             source ~/.config/op/plugins.sh

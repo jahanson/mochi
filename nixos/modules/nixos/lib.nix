@@ -88,10 +88,7 @@
         else
           null;
       remoteResticTemplate =
-        if builtins.hasAttr "remoteResticTemplate" options then
-          options.remoteResticTemplate
-        else
-          null;
+        if builtins.hasAttr "remoteResticTemplate" options then options.remoteResticTemplate else null;
       # 2:05 daily backup with 3h random delay
       timerConfig = {
         OnCalendar = "02:05";
@@ -125,7 +122,9 @@
         inherit (options) user passwordFile environmentFile;
         # Move the path to the zfs snapshot path
         paths = map (x: "${config.mySystem.services.zfs-nightly-snap.mountPath}/${x}") options.paths;
-        exclude = map (x: "${config.mySystem.services.zfs-nightly-snap.mountPath}/${x}") options.excludePaths;
+        exclude = map (
+          x: "${config.mySystem.services.zfs-nightly-snap.mountPath}/${x}"
+        ) options.excludePaths;
         repository = "${options.localResticTemplate}";
       };
 
@@ -142,7 +141,9 @@
         paths = map (x: "${config.mySystem.services.zfs-nightly-snap.mountPath}/${x}") options.paths;
         repository = remoteResticTemplate;
         repositoryFile = remoteResticTemplateFile;
-        exclude = map (x: "${config.mySystem.services.zfs-nightly-snap.mountPath}/${x}") options.excludePaths;
+        exclude = map (
+          x: "${config.mySystem.services.zfs-nightly-snap.mountPath}/${x}"
+        ) options.excludePaths;
       };
     };
 }

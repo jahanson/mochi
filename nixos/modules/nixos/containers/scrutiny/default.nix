@@ -85,8 +85,7 @@ in
       # using the --device and --cap-add flags
       extraOptions =
         (map (disk: "--device=${toString disk}") cfg.devices)
-        ++
-        (map (cap: "--cap-add=${cap}") cfg.extraCapabilities);
+        ++ (map (cap: "--cap-add=${cap}") cfg.extraCapabilities);
     };
   };
 }

@@ -52,8 +52,14 @@ in
     };
 
     networking.firewall = {
-      allowedTCPPorts = [ 80 443 ];
-      allowedUDPPorts = [ 80 443 ];
+      allowedTCPPorts = [
+        80
+        443
+      ];
+      allowedUDPPorts = [
+        80
+        443
+      ];
     };
 
     # required for using acme certs

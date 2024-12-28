@@ -19,16 +19,22 @@ in
   # The unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'
   unstable-packages = final: prev: {
-    unstable = import inputs.nixpkgs-unstable
-      {
+    unstable =
+      import inputs.nixpkgs-unstable {
         inherit (final) system;
         config.allowUnfree = true;
-      } // {
-      # Add talosctl to the unstable set
-      talosctl = final.unstable.callPackage ./talosctl {
-        inherit (final.unstable) lib buildGoModule fetchFromGitHub installShellFiles;
+      }
+      // {
+        # Add talosctl to the unstable set
+        talosctl = final.unstable.callPackage ./talosctl {
+          inherit (final.unstable)
+            lib
+            buildGoModule
+            fetchFromGitHub
+            installShellFiles
+            ;
+        };
+        xpipe = final.unstable.callPackage ./xpipe/ptb.nix { };
       };
-      xpipe = final.unstable.callPackage ./xpipe/ptb.nix {};
-    };
   };
 }

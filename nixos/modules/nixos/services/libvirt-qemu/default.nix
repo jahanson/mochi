@@ -1,4 +1,10 @@
-{ lib, config, pkgs, inputs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 with lib;
 let
   cfg = config.mySystem.services.libvirt-qemu;
@@ -11,7 +17,10 @@ in
 
   config = mkIf cfg.enable {
     networking.firewall = {
-      allowedTCPPorts = [ 16509 16514 ];
+      allowedTCPPorts = [
+        16509
+        16514
+      ];
     };
 
     # Enable bind with domain configuration

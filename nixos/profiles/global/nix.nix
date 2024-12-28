@@ -42,7 +42,10 @@
       connect-timeout = 25;
       # Avoid copying unnecessary stuff over SSH
       builders-use-substitutes = true;
-      trusted-users = [ "root" "@wheel" ];
+      trusted-users = [
+        "root"
+        "@wheel"
+      ];
       warn-dirty = false;
       # The default at 10 is rarely enough.
       log-lines = lib.mkDefault 25;

@@ -38,6 +38,7 @@
       shfmt
       statix
       tmux
+      unstable.mise
       unstable.bottom
       unstable.cyme
       unstable.go-task

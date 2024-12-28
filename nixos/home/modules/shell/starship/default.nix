@@ -1,12 +1,16 @@
-{ lib
-, config
-, ...
+{
+  lib,
+  config,
+  ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.myHome.shell.starship;
 in
 {
-  options.myHome.shell.starship = { enable = mkEnableOption "starship"; };
+  options.myHome.shell.starship = {
+    enable = mkEnableOption "starship";
+  };
 
   config = mkIf cfg.enable {
     programs.starship = {

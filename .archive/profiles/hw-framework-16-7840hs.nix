@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   mySystem = {
     security.wheelNeedsSudoPassword = false;
@@ -16,7 +21,7 @@
     };
   };
 
-   # For updating firmware on the Framework.
+  # For updating firmware on the Framework.
   services.fwupd.enable = true;
 
   networking = {

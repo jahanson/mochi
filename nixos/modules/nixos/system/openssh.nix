@@ -5,19 +5,25 @@ let
 in
 {
   options.mySystem.services.openssh = {
-    enable = mkEnableOption "openssh" // { default = true; };
-    passwordAuthentication = mkOption
-      {
-        type = lib.types.bool;
-        description = "If password can be accepted for ssh (commonly disable for security hardening)";
-        default = false;
-      };
-    permitRootLogin = mkOption
-      {
-        type = types.enum [ "yes" "without-password" "prohibit-password" "forced-commands-only" "no" ];
-        description = "If root can login via ssh (commonly disable for security hardening)";
-        default = "prohibit-password";
-      };
+    enable = mkEnableOption "openssh" // {
+      default = true;
+    };
+    passwordAuthentication = mkOption {
+      type = lib.types.bool;
+      description = "If password can be accepted for ssh (commonly disable for security hardening)";
+      default = false;
+    };
+    permitRootLogin = mkOption {
+      type = types.enum [
+        "yes"
+        "without-password"
+        "prohibit-password"
+        "forced-commands-only"
+        "no"
+      ];
+      description = "If root can login via ssh (commonly disable for security hardening)";
+      default = "prohibit-password";
+    };
   };
 
   config = mkIf cfg.enable {

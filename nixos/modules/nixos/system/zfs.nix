@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   cfg = config.mySystem.system.zfs;
 in
@@ -25,7 +30,6 @@ with lib;
 
     services.zfs = {
       autoScrub.enable = true;
-      # Defaults to weekly and is a bit too regular for my NAS
       autoScrub.interval = "weekly";
       trim.enable = true;
     };
@@ -34,7 +38,7 @@ with lib;
     environment.systemPackages = with pkgs; [
       busybox
     ];
-    
+
     services.zfs.zed.settings = {
       ZED_PUSHOVER_TOKEN = "$(${pkgs.busybox}/bin/cat ${config.sops.secrets.pushover-api-key.path})";
       ZED_PUSHOVER_USER = "$(${pkgs.busybox}/bin/cat ${config.sops.secrets.pushover-user-key.path})";

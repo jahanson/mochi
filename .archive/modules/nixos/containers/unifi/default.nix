@@ -6,8 +6,8 @@ let
   version = "8.4.62";
   cfg = config.mySystem.services.${app};
   appFolder = "/eru/containers/volumes/${app}";
-  # persistentFolder = "${config.mySystem.persistentFolder}/var/lib/${appFolder}";
 in
+# persistentFolder = "${config.mySystem.persistentFolder}/var/lib/${appFolder}";
 {
   options.mySystem.services.${app} = {
     enable = mkEnableOption "${app}";
@@ -19,7 +19,12 @@ in
         allowedTCPPorts = [ 8443 ];
       };
       podman0 = {
-        allowedTCPPorts = [ 8080 8443 8880 8843 ];
+        allowedTCPPorts = [
+          8080
+          8443
+          8880
+          8843
+        ];
         allowedUDPPorts = [ 3478 ];
       };
     };

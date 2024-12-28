@@ -3,9 +3,9 @@ with lib;
 let
   app = "lego-auto";
   image = "ghcr.io/bjw-s/lego-auto:v0.3.0";
-  user = "999"; #string
-  group = "102"; #string
-  port = 9898; #int
+  user = "999"; # string
+  group = "102"; # string
+  port = 9898; # int
   cfg = config.mySystem.services.${app};
   appFolder = "/eru/containers/volumes/${app}";
 in
@@ -43,16 +43,18 @@ in
       extraOptions = [
         "--dns=1.1.1.1"
       ];
-      environment = {
-        TZ = "America/Chicago";
-        LA_DATADIR = "/cert";
-        LA_CACHEDIR = "/cert/.cache";
-        LA_EMAIL = cfg.email;
-        LA_DOMAINS = cfg.domains;
-        LA_PROVIDER = cfg.provider;
-      } // lib.optionalAttrs (cfg.provider == "dnsimple") {
-        DNSIMPLE_OAUTH_TOKEN_FILE = "/config/dnsimple-token";
-      };
+      environment =
+        {
+          TZ = "America/Chicago";
+          LA_DATADIR = "/cert";
+          LA_CACHEDIR = "/cert/.cache";
+          LA_EMAIL = cfg.email;
+          LA_DOMAINS = cfg.domains;
+          LA_PROVIDER = cfg.provider;
+        }
+        // lib.optionalAttrs (cfg.provider == "dnsimple") {
+          DNSIMPLE_OAUTH_TOKEN_FILE = "/config/dnsimple-token";
+        };
 
       volumes = [
         "${appFolder}/cert:/cert"

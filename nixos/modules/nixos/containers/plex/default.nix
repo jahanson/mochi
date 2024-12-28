@@ -51,7 +51,9 @@ in
             --cidfile=/run/${app}.ctr-id \
             --cgroups=no-conmon \
             --sdnotify=conmon \
-            --user="${toString config.users.users."${user}".uid}:${toString config.users.groups."${group}".gid}" \
+            --user="${toString config.users.users."${user}".uid}:${
+              toString config.users.groups."${group}".gid
+            }" \
             --volume="${volumeLocation}:/config:rw" \
             --volume="/moria/media:/media:rw" \
             --volume="tmpfs:/config/Library/Application Support/Plex Media Server/Logs:rw" \
@@ -78,7 +80,7 @@ in
       ];
     };
 
-    sops.secrets ={
+    sops.secrets = {
       "restic/plex/env" = {
         sopsFile = ./secrets.sops.yaml;
         owner = user;
@@ -154,7 +156,6 @@ in
     #     ];
     #   }
     # ];
-
 
   };
 }

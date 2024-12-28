@@ -92,9 +92,6 @@
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
-
-    # Mise
-    mise.url = "github:jdx/mise";
   };
 
   outputs =
@@ -110,7 +107,6 @@
       lix-module,
       vscode-server,
       krewfile,
-      mise,
       ...
     }@inputs:
     let

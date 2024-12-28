@@ -10,7 +10,10 @@
 
   boot = {
     # for managing/mounting ntfs
-    supportedFilesystems = [ "ntfs" "nfs" ];
+    supportedFilesystems = [
+      "ntfs"
+      "nfs"
+    ];
 
     loader = {
       grub = {
@@ -18,7 +21,10 @@
         zfsSupport = true;
         device = "nodev";
         mirroredBoots = [
-          { devices = [ "nodev" ]; path = "/boot"; }
+          {
+            devices = [ "nodev" ];
+            path = "/boot";
+          }
         ];
       };
     };

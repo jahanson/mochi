@@ -1,4 +1,10 @@
-{ lib, buildGoModule, fetchFromGitHub, installShellFiles, git }:
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+  installShellFiles,
+  git,
+}:
 
 buildGoModule rec {
   pname = "talosctl";
@@ -13,7 +19,10 @@ buildGoModule rec {
 
   vendorHash = "sha256-XvOMNyiHnemqnbOzWmzZXkr3+/ZgJDg8vjCtWFkCtLs=";
 
-  ldflags = [ "-s" "-w" ];
+  ldflags = [
+    "-s"
+    "-w"
+  ];
 
   subPackages = [ "cmd/talosctl" ];
 
@@ -33,7 +42,10 @@ buildGoModule rec {
     export GOFLAGS="-mod=vendor"
   '';
 
-  nativeBuildInputs = [ installShellFiles git ];
+  nativeBuildInputs = [
+    installShellFiles
+    git
+  ];
 
   postInstall = ''
     installShellCompletion --cmd talosctl \

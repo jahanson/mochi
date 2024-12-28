@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.mySystem.services.dnsmasq;
@@ -25,7 +30,11 @@ in
 
     networking.firewall = {
       # dhcp ports | tftp port
-      allowedUDPPorts = [ 67 68 69 ]; # server/client/tftp
+      allowedUDPPorts = [
+        67
+        68
+        69
+      ]; # server/client/tftp
     };
 
     # Proxy DHCP for PXE booting. This leaves DHCP address allocation alone and dhcp clients

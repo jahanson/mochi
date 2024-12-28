@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.myHome.programs.firefox;
@@ -6,27 +11,25 @@ in
 {
   options.myHome.programs.firefox.enable = mkEnableOption "Firefox";
 
-  config = mkIf cfg.enable
-    {
-      programs.firefox = {
-        enable = true;
-        package = pkgs.firefox.override
-          {
-            extraPolicies = {
-              DontCheckDefaultBrowser = true;
-              DisablePocket = true;
-              # See nixpkgs' firefox/wrapper.nix to check which options you can use
-              nativeMessagingHosts = [
-                # Gnome shell native connector
-                pkgs.gnome-browser-connector
-                # plasma connector
-                # plasma5Packages.plasma-browser-integration
-              ];
-            };
-          };
-        policies = import ./policies.nix;
-
-        profiles.default = import ./profile-default.nix { inherit pkgs; };
+  config = mkIf cfg.enable {
+    programs.firefox = {
+      enable = true;
+      package = pkgs.firefox.override {
+        extraPolicies = {
+          DontCheckDefaultBrowser = true;
+          DisablePocket = true;
+          # See nixpkgs' firefox/wrapper.nix to check which options you can use
+          nativeMessagingHosts = [
+            # Gnome shell native connector
+            pkgs.gnome-browser-connector
+            # plasma connector
+            # plasma5Packages.plasma-browser-integration
+          ];
+        };
       };
+      policies = import ./policies.nix;
+
+      profiles.default = import ./profile-default.nix { inherit pkgs; };
     };
+  };
 }

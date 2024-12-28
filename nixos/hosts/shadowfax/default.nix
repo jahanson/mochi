@@ -47,10 +47,7 @@ in
     nvidia-container-toolkit.enable = true;
   };
 
-  users.users.root.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAGSFTSVPt43PBpSMSF1dGTzN2JbxztDZUml7g4+PnWe CSI-Driver@talos"
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBROTzSefJGJeCNUgNLbE5l4sHHg2fHUO4sCwqvP+zAd root@Gollum"
-  ];
+  users.users.root.openssh.authorizedKeys.keys = [ ];
 
   # Network settings
   networking = {
@@ -187,7 +184,10 @@ in
       scrutiny = {
         enable = true;
         devices = disks;
-        extraCapabilities = [ "SYS_RAWIO" ];
+        extraCapabilities = [
+          "SYS_RAWIO"
+          "SYS_ADMIN"
+        ];
         containerVolumeLocation = "/nahar/containers/volumes/scrutiny";
         port = 8585;
       };

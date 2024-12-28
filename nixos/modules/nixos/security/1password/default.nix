@@ -1,5 +1,6 @@
 { config, lib, ... }:
-with lib; let
+with lib;
+let
   cfg = config.mySystem.security._1password;
   user = "jahanson";
 in

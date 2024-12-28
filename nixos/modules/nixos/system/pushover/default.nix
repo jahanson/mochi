@@ -1,26 +1,33 @@
-{ lib
-, config
-, pkgs
-, ...
+{
+  lib,
+  config,
+  pkgs,
+  ...
 }:
 with lib;
 let
   cfg = config.mySystem.system.systemd.pushover-alerts;
 in
 {
-  options.mySystem.system.systemd.pushover-alerts.enable = mkEnableOption "Pushover alerts for systemd failures" // { default = true; };
+  options.mySystem.system.systemd.pushover-alerts.enable =
+    mkEnableOption "Pushover alerts for systemd failures"
+    // {
+      default = true;
+    };
   options.systemd.services = mkOption {
-    type = with types; attrsOf (
-      submodule {
+    type =
+      with types;
+      attrsOf (submodule {
         config.onFailure = [ "notify-pushover@%n.service" ];
-      }
-    );
+      });
   };
 
   config = {
     # Warn if backups are disable and machine isnt a dev box
     warnings = [
-      (mkIf (!cfg.enable && config.mySystem.purpose != "Development") "WARNING: Pushover SystemD notifications are disabled!")
+      (mkIf (
+        !cfg.enable && config.mySystem.purpose != "Development"
+      ) "WARNING: Pushover SystemD notifications are disabled!")
     ];
 
     systemd.services."notify-pushover@" = mkIf cfg.enable {

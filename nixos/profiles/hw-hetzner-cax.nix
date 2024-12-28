@@ -1,10 +1,17 @@
-{ lib, ... }: {
+{ lib, ... }:
+{
   imports = [ ];
 
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
-    initrd.availableKernelModules = [ "xhci_pci" "virtio_pci" "virtio_scsi" "usbhid" "sr_mod" ];
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "virtio_pci"
+      "virtio_scsi"
+      "usbhid"
+      "sr_mod"
+    ];
     initrd.kernelModules = [ ];
     kernelModules = [ ];
     extraModulePackages = [ ];

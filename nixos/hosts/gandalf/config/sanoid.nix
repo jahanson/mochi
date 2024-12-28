@@ -14,22 +14,22 @@
     };
     datasets = {
       "eru/xen-backups" = {
-        useTemplate = ["production"];
+        useTemplate = [ "production" ];
       };
       "eru/hansonhive" = {
-        useTemplate = ["production"];
+        useTemplate = [ "production" ];
       };
       "eru/tm_joe" = {
-        useTemplate = ["production"];
+        useTemplate = [ "production" ];
       };
       "eru/tm_elisia" = {
-        useTemplate = ["production"];
+        useTemplate = [ "production" ];
       };
       "eru/containers/volumes/xo-data" = {
-        useTemplate = ["production"];
+        useTemplate = [ "production" ];
       };
       "eru/containers/volumes/xo-redis-data" = {
-        useTemplate = ["production"];
+        useTemplate = [ "production" ];
       };
     };
   };

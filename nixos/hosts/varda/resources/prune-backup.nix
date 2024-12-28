@@ -1,7 +1,9 @@
 { pkgs, ... }:
 
 let
-  cleanupScript = pkgs.writeShellScriptBin "cleanup-backups.sh" (builtins.readFile ./prune-backups.sh);
+  cleanupScript = pkgs.writeShellScriptBin "cleanup-backups.sh" (
+    builtins.readFile ./prune-backups.sh
+  );
 in
 {
   systemd.timers.cleanup-backups = {

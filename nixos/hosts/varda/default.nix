@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   imports = [ ./resources/prune-backup.nix ];
 
   networking.hostId = "cdab8473";
@@ -21,7 +22,6 @@
   };
 
   swapDevices = [ ];
-
 
   # System settings and services.
   mySystem = {

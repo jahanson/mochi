@@ -5,22 +5,20 @@ let
 in
 {
   options.mySystem.nix = {
-    autoOptimiseStore = mkOption
-      {
-        type = lib.types.bool;
-        description = "If we want to auto optimise store";
-        default = true;
-      };
+    autoOptimiseStore = mkOption {
+      type = lib.types.bool;
+      description = "If we want to auto optimise store";
+      default = true;
+    };
     gc = {
       enable = mkEnableOption "automatic garbage collection" // {
         default = true;
       };
-      persistent = mkOption
-        {
-          type = lib.types.bool;
-          description = "Persistent timer for gc, runs at startup if timer missed";
-          default = true;
-        };
+      persistent = mkOption {
+        type = lib.types.bool;
+        description = "Persistent timer for gc, runs at startup if timer missed";
+        default = true;
+      };
     };
   };
 

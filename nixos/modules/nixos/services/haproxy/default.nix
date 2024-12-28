@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.mySystem.services.haproxy;
@@ -6,7 +11,9 @@ let
 in
 {
   options.mySystem.services.haproxy = {
-    enable = mkEnableOption "haproxy" // { default = false; };
+    enable = mkEnableOption "haproxy" // {
+      default = false;
+    };
     package = mkPackageOption pkgs "haproxy" { };
     config = mkOption {
       type = types.str;

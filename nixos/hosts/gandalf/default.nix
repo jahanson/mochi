@@ -9,9 +9,9 @@
   ...
 }:
 # let
-  # sanoidConfig = import ./config/sanoid.nix { };
-  # disks = import ./config/disks.nix;
-  # smartdDevices = map (device: { inherit device; }) disks;
+# sanoidConfig = import ./config/sanoid.nix { };
+# disks = import ./config/disks.nix;
+# smartdDevices = map (device: { inherit device; }) disks;
 # in
 {
   imports = [

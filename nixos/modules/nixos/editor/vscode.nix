@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.mySystem.editor.vscode;
@@ -74,8 +79,12 @@ let
     }
   ];
   # Extract extension strings and coerce them to a list of valid attribute paths.
-  vscodeCommunityExtensionsPackages = map (ext: getAttrFromPath (splitString "." ext) pkgs.vscode-marketplace) vscodeCommunityExtensions;
-  nixpkgsExtensionsPackages = map (ext: getAttrFromPath (splitString "." ext) pkgs.vscode-extensions) vscodeNixpkgsExtensions;
+  vscodeCommunityExtensionsPackages = map (
+    ext: getAttrFromPath (splitString "." ext) pkgs.vscode-marketplace
+  ) vscodeCommunityExtensions;
+  nixpkgsExtensionsPackages = map (
+    ext: getAttrFromPath (splitString "." ext) pkgs.vscode-extensions
+  ) vscodeNixpkgsExtensions;
   marketplaceExtensionsPackages = pkgs.vscode-utils.extensionsFromVscodeMarketplace marketplaceExtensions;
 in
 {

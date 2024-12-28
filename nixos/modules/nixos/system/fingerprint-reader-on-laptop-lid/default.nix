@@ -12,7 +12,12 @@
 # On Framework 16 the USB is:
 # Bus 005 Device 007: ID 27c6:609c Shenzhen Goodix Technology Co.,Ltd
 # Use `findfp.sh` to find the correct USB device.
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.mySystem.system.fingerprint-reader-on-laptop-lid;
   laptop-lid = pkgs.writeShellScript "laptop-lid" ''
@@ -79,8 +84,13 @@ in
     systemd.services.fingerprint-laptop-lid = {
       enable = true;
       description = "Disable fingerprint reader when laptop lid closes";
-      serviceConfig = { ExecStart = "${laptop-lid}"; };
-      wantedBy = [ "multi-user.target" "suspend.target" ];
+      serviceConfig = {
+        ExecStart = "${laptop-lid}";
+      };
+      wantedBy = [
+        "multi-user.target"
+        "suspend.target"
+      ];
       after = [ "suspend.target" ];
     };
   };

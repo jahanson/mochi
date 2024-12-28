@@ -14,13 +14,21 @@ in
     programs.vim.defaultEditor = true;
 
     # Visual mode off and syntax highlighting on
-    home-manager.users = mapAttrs
-      (user: _: {
-        home.file.".vimrc".text = ''
-          set mouse-=a
-          syntax on
-        '';
-      })
-      (listToAttrs (map (u: { name = u; value = { }; }) users));
+    home-manager.users =
+      mapAttrs
+        (user: _: {
+          home.file.".vimrc".text = ''
+            set mouse-=a
+            syntax on
+          '';
+        })
+        (
+          listToAttrs (
+            map (u: {
+              name = u;
+              value = { };
+            }) users
+          )
+        );
   };
 }

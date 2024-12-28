@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   cfg = config.mySystem.de.kde;
   flameshotOverride = pkgs.unstable.flameshot.override { enableWlrSupport = true; };
@@ -6,13 +11,14 @@ in
 {
   options = {
     mySystem.de.kde = {
-      enable = lib.mkEnableOption "KDE" // { default = false; };
+      enable = lib.mkEnableOption "KDE" // {
+        default = false;
+      };
     };
   };
 
   config = lib.mkIf cfg.enable {
     # Ref: https://wiki.nixos.org/wiki/KDE
-
 
     # KDE
     services = {
@@ -42,7 +48,6 @@ in
       pulse.enable = true;
       jack.enable = true;
     };
-
 
     # extra pkgs and extensions
     environment = {

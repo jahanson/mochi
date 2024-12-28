@@ -1,48 +1,54 @@
-{ stdenvNoCC
-, lib
-, fetchzip
-, makeDesktopItem
-, autoPatchelfHook
-, zlib
-, fontconfig
-, udev
-, gtk3
-, freetype
-, alsa-lib
-, makeShellWrapper
-, libX11
-, libXext
-, libXdamage
-, libXfixes
-, libxcb
-, libXcomposite
-, libXcursor
-, libXi
-, libXrender
-, libXtst
-, libXxf86vm
-, util-linux
-, socat
-, hicolor-icon-theme
+{
+  stdenvNoCC,
+  lib,
+  fetchzip,
+  makeDesktopItem,
+  autoPatchelfHook,
+  zlib,
+  fontconfig,
+  udev,
+  gtk3,
+  freetype,
+  alsa-lib,
+  makeShellWrapper,
+  libX11,
+  libXext,
+  libXdamage,
+  libXfixes,
+  libxcb,
+  libXcomposite,
+  libXcursor,
+  libXi,
+  libXrender,
+  libXtst,
+  libXxf86vm,
+  util-linux,
+  socat,
+  hicolor-icon-theme,
 }:
 
 let
   inherit (stdenvNoCC.hostPlatform) system;
   throwSystem = throw "Unsupported system: ${system}";
 
-  arch = {
-    x86_64-linux = "x86_64";
-    aarch64-linux = "arm64";
-  }.${system} or throwSystem;
+  arch =
+    {
+      x86_64-linux = "x86_64";
+      aarch64-linux = "arm64";
+    }
+    .${system} or throwSystem;
 
-  hash = {
-    x86_64-linux = "sha256-O4gl0WulhDyqL9lDwqR1oxNAzVjHn+3q0UB8KP0/sBk=";
-    aarch64-linux = "";
-  }.${system} or throwSystem;
+  hash =
+    {
+      x86_64-linux = "sha256-O4gl0WulhDyqL9lDwqR1oxNAzVjHn+3q0UB8KP0/sBk=";
+      aarch64-linux = "";
+    }
+    .${system} or throwSystem;
 
   displayname = "XPipe PTB";
 
-in stdenvNoCC.mkDerivation rec {
+in
+stdenvNoCC.mkDerivation rec {
   pname = "xpipe-ptb";
   version = "13.0-10";
 
@@ -60,25 +66,25 @@ in stdenvNoCC.mkDerivation rec {
   autoPatchelfIgnoreMissingDeps = true;
 
   buildInputs = [
-      fontconfig
-      zlib
-      udev
-      freetype
-      gtk3
-      alsa-lib
-      libX11
-      libX11
-      libXext
-      libXdamage
-      libXfixes
-      libxcb
-      libXcomposite
-      libXcursor
-      libXi
-      libXrender
-      libXtst
-      libXxf86vm
-    ];
+    fontconfig
+    zlib
+    udev
+    freetype
+    gtk3
+    alsa-lib
+    libX11
+    libX11
+    libXext
+    libXdamage
+    libXfixes
+    libxcb
+    libXcomposite
+    libXcursor
+    libXi
+    libXrender
+    libXtst
+    libXxf86vm
+  ];
 
   desktopItem = makeDesktopItem {
     categories = [ "Network" ];
@@ -114,9 +120,21 @@ in stdenvNoCC.mkDerivation rec {
     mv "$out/opt/$pkg/app/scripts/xpiped_debug.sh" "$out/opt/$pkg/app/scripts/xpiped_debug_raw.sh"
 
     makeShellWrapper "$out/opt/$pkg/app/bin/xpiped_raw" "$out/opt/$pkg/app/bin/xpiped" \
-      --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ fontconfig gtk3 udev ]}"
+      --prefix LD_LIBRARY_PATH : "${
+        lib.makeLibraryPath [
+          fontconfig
+          gtk3
+          udev
+        ]
+      }"
     makeShellWrapper "$out/opt/$pkg/app/scripts/xpiped_debug_raw.sh" "$out/opt/$pkg/app/scripts/xpiped_debug.sh" \
-      --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ fontconfig gtk3 udev ]}"
+      --prefix LD_LIBRARY_PATH : "${
+        lib.makeLibraryPath [
+          fontconfig
+          gtk3
+          udev
+        ]
+      }"
 
     runHook postInstall
   '';
@@ -127,9 +145,15 @@ in stdenvNoCC.mkDerivation rec {
     downloadPage = "https://github.com/xpipe-io/${pname}/releases/latest";
     sourceProvenance = with sourceTypes; [ binaryNativeCode ];
     changelog = "https://github.com/xpipe-io/${pname}/releases/tag/${version}";
-    license = [ licenses.asl20 licenses.unfree ];
+    license = [
+      licenses.asl20
+      licenses.unfree
+    ];
     maintainers = with maintainers; [ crschnick ];
-    platforms = [ "x86_64-linux" "aarch64-linux" ];
+    platforms = [
+      "x86_64-linux"
+      "aarch64-linux"
+    ];
     mainProgram = pname;
   };
 }

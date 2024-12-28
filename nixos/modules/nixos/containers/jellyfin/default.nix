@@ -45,7 +45,9 @@ in
           ${pkgs.podman}/bin/podman run \
             --rm \
             --name=${app} \
-            --user="${toString config.users.users."${user}".uid}:${toString config.users.groups."${group}".gid}" \
+            --user="${toString config.users.users."${user}".uid}:${
+              toString config.users.groups."${group}".gid
+            }" \
             --device='nvidia.com/gpu=all' \
             --log-driver=journald \
             --cidfile=/run/${app}.ctr-id \

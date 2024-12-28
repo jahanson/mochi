@@ -1,4 +1,9 @@
-{ pkgs, config, inputs, ... }:
+{
+  pkgs,
+  config,
+  inputs,
+  ...
+}:
 with config;
 {
   imports = [
@@ -75,7 +80,6 @@ with config;
 
         # filesystem tools
         gptfdisk # sgdisk
-
 
         # system call monitoring
         strace # system call monitoring
