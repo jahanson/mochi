@@ -10,11 +10,13 @@
     registry.nixpkgs.flake = nixpkgs;
     channel.enable = false; # remove nix-channel related tools & configs, we use flakes instead.
 
-    # but NIX_PATH is still used by many useful tools, so we set it to the same value as the one used by this flake.
-    # https://github.com/NixOS/nix/issues/9574
-    settings.nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
+    nixPath = [ "nixpkgs=${nixpkgs}" ];
 
     settings = {
+      # but NIX_PATH is still used by many useful tools, so we set it to the same value as the one used by this flake.
+      # https://github.com/NixOS/nix/issues/9574
+      nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
+
       # Enable flakes
       experimental-features = [
         "nix-command"
