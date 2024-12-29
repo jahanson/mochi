@@ -40,7 +40,6 @@ with lib;
       smartmontools
     ];
 
-    networking.useDHCP = lib.mkDefault true;
     networking.domain = config.mySystem.domain;
   };
 

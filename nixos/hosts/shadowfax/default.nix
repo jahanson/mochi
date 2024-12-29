@@ -53,13 +53,6 @@ in
   networking = {
     hostName = "shadowfax";
     hostId = "a885fabe";
-    useDHCP = false; # needed for bridge
-    networkmanager.enable = true;
-    firewall.enable = false;
-    interfaces = {
-      "enp36s0f0".useDHCP = true;
-      "enp36s0f1".useDHCP = false;
-    };
   };
 
   # Home Manager
