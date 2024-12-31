@@ -93,6 +93,14 @@ in
     };
   };
 
+  # Open minio ports for firewall
+  networking.firewall = {
+    allowedTCPPorts = [
+      9000 # console web interface
+      9001 # api interface
+    ];
+  };
+
   services = {
     # Minio
     minio = {
