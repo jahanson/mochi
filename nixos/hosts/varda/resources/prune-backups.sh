@@ -1,8 +1,8 @@
 # Set the backup directory
-BACKUP_DIR="/var/lib/forgejo/dump"
+BACKUP_DIR="/mnt/storage/forgejo/backups"
 
 # Keep the 3 most recent backups
-KEEP_NUM=3
+KEEP_NUM=7
 
 echo "Starting backup cleanup process..."
 echo "Keeping the $KEEP_NUM most recent backups in $BACKUP_DIR"

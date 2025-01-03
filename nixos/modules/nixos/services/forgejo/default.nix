@@ -31,7 +31,10 @@ in
       enable = true;
       package = cfg.package;
       # enable sql db dumps daily
-      dump.enable = true;
+      dump = {
+        enable = true;
+        backupDir = "/mnt/backup/forgejo/backups/";
+      };
       database.type = "postgres";
       # Enable support for Git Large File Storage
       lfs.enable = true;
