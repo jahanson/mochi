@@ -9,7 +9,7 @@
   "editor.guides.bracketPairsHorizontal": true,
   "editor.guides.highlightActiveBracketPair": true,
   "files.trimTrailingWhitespace": true,
-  "sops.defaults.ageKeyFile": "/home/jahanson/projects/mochi/age.key",
+  "sops.defaults.ageKeyFile": "age.key",
   "nix.enableLanguageServer": true,
   "nix.serverPath": "/run/current-system/sw/bin/nil",
   "nix.formatterPath": "/run/current-system/sw/bin/nixfmt",
@@ -36,5 +36,6 @@
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "sops.binPath": "/run/current-system/sw/bin/sops"
+  "sops.binPath": "/run/current-system/sw/bin/sops",
+  "editor.formatOnSave": true
 }
