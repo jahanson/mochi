@@ -219,7 +219,7 @@ in
         description = "Create and mount nightly ZFS snapshot";
         serviceConfig = {
           Type = "oneshot";
-          ExecStart = "${lib.getExe resticSnapAndMount}";
+          ExecStart = "${resticSnapAndMount}/bin/zfs-nightly-snap";
         };
         requires = [ "zfs.target" ];
         after = [ "zfs.target" ];

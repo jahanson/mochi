@@ -10,11 +10,16 @@
         daily = 7;
         monthly = 12;
       };
+      "nvr" = {
+        autoprune = true;
+        autosnap = true;
+        hourly = 24;
+        daily = 7;
+      };
     };
     datasets = {
       "nahar/scrypted" = {
-        useTemplate = [ "production" ];
-        recursive = true;
+        useTemplate = [ "nvr" ];
       };
       "nahar/containers/volumes/plex" = {
         useTemplate = [ "production" ];
