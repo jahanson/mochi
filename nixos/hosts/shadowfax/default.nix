@@ -208,7 +208,7 @@ in
         mountPath = "/mnt/restic_nightly_backup";
         zfsDataset = "nahar/containers/volumes";
         snapshotName = "restic_nightly_snap";
-        startAt = "*-*-* 02:00:00 America/Chicago";
+        startAt = "*-*-* 02:10:00 America/Chicago";
       };
     };
     # System
