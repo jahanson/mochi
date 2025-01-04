@@ -1,14 +1,16 @@
-#!/usr/bin/env nix-shell
-#!nix-shell -I nixpkgs=/etc/nix/inputs/nixpkgs -i bash -p busybox zfs
 # shellcheck disable=SC1008
 
-set -e # Exit on error
+# Command line arguments
+BACKUP_DIRECTORY="$1"
+ZFS_DATASET="$2"
+SNAPSHOT_NAME="$3"
 
-BACKUP_DIRECTORY="/mnt/restic_nightly_backup"
-ZFS_DATASET="nahar/containers/volumes"
-SNAPSHOT_NAME="restic_nightly_snap"
-
+if [ -z "$BACKUP_DIRECTORY" ] || [ -z "$ZFS_DATASET" ] || [ -z "$SNAPSHOT_NAME" ]; then
+  echo "Usage: $0 <backup_directory> <zfs_dataset> <snapshot_name>"
+  exit 1
+fi
 # Check if running as root
+
 if [ "$(id -u)" -ne 0 ]; then
   echo "Error: This script must be run as root."
   exit 1
@@ -19,7 +21,7 @@ fi
 # mounts all zfs filesystems under $ZFS_DATASET
 function mount_dataset() {
   # ensure BACKUP_DIRECTORY exists
-  mkdir -p $BACKUP_DIRECTORY
+  mkdir -p "$BACKUP_DIRECTORY"
   # get list of all zfs filesystems under $ZFS_DATASET
   # exclude if mountpoint "legacy" and "none" mountpoint
   # order by shallowest mountpoint first (determined by number of slashes)
@@ -44,7 +46,7 @@ function zfs_backup_cleanup() {
   done
 
   # delete empty directories from within the backup directory
-  find "${1}" -type d -empty -delete
+  find "${1}" -type d -empty -delete 2>/dev/null || true
 }
 
 # gets the name of the newest snapshot given a zfs filesystem
@@ -62,24 +64,24 @@ function zfs_latest_snap() {
 # gets the path of a snapshot given a zfs filesystem and a snapshot name
 # usage zfs_snapshot_mountpoint filesystem snapshot
 function zfs_snapshot_mountpoint() {
-        # get mountpoint for filesystem
-        mountpoint=$(zfs list -H -o mountpoint "${1}")
+  # get mountpoint for filesystem
+  mountpoint=$(zfs list -H -o mountpoint "${1}")
 
-        # exit if filesystem doesn't exist
-        if [[ $? == 1 ]]; then
-                return 1
-        fi
+  # exit if filesystem doesn't exist
+  if [[ $? == 1 ]]; then
+    return 1
+  fi
 
-        # build out path
-        path="${mountpoint}/.zfs/snapshot/${2}"
+  # build out path
+  path="${mountpoint}/.zfs/snapshot/${2}"
 
-        # check to make sure path exists
-        if stat "${path}" &> /dev/null; then
-                echo "${path}"
-                return 0
-        else
-                return 1
-        fi
+  # check to make sure path exists
+  if stat "${path}" &>/dev/null; then
+    echo "${path}"
+    return 0
+  else
+    return 1
+  fi
 }
 
 # mounts latest snapshot in directory
@@ -123,15 +125,11 @@ zfs list -t snapshot | grep "$ZFS_DATASET@$SNAPSHOT_NAME" || true
 
 # Attempt to destroy existing snapshot
 echo "Attempting to destroy existing snapshot..."
-if zfs list -t snapshot | grep -q "$ZFS_DATASET@$SNAPSHOT_NAME"; then
-  if zfs destroy -r "$ZFS_DATASET@$SNAPSHOT_NAME"; then
-    echo "Successfully destroyed old snapshot"
-  else
-    echo "Failed to destroy existing snapshot"
-    exit 1
-  fi
+if zfs destroy -r "$ZFS_DATASET@$SNAPSHOT_NAME"; then
+  echo "Successfully destroyed old snapshot"
 else
-  echo "No existing snapshot found"
+  echo "Failed to destroy existing snapshot"
+  exit 1
 fi
 
 # Create new snapshot
