@@ -28,6 +28,7 @@
       unstable.nixfmt-rfc-style # nixfmt RFC 166-style compatible with nixpkgs soon
 
       # dev
+      bash-language-server
       gh
       go
       hadolint

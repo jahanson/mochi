@@ -37,5 +37,8 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "sops.binPath": "/run/current-system/sw/bin/sops",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "bashIde.explainshellEndpoint": "http://localhost:5000",
+  "bashIde.shellcheckPath": "/run/current-system/sw/bin/shellcheck",
+  "bashIde.shfmt.path": "/run/current-system/sw/bin/shfmt"
 }
