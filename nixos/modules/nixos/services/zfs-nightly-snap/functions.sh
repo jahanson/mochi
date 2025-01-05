@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 # functions sourced from: https://github.com/Jip-Hop/zfs-backup-snapshots
 function mount_dataset() {
   mkdir -p "$BACKUP_DIRECTORY"
