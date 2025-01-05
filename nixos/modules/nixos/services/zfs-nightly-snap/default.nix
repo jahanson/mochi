@@ -18,7 +18,48 @@ let
     ];
 
     text = ''
-      ${builtins.readFile ./snap-and-mount.sh} "${cfg.mountPath}" "${cfg.zfsDataset}" "${cfg.snapshotName}"
+      # Import our functions
+      ${builtins.readFile ./functions.sh}
+
+      BACKUP_DIRECTORY="${cfg.mountPath}"
+      ZFS_DATASET="${cfg.zfsDataset}"
+      SNAPSHOT_NAME="${cfg.snapshotName}"
+
+      if [ "$(id -u)" -ne 0 ]; then
+        echo "Error: This script must be run as root."
+        exit 1
+      fi
+
+      # Main logic
+      zfs_backup_cleanup "$BACKUP_DIRECTORY"
+
+      echo "Previous snapshot:"
+      zfs list -t snapshot | grep "$ZFS_DATASET@$SNAPSHOT_NAME" || true
+
+      echo "Attempting to destroy existing snapshot..."
+      if zfs destroy -r "$ZFS_DATASET@$SNAPSHOT_NAME"; then
+        echo "Successfully destroyed old snapshot"
+      else
+        echo "Failed to destroy existing snapshot"
+        exit 1
+      fi
+
+      # Create new snapshot
+      if ! zfs snapshot -r "$ZFS_DATASET@$SNAPSHOT_NAME"; then
+        echo "Failed to create snapshot"
+        exit 1
+      fi
+
+      echo "New snapshot created:"
+      zfs list -t snapshot | grep "$ZFS_DATASET@$SNAPSHOT_NAME"
+
+      if ! mount_dataset; then
+        echo "Failed to mount snapshot"
+        exit 1
+      fi
+
+      echo "Successfully created and mounted snapshot at $BACKUP_DIRECTORY"
+      mount | grep "$BACKUP_DIRECTORY"
     '';
   };
 in
