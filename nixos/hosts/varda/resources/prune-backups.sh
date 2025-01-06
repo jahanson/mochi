@@ -1,5 +1,5 @@
 # Set the backup directory
-BACKUP_DIR="/mnt/storage/forgejo/backups"
+BACKUP_DIR="/mnt/storagebox/forgejo/backup"
 
 KEEP_NUM=7
 

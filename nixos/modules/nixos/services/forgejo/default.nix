@@ -33,7 +33,7 @@ in
       # enable sql db dumps daily
       dump = {
         enable = true;
-        backupDir = "/mnt/storagebox/forgejo/backup/";
+        backupDir = "/mnt/storagebox/forgejo/backup";
       };
       database.type = "postgres";
       # Enable support for Git Large File Storage
