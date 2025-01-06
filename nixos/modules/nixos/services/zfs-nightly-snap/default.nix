@@ -84,8 +84,8 @@ in
     };
     startAt = lib.mkOption {
       type = lib.types.str;
-      default = "*-*-* 02:00:00 America/Chicago"; # Every day at 2 AM
-      description = "When to create and mount the ZFS snapshot. Defaults to 2 AM.";
+      default = "*-*-* 06:00:00 America/Chicago"; # Every day at 6 AM
+      description = "When to create and mount the ZFS snapshot. Defaults to 6 AM.";
     };
   };
 

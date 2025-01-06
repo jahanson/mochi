@@ -91,7 +91,7 @@
         if builtins.hasAttr "remoteResticTemplate" options then options.remoteResticTemplate else null;
       # 2:05 daily backup with 3h random delay
       timerConfig = {
-        OnCalendar = "02:15"; # night snap is taken at 02:10
+        OnCalendar = "06:05"; # night snap is taken at 02:10
         Persistent = true;
         RandomizedDelaySec = "30m";
       };
@@ -99,7 +99,6 @@
       pruneOpts = [
         "--keep-daily 7"
         "--keep-weekly 5"
-        "--keep-monthly 12"
       ];
       # Initialize the repository if it doesn't exist
       initialize = true;
