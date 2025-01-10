@@ -26,6 +26,11 @@ with config;
     };
 
     home = {
+      # Tasks, env, and secrets management.
+      programs.mise = {
+        enable = true;
+        package = pkgs.unstable.mise;
+      };
 
       # Install these packages for my user
       packages = with pkgs; [
