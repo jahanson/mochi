@@ -74,7 +74,7 @@
     # krewfile - Declarative krew plugin management
     krewfile = {
       # url = "github:brumhard/krewfile";
-      url = "github:ajgon/krewfile?ref=feat/indexes";
+      url = "github:brumhard/krewfile";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
