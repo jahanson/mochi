@@ -40,5 +40,6 @@
   "editor.formatOnSave": true,
   "bashIde.explainshellEndpoint": "http://localhost:5000",
   "bashIde.shellcheckPath": "/run/current-system/sw/bin/shellcheck",
-  "bashIde.shfmt.path": "/run/current-system/sw/bin/shfmt"
+  "bashIde.shfmt.path": "/run/current-system/sw/bin/shfmt",
+  "mise.binPath": "/etc/profiles/per-user/jahanson/bin/mise"
 }
