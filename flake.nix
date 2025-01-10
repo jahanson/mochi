@@ -183,15 +183,20 @@
             };
         in
         {
-          "varda" = mkNixosConfig {
-            # Arm64 cax21 @ Hetzner
-            # forgejo server
-            hostname = "varda";
-            system = "aarch64-linux";
+          "shadowfax" = mkNixosConfig {
+            # Pro WS WRX80E-SAGE SE WIFI - AMD Ryzen Threadripper PRO 3955WX 16-Cores
+            # Workloads server
+            hostname = "shadowfax";
+            system = "x86_64-linux";
+            disabledModules = [ "services/web-servers/minio.nix" ];
             hardwareModules = [
-              ./nixos/profiles/hw-hetzner-cax.nix
+              lix-module.nixosModules.default
+              ./nixos/profiles/hw-threadripperpro.nix
             ];
             profileModules = [
+              vscode-server.nixosModules.default
+              "${nixpkgs-unstable}/nixos/modules/services/web-servers/minio.nix"
+              ./nixos/profiles/role-dev.nix
               ./nixos/profiles/role-server.nix
               { home-manager.users.jahanson = ./nixos/home/jahanson/server.nix; }
             ];
@@ -214,42 +219,19 @@
             ];
           };
 
-          "shadowfax" = mkNixosConfig {
-            # Pro WS WRX80E-SAGE SE WIFI - AMD Ryzen Threadripper PRO 3955WX 16-Cores
-            # Workloads server
-            hostname = "shadowfax";
-            system = "x86_64-linux";
-            disabledModules = [ "services/web-servers/minio.nix" ];
+          "varda" = mkNixosConfig {
+            # Arm64 cax21 @ Hetzner
+            # forgejo server
+            hostname = "varda";
+            system = "aarch64-linux";
             hardwareModules = [
-              lix-module.nixosModules.default
-              ./nixos/profiles/hw-threadripperpro.nix
+              ./nixos/profiles/hw-hetzner-cax.nix
             ];
             profileModules = [
-              vscode-server.nixosModules.default
-              "${nixpkgs-unstable}/nixos/modules/services/web-servers/minio.nix"
-              ./nixos/profiles/role-dev.nix
               ./nixos/profiles/role-server.nix
               { home-manager.users.jahanson = ./nixos/home/jahanson/server.nix; }
             ];
           };
-
-          "gandalf" = mkNixosConfig {
-            # X9DRi-LN4+/X9DR3-LN4+ - Intel(R) Xeon(R) CPU E5-2650 v2
-            # NAS
-            hostname = "gandalf";
-            system = "x86_64-linux";
-            hardwareModules = [
-              lix-module.nixosModules.default
-              ./nixos/profiles/hw-supermicro.nix
-            ];
-            profileModules = [
-              vscode-server.nixosModules.default
-              ./nixos/profiles/role-dev.nix
-              ./nixos/profiles/role-server.nix
-              { home-manager.users.jahanson = ./nixos/home/jahanson/server.nix; }
-            ];
-          };
-
         };
 
       # Convenience output that aggregates the outputs for home, nixos.
