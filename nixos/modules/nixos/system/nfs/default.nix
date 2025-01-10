@@ -15,7 +15,9 @@ in
     services.nfs.server.enable = true;
     services.nfs.server.exports = cfg.exports;
     networking.firewall.allowedTCPPorts = [
-      2049
+      2049 # NFS
+      111 # RPC bind
+      20048 # NFSv4 (Mountd)
     ];
   };
 }
