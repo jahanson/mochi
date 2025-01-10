@@ -217,7 +217,7 @@ in
         enable = true;
         preseed = import ./config/incus-preseed.nix { };
       };
-      motd.networkInterfaces = [ "enp36s0f0" ];
+      motd.networkInterfaces = [ "bond0" ];
       nfs.enable = true;
       zfs.enable = true;
       zfs.mountPoolsAtBoot = [
