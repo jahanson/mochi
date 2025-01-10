@@ -135,6 +135,12 @@ in
       settings = import ./config/soft-serve.nix { };
     };
 
+    # Tailscale
+    tailscale = {
+      enable = true;
+      openFirewall = true;
+    };
+
     # VSCode Compatibility Settings
     vscode-server.enable = true;
 

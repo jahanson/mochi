@@ -76,6 +76,12 @@
     };
   };
 
+  # Tailscale
+  services.tailscale = {
+    enable = true;
+    openFirewall = true;
+  };
+
   # System settings and services.
   mySystem = {
     purpose = "Production";
