@@ -5,6 +5,7 @@
   config,
   lib,
   modulesPath,
+  pkgs,
   ...
 }:
 
@@ -75,11 +76,26 @@
       };
     };
   };
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+    2019
+  ];
+  services = {
+    # Caddy
+    caddy = {
+      enable = true;
+      package = pkgs.unstable.caddy;
+      extraConfig = builtins.readFile ./config/Caddyfile;
+      logFormat = lib.mkForce "level INFO";
+    };
 
-  # Tailscale
-  services.tailscale = {
-    enable = true;
-    openFirewall = true;
+    # Tailscale
+    tailscale = {
+      enable = true;
+      openFirewall = true;
+      permitCertUid = builtins.toString config.users.users.caddy.uid;
+    };
   };
 
   # System settings and services.

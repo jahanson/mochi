@@ -32,12 +32,13 @@ with lib;
 
     environment.systemPackages = with pkgs; [
       curl
-      wget
       dnsutils
       jq
-      yq-go
       nvme-cli
       smartmontools
+      unstable.caddy
+      wget
+      yq-go
     ];
 
     networking.domain = config.mySystem.domain;

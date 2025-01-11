@@ -1,0 +1,13 @@
+telperion.meerkat-dab.ts.net {
+	log {
+		output file /var/log/caddy/telperion.meerkat-dab.ts.net.log
+	}
+	reverse_proxy {
+		transport http {
+			tls_insecure_skip_verify
+		}
+		lb_policy client_ip_hash
+		to https://10.1.1.66:8006
+		to https://10.1.1.67:8006
+	}
+}
