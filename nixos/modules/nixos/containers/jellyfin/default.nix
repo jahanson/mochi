@@ -4,24 +4,24 @@
   pkgs,
   ...
 }:
-with lib;
-let
+with lib; let
   app = "jellyfin";
   cfg = config.mySystem.containers.${app};
   group = "kah";
   image = "ghcr.io/jellyfin/jellyfin:${version}";
   user = "kah";
   # renovate: depName=ghcr.io/jellyfin/jellyfin datasource=docker
-  version = "10.10.3";
+  version = "10.10.4";
   volumeLocation = "/nahar/containers/volumes/jellyfin";
-in
-{
+in {
   # Options
   options.mySystem.containers.${app} = {
     enable = mkEnableOption "${app}";
-    openFirewall = mkEnableOption "Open firewall for ${app}" // {
-      default = true;
-    };
+    openFirewall =
+      mkEnableOption "Open firewall for ${app}"
+      // {
+        default = true;
+      };
   };
 
   # Implementation
@@ -29,8 +29,8 @@ in
     # Systemd service for container
     systemd.services.${app} = {
       description = "Jellyfin Media Server";
-      wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
+      wantedBy = ["multi-user.target"];
+      after = ["network.target"];
 
       serviceConfig = {
         ExecStartPre = "${pkgs.writeShellScript "jellyfin-start-pre" ''
@@ -46,8 +46,8 @@ in
             --rm \
             --name=${app} \
             --user="${toString config.users.users."${user}".uid}:${
-              toString config.users.groups."${group}".gid
-            }" \
+            toString config.users.groups."${group}".gid
+          }" \
             --device='nvidia.com/gpu=all' \
             --log-driver=journald \
             --cidfile=/run/${app}.ctr-id \
@@ -113,10 +113,10 @@ in
     services.restic.backups = config.lib.mySystem.mkRestic {
       inherit app user;
       environmentFile = config.sops.secrets."restic/jellyfin/env".path;
-      excludePaths = [ ];
+      excludePaths = [];
       localResticTemplate = "/eru/restic/jellyfin";
       passwordFile = config.sops.secrets."restic/jellyfin/password".path;
-      paths = [ volumeLocation ];
+      paths = [volumeLocation];
       remoteResticTemplateFile = config.sops.secrets."restic/jellyfin/template".path;
     };
     # TODO add nginx proxy

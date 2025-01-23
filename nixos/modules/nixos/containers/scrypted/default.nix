@@ -4,15 +4,13 @@
   pkgs,
   ...
 }:
-with lib;
-let
+with lib; let
   app = "scrypted";
   # renovate: depName=ghcr.io/koush/scrypted datasource=docker versioning=docker
-  version = "v0.123.58-jammy-nvidia";
+  version = "v0.127.1-noble-nvidia";
   image = "ghcr.io/koush/scrypted:${version}";
   cfg = config.mySystem.containers.${app};
-in
-{
+in {
   # Options
   options.mySystem.containers.${app} = {
     enable = mkEnableOption "${app}";
@@ -20,9 +18,11 @@ in
     # addToHomepage = mkEnableOption "Add ${app} to homepage" // {
     #   default = true;
     # };
-    openFirewall = mkEnableOption "Open firewall for ${app}" // {
-      default = true;
-    };
+    openFirewall =
+      mkEnableOption "Open firewall for ${app}"
+      // {
+        default = true;
+      };
   };
 
   # Implementation
@@ -30,8 +30,8 @@ in
     # Systemd service for container
     systemd.services.${app} = {
       description = "Scrypted Home Security";
-      wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
+      wantedBy = ["multi-user.target"];
+      after = ["network.target"];
 
       serviceConfig = {
         ExecStartPre = "${pkgs.writeShellScript "scrypted-start-pre" ''
@@ -134,6 +134,5 @@ in
     #   paths = [ appFolder ];
     #   inherit appFolder;
     # };
-
   };
 }

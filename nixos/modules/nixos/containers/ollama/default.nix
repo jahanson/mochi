@@ -4,15 +4,13 @@
   pkgs,
   ...
 }:
-with lib;
-let
+with lib; let
   app = "ollama";
   # renovate: depName=docker.io/ollama/ollama datasource=docker
-  version = "0.5.5";
+  version = "0.5.7";
   image = "docker.io/ollama/ollama:${version}";
   cfg = config.mySystem.containers.${app};
-in
-{
+in {
   # Options
   options.mySystem.containers.${app} = {
     enable = mkEnableOption "${app}";
@@ -20,9 +18,11 @@ in
     # addToHomepage = mkEnableOption "Add ${app} to homepage" // {
     #   default = true;
     # };
-    openFirewall = mkEnableOption "Open firewall for ${app}" // {
-      default = true;
-    };
+    openFirewall =
+      mkEnableOption "Open firewall for ${app}"
+      // {
+        default = true;
+      };
   };
 
   # Implementation
@@ -30,8 +30,8 @@ in
     # Systemd service for container
     systemd.services.${app} = {
       description = "Ollama";
-      wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
+      wantedBy = ["multi-user.target"];
+      after = ["network.target"];
 
       serviceConfig = {
         ExecStartPre = "${pkgs.writeShellScript "ollama-start-pre" ''
@@ -76,7 +76,7 @@ in
       allowedTCPPorts = [
         11434 # HTTP web interface
       ];
-      allowedUDPPorts = [ ];
+      allowedUDPPorts = [];
     };
 
     # TODO add nginx proxy
@@ -131,6 +131,5 @@ in
     #   paths = [ appFolder ];
     #   inherit appFolder;
     # };
-
   };
 }
