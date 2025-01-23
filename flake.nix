@@ -9,7 +9,7 @@
     # Lix - Substitution of the Nix package manager, focused on correctness, usability, and growth – and committed to doing right by its community.
     # https://git.lix.systems/lix-project/lix
     lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1-2.tar.gz";
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.92.0.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -94,158 +94,150 @@
     };
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      nixpkgs-unstable,
-      sops-nix,
-      home-manager,
-      nix-vscode-extensions,
-      disko,
-      talhelper,
-      lix-module,
-      vscode-server,
-      krewfile,
-      ...
-    }@inputs:
-    let
-      forAllSystems = nixpkgs.lib.genAttrs [
-        "aarch64-linux"
-        "x86_64-linux"
-      ];
-    in
-    rec {
-      # Use nixpkgs-fmt for 'nix fmt'
-      formatter = forAllSystems (system: nixpkgs.legacyPackages."${system}".nixfmt-rfc-style);
+  outputs = {
+    self,
+    nixpkgs,
+    nixpkgs-unstable,
+    sops-nix,
+    home-manager,
+    nix-vscode-extensions,
+    disko,
+    talhelper,
+    lix-module,
+    vscode-server,
+    krewfile,
+    ...
+  } @ inputs: let
+    forAllSystems = nixpkgs.lib.genAttrs [
+      "aarch64-linux"
+      "x86_64-linux"
+    ];
+  in rec {
+    # Use nixpkgs-fmt for 'nix fmt'
+    formatter = forAllSystems (system: nixpkgs.legacyPackages."${system}".nixfmt-rfc-style);
 
-      # setup devshells against shell.nix
-      # devShells = forAllSystems (pkgs: import ./shell.nix { inherit pkgs; });
+    # setup devshells against shell.nix
+    # devShells = forAllSystems (pkgs: import ./shell.nix { inherit pkgs; });
 
-      # extend lib with my custom functions
-      lib = nixpkgs.lib.extend (
-        final: prev: {
+    # extend lib with my custom functions
+    lib = nixpkgs.lib.extend (
+      final: prev: {
+        inherit inputs;
+        myLib = import ./nixos/lib {
           inherit inputs;
-          myLib = import ./nixos/lib {
-            inherit inputs;
-            lib = final;
-          };
-        }
-      );
+          lib = final;
+        };
+      }
+    );
 
-      nixosConfigurations =
-        let
-          inherit inputs;
-          # Import overlays for building nixosconfig with them.
-          overlays = import ./nixos/overlays { inherit inputs; };
-          # generate a base nixos configuration with the specified overlays, hardware modules, and any AerModules applied
-          mkNixosConfig =
-            {
-              hostname,
-              system ? "x86_64-linux",
-              nixpkgs ? inputs.nixpkgs,
-              disabledModules ? [ ],
-              hardwareModules ? [ ],
-              # basemodules is the base of the entire machine building
-              # here we import all the modules and setup home-manager
-              baseModules ? [
-                sops-nix.nixosModules.sops
-                home-manager.nixosModules.home-manager
-                ./nixos/profiles/global.nix # all machines get a global profile
-                ./nixos/modules/nixos # all machines get nixos modules
-                ./nixos/hosts/${hostname} # load this host's config folder for machine-specific config
-                {
-                  home-manager = {
-                    useUserPackages = true;
-                    useGlobalPkgs = true;
-                    extraSpecialArgs = {
-                      inherit inputs hostname system;
-                    };
-                  };
-                  disabledModules = disabledModules;
-                }
-              ],
-              profileModules ? [ ],
-            }:
-            nixpkgs.lib.nixosSystem {
-              inherit system lib;
-              modules = baseModules ++ hardwareModules ++ profileModules;
-              specialArgs = { inherit self inputs nixpkgs; };
-              # Add our overlays
-              pkgs = import nixpkgs {
-                inherit system;
-                overlays = builtins.attrValues overlays;
-                config = {
-                  allowUnfree = true;
-                  allowUnfreePredicate = _: true;
-                };
+    nixosConfigurations = let
+      inherit inputs;
+      # Import overlays for building nixosconfig with them.
+      overlays = import ./nixos/overlays {inherit inputs;};
+      # generate a base nixos configuration with the specified overlays, hardware modules, and any AerModules applied
+      mkNixosConfig = {
+        hostname,
+        system ? "x86_64-linux",
+        nixpkgs ? inputs.nixpkgs,
+        disabledModules ? [],
+        hardwareModules ? [],
+        # basemodules is the base of the entire machine building
+        # here we import all the modules and setup home-manager
+        baseModules ? [
+          sops-nix.nixosModules.sops
+          home-manager.nixosModules.home-manager
+          ./nixos/profiles/global.nix # all machines get a global profile
+          ./nixos/modules/nixos # all machines get nixos modules
+          ./nixos/hosts/${hostname} # load this host's config folder for machine-specific config
+          {
+            home-manager = {
+              useUserPackages = true;
+              useGlobalPkgs = true;
+              extraSpecialArgs = {
+                inherit inputs hostname system;
               };
             };
-        in
-        {
-          "shadowfax" = mkNixosConfig {
-            # Pro WS WRX80E-SAGE SE WIFI - AMD Ryzen Threadripper PRO 3955WX 16-Cores
-            # Workloads server
-            hostname = "shadowfax";
-            system = "x86_64-linux";
-            disabledModules = [
-              "services/web-servers/minio.nix"
-              "services/web-servers/caddy/default.nix"
-            ];
-            hardwareModules = [
-              lix-module.nixosModules.default
-              ./nixos/profiles/hw-threadripperpro.nix
-            ];
-            profileModules = [
-              vscode-server.nixosModules.default
-              "${nixpkgs-unstable}/nixos/modules/services/web-servers/minio.nix"
-              "${nixpkgs-unstable}/nixos/modules/services/web-servers/caddy/default.nix"
-              ./nixos/profiles/role-dev.nix
-              ./nixos/profiles/role-server.nix
-              { home-manager.users.jahanson = ./nixos/home/jahanson/server.nix; }
-            ];
-          };
-
-          "telperion" = mkNixosConfig {
-            # HP-S01 Intel G5900
-            # Network services server
-            hostname = "telperion";
-            system = "x86_64-linux";
-            hardwareModules = [
-              ./nixos/profiles/hw-hp-s01.nix
-              disko.nixosModules.disko
-              (import ./nixos/profiles/disko-nixos.nix { disks = [ "/dev/nvme0n1" ]; })
-
-            ];
-            profileModules = [
-              ./nixos/profiles/role-server.nix
-              { home-manager.users.jahanson = ./nixos/home/jahanson/server.nix; }
-            ];
-          };
-
-          "varda" = mkNixosConfig {
-            # Arm64 cax21 @ Hetzner
-            # forgejo server
-            hostname = "varda";
-            system = "aarch64-linux";
-            hardwareModules = [
-              ./nixos/profiles/hw-hetzner-cax.nix
-            ];
-            profileModules = [
-              ./nixos/profiles/role-server.nix
-              { home-manager.users.jahanson = ./nixos/home/jahanson/server.nix; }
-            ];
+            disabledModules = disabledModules;
+          }
+        ],
+        profileModules ? [],
+      }:
+        nixpkgs.lib.nixosSystem {
+          inherit system lib;
+          modules = baseModules ++ hardwareModules ++ profileModules;
+          specialArgs = {inherit self inputs nixpkgs;};
+          # Add our overlays
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = builtins.attrValues overlays;
+            config = {
+              allowUnfree = true;
+              allowUnfreePredicate = _: true;
+            };
           };
         };
+    in {
+      "shadowfax" = mkNixosConfig {
+        # Pro WS WRX80E-SAGE SE WIFI - AMD Ryzen Threadripper PRO 3955WX 16-Cores
+        # Workloads server
+        hostname = "shadowfax";
+        system = "x86_64-linux";
+        disabledModules = [
+          "services/web-servers/minio.nix"
+          "services/web-servers/caddy/default.nix"
+        ];
+        hardwareModules = [
+          lix-module.nixosModules.default
+          ./nixos/profiles/hw-threadripperpro.nix
+        ];
+        profileModules = [
+          vscode-server.nixosModules.default
+          "${nixpkgs-unstable}/nixos/modules/services/web-servers/minio.nix"
+          "${nixpkgs-unstable}/nixos/modules/services/web-servers/caddy/default.nix"
+          ./nixos/profiles/role-dev.nix
+          ./nixos/profiles/role-server.nix
+          {home-manager.users.jahanson = ./nixos/home/jahanson/server.nix;}
+        ];
+      };
 
-      # Convenience output that aggregates the outputs for home, nixos.
-      # Also used in ci to build targets generally.
-      top =
-        let
-          nixtop = nixpkgs.lib.genAttrs (builtins.attrNames inputs.self.nixosConfigurations) (
-            attr: inputs.self.nixosConfigurations.${attr}.config.system.build.toplevel
-          );
-        in
-        nixtop;
+      "telperion" = mkNixosConfig {
+        # HP-S01 Intel G5900
+        # Network services server
+        hostname = "telperion";
+        system = "x86_64-linux";
+        hardwareModules = [
+          ./nixos/profiles/hw-hp-s01.nix
+          disko.nixosModules.disko
+          (import ./nixos/profiles/disko-nixos.nix {disks = ["/dev/nvme0n1"];})
+        ];
+        profileModules = [
+          ./nixos/profiles/role-server.nix
+          {home-manager.users.jahanson = ./nixos/home/jahanson/server.nix;}
+        ];
+      };
+
+      "varda" = mkNixosConfig {
+        # Arm64 cax21 @ Hetzner
+        # forgejo server
+        hostname = "varda";
+        system = "aarch64-linux";
+        hardwareModules = [
+          ./nixos/profiles/hw-hetzner-cax.nix
+        ];
+        profileModules = [
+          ./nixos/profiles/role-server.nix
+          {home-manager.users.jahanson = ./nixos/home/jahanson/server.nix;}
+        ];
+      };
     };
+
+    # Convenience output that aggregates the outputs for home, nixos.
+    # Also used in ci to build targets generally.
+    top = let
+      nixtop = nixpkgs.lib.genAttrs (builtins.attrNames inputs.self.nixosConfigurations) (
+        attr: inputs.self.nixosConfigurations.${attr}.config.system.build.toplevel
+      );
+    in
+      nixtop;
+  };
 }
