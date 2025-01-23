@@ -6,8 +6,16 @@ telperion.meerkat-dab.ts.net {
 		transport http {
 			tls_insecure_skip_verify
 		}
+		fail_duration 10s
+		health_interval 5s
+		health_timeout 2s
+		health_uri /
 		lb_policy client_ip_hash
-		to https://10.1.1.66:8006
-		to https://10.1.1.67:8006
+		lb_try_duration 5s
+		lb_try_interval 250ms
+		max_fails 1
+		unhealthy_status 5xx
+		to https://legion.meerkat-dab.ts.net:8006
+		to https://rosie.meerkat-dab.ts.net:8006
 	}
 }

@@ -1,0 +1,14 @@
+redeye.hsn.dev {
+	log {
+		output file /var/log/caddy/redeye.hsn.dev.log
+	}
+	tls {
+		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+	}
+	reverse_proxy {
+		transport http {
+			tls_insecure_skip_verify
+		}
+		to http://127.0.0.1:11080
+	}
+}

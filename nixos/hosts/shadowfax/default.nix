@@ -93,15 +93,30 @@ in
     };
   };
 
-  # Open minio ports for firewall
+  # Open ports in the firewall.
   networking.firewall = {
     allowedTCPPorts = [
+      # Caddy
+      80 # http
+      443 # https
+      2019 # caddy admin api
+      # Minio
       9000 # console web interface
       9001 # api interface
+
     ];
   };
 
   services = {
+    # Caddy
+    # caddy = {
+    #   enable = true;
+    #   package = pkgs.unstable.caddy;
+    #   extraConfig = builtins.readFile ./config/Caddyfile;
+    #   logFormat = lib.mkForce "level INFO";
+    #   environmentFile = config.sops.secrets."caddy/env".path;
+    # };
+
     # Minio
     minio = {
       enable = true;
@@ -168,6 +183,12 @@ in
       mode = "400";
       restartUnits = [ "syncthing.service" ];
     };
+    # "caddy/env" = {
+    #   sopsFile = ./secrets.sops.yaml;
+    #   owner = "caddy";
+    #   mode = "400";
+    #   restartUnits = [ "caddy.service" ];
+    # };
   };
 
   # System settings and services.

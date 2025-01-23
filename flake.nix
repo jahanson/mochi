@@ -188,7 +188,10 @@
             # Workloads server
             hostname = "shadowfax";
             system = "x86_64-linux";
-            disabledModules = [ "services/web-servers/minio.nix" ];
+            disabledModules = [
+              "services/web-servers/minio.nix"
+              "services/web-servers/caddy/default.nix"
+            ];
             hardwareModules = [
               lix-module.nixosModules.default
               ./nixos/profiles/hw-threadripperpro.nix
@@ -196,6 +199,7 @@
             profileModules = [
               vscode-server.nixosModules.default
               "${nixpkgs-unstable}/nixos/modules/services/web-servers/minio.nix"
+              "${nixpkgs-unstable}/nixos/modules/services/web-servers/caddy/default.nix"
               ./nixos/profiles/role-dev.nix
               ./nixos/profiles/role-server.nix
               { home-manager.users.jahanson = ./nixos/home/jahanson/server.nix; }
