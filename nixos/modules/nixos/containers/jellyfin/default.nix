@@ -90,21 +90,21 @@ in {
 
     sops.secrets = {
       "restic/jellyfin/env" = {
+        inherit group;
         sopsFile = ./secrets.sops.yaml;
         owner = user;
-        group = group;
         mode = "0400";
       };
       "restic/jellyfin/password" = {
+        inherit group;
         sopsFile = ./secrets.sops.yaml;
         owner = user;
-        group = group;
         mode = "0400";
       };
       "restic/jellyfin/template" = {
+        inherit group;
         sopsFile = ./secrets.sops.yaml;
         owner = user;
-        group = group;
         mode = "0400";
       };
     };

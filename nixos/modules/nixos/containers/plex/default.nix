@@ -4,8 +4,7 @@
   pkgs,
   ...
 }:
-with lib;
-let
+with lib; let
   app = "plex";
   cfg = config.mySystem.containers.${app};
   group = "kah";
@@ -14,14 +13,15 @@ let
   # renovate: depName=ghcr.io/onedr0p/plex datasource=docker versioning=loose
   version = "1.41.3.9314-a0bfb8370";
   volumeLocation = "/nahar/containers/volumes/plex";
-in
-{
+in {
   # Options
   options.mySystem.containers.${app} = {
     enable = mkEnableOption "${app}";
-    openFirewall = mkEnableOption "Open firewall for ${app}" // {
-      default = true;
-    };
+    openFirewall =
+      mkEnableOption "Open firewall for ${app}"
+      // {
+        default = true;
+      };
   };
 
   # Implementation
@@ -29,8 +29,8 @@ in
     # Systemd service for container
     systemd.services.${app} = {
       description = "Plex Media Server";
-      wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
+      wantedBy = ["multi-user.target"];
+      after = ["network.target"];
 
       serviceConfig = {
         ExecStartPre = "${pkgs.writeShellScript "plex-start-pre" ''
@@ -52,8 +52,8 @@ in
             --cgroups=no-conmon \
             --sdnotify=conmon \
             --user="${toString config.users.users."${user}".uid}:${
-              toString config.users.groups."${group}".gid
-            }" \
+            toString config.users.groups."${group}".gid
+          }" \
             --volume="${volumeLocation}:/config:rw" \
             --volume="/moria/media:/media:rw" \
             --volume="tmpfs:/config/Library/Application Support/Plex Media Server/Logs:rw" \
@@ -82,21 +82,21 @@ in
 
     sops.secrets = {
       "restic/plex/env" = {
+        inherit group;
         sopsFile = ./secrets.sops.yaml;
         owner = user;
-        group = group;
         mode = "0400";
       };
       "restic/plex/password" = {
+        inherit group;
         sopsFile = ./secrets.sops.yaml;
         owner = user;
-        group = group;
         mode = "0400";
       };
       "restic/plex/template" = {
+        inherit group;
         sopsFile = ./secrets.sops.yaml;
         owner = user;
-        group = group;
         mode = "0400";
       };
     };
@@ -105,10 +105,10 @@ in
     services.restic.backups = config.lib.mySystem.mkRestic {
       inherit app user;
       environmentFile = config.sops.secrets."restic/plex/env".path;
-      excludePaths = [ "${volumeLocation}/Library/Application Support/Plex Media Server/Cache" ];
+      excludePaths = ["${volumeLocation}/Library/Application Support/Plex Media Server/Cache"];
       localResticTemplate = "/eru/restic/plex";
       passwordFile = config.sops.secrets."restic/plex/password".path;
-      paths = [ "${volumeLocation}/Library" ];
+      paths = ["${volumeLocation}/Library"];
       remoteResticTemplateFile = config.sops.secrets."restic/plex/template".path;
     };
 
@@ -156,6 +156,5 @@ in
     #     ];
     #   }
     # ];
-
   };
 }
