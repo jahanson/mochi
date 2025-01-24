@@ -99,8 +99,8 @@ in
         {
           ExecStart = "${cfg.package}/bin/qbittorrent-nox --profile=${cfg.dataDir}";
           ReadWritePaths = [
-            "/nahar/qbittorrent"
-            "/eru/media"
+            cfg.dataDir
+            cfg.downloadsDir
           ];
           Restart = "on-failure";
           RestartSec = 5;
