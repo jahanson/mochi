@@ -51,7 +51,7 @@ in
     openFirewall = mkOption {
       type = types.bool;
       default = false;
-      description = "Open firewall port for web interface";
+      description = "Open firewall ports for qBittorrent";
     };
 
     hardening = mkOption {
@@ -86,7 +86,7 @@ in
         QBT_CONFIRM_LEGAL_NOTICE = "1";
         QBT_WEBUI_PORT = toString cfg.webuiPort;
         QBT_TORRENTING_PORT = toString cfg.qbittorrentPort;
-        QBT_DOWNLOADS_PATH = "${cfg.dataDir}/downloads";
+        QBT_DOWNLOADS_PATH = "${cfg.downloadsDir}";
         XDG_CONFIG_HOME = cfg.dataDir;
         XDG_DATA_HOME = cfg.dataDir;
         CONFIG_DIR = "${cfg.dataDir}/qBittorrent";
