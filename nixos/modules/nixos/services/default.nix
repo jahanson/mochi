@@ -10,6 +10,7 @@
     ./nix-index-daily
     ./onepassword-connect
     ./podman
+    ./qbittorrent
     ./reboot-required-check.nix
     ./sanoid
     ./syncthing

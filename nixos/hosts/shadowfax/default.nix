@@ -73,6 +73,11 @@ in
     };
   };
 
+  # Programs
+  environment.systemPackages = with pkgs; [
+    # Headless qBittorrent - qbittorrent-nox
+  ];
+
   programs = {
     # 1Password cli
     _1password.enable = true;
@@ -103,7 +108,6 @@ in
       # Minio
       9000 # console web interface
       9001 # api interface
-
     ];
   };
 
@@ -228,6 +232,19 @@ in
         user = "jahanson";
         publicCertPath = config.sops.secrets."syncthing/publicCert".path;
         privateKeyPath = config.sops.secrets."syncthing/privateKey".path;
+      };
+      # qBittorrent
+      qbittorrent = {
+        enable = true;
+        package = pkgs.unstable.qbittorrent.override { guiSupport = false; };
+        user = "qbittorrent";
+        group = "qbittorrent";
+        dataDir = "/nahar/qbittorrent";
+        downloadsDir = "/eru/media/qb/downloads/complete";
+        webuiPort = 8456;
+        openFirewall = true;
+        hardening = true;
+        qbittorrentPort = 50413;
       };
       # ZFS nightly snapshot of container volumes
       zfs-nightly-snap = {
