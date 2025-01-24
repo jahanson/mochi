@@ -78,6 +78,7 @@ in
     };
 
     environment.systemPackages = [
+      cfg.package
     ];
 
     systemd.services.qbittorrent = {
@@ -88,34 +89,13 @@ in
         QBT_DOWNLOADS_PATH = "${cfg.dataDir}/downloads";
         XDG_CONFIG_HOME = cfg.dataDir;
         XDG_DATA_HOME = cfg.dataDir;
-        CONFIG_DIR = "${cfg.dataDir}";
-        CONFIG_FILE = "${cfg.dataDir}/qBittorrent.conf";
+        CONFIG_DIR = "${cfg.dataDir}/qBittorrent";
+        CONFIG_FILE = "${cfg.dataDir}/qBittorrent/config/qBittorrent.conf";
         LOG_DIR = "${cfg.dataDir}/logs";
         LOG_FILE = "${cfg.dataDir}/logs/qbittorrent.log";
       };
 
-      preStart = ''
-                # Ensure config directory exists
-                mkdir -p "$CONFIG_DIR"
-
-                # Set up log directory and file
-                mkdir -p "$LOG_DIR"
-
-                # Copy default config if it doesn't exist
-                if [[ ! -f "$CONFIG_FILE" ]]; then
-                  cat > "$CONFIG_FILE" << EOF
-        [BitTorrent]
-        Session\DefaultSavePath=${cfg.downloadsDir}
-        Session\Port=${toString cfg.qbittorrentPort}
-        Session\TempPath=${cfg.downloadsDir}/temp
-        EOF
-                fi
-
-                # Ensure correct permissions
-                chown -R ${cfg.user}:${cfg.group} "$CONFIG_DIR"
-      '';
-
-      serviceConfig =
+      serviceConfig = lib.mkMerge [
         {
           ExecStart = "${cfg.package}/bin/qbittorrent-nox --profile=${cfg.dataDir}";
           ReadWritePaths = [
@@ -124,9 +104,12 @@ in
           ];
           Restart = "on-failure";
           RestartSec = 5;
+          User = cfg.user;
+          Group = cfg.group;
         }
-        // lib.mkIf cfg.hardening {
-          CapabilityBoundingSet = [ ];
+        (lib.mkIf cfg.hardening {
+          CapabilityBoundingSet = [ "" ];
+          DeviceAllow = [ "" ];
           DevicePolicy = "closed";
           LockPersonality = true;
           MemoryDenyWriteExecute = true;
@@ -141,8 +124,6 @@ in
           RestrictAddressFamilies = [
             "AF_INET"
             "AF_INET6"
-            "AF_NETLINK"
-            "AF_UNIX"
           ];
           RestrictNamespaces = [
             "uts"
@@ -159,7 +140,8 @@ in
             "~@privileged"
             "~@resources"
           ];
-        };
+        })
+      ];
     };
 
     networking.firewall = mkIf cfg.openFirewall {
