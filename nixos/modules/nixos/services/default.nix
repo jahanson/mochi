@@ -12,6 +12,7 @@
     ./podman
     ./qbittorrent
     ./reboot-required-check.nix
+    ./sabnzbd
     ./sanoid
     ./syncthing
     ./zfs-nightly-snap
