@@ -11,16 +11,17 @@
   "files.trimTrailingWhitespace": true,
   "sops.defaults.ageKeyFile": "age.key",
   "nix.enableLanguageServer": true,
-  "nix.serverPath": "/run/current-system/sw/bin/nil",
+  "nix.serverPath": "/run/current-system/sw/bin/nixd",
   "nix.formatterPath": "/run/current-system/sw/bin/nixfmt",
   "nix.serverSettings": {
-    "nil": {
+    "nixd": {
       "formatting": {
         "command": ["nixfmt"]
       },
-      "diagnostics": {
-        "ignored": [],
-        "excludedFiles": []
+      "options": {
+        "nixos": {
+          "expr": "(builtins.getFlake \"/home/jahanson/projects/mochi\").nixosConfigurations.shadowfax.options"
+        }
       }
     },
     "nix": {
