@@ -188,6 +188,18 @@ in {
       # Misc
       libvirt-qemu.enable = true;
       podman.enable = true;
+      # Sabnzbd
+      sabnzbd = {
+        enable = true;
+        package = pkgs.unstable.sabnzbd;
+        configFile = "/nahar/sabnzbd/sabnzbd.ini";
+        port = 8457;
+        # Security hardening.
+        dataDir = "/nahar/sabnzbd";
+        downloadsDir = "/eru/media/sabnzbd";
+        hardening = true;
+        openFirewall = true;
+      };
       # Sanoid
       sanoid = {
         enable = true;
@@ -215,10 +227,8 @@ in {
       qbittorrent = {
         enable = true;
         package = pkgs.unstable.qbittorrent.override {guiSupport = false;};
-        user = "qbittorrent";
-        group = "qbittorrent";
         dataDir = "/nahar/qbittorrent";
-        downloadsDir = "/eru/media/qb/downloads/complete";
+        downloadsDir = "/eru/media/qb/downloads";
         webuiPort = 8456;
         openFirewall = true;
         hardening = true;
