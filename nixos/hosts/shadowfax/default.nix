@@ -105,15 +105,6 @@ in {
   };
 
   services = {
-    # Caddy
-    # caddy = {
-    #   enable = true;
-    #   package = pkgs.unstable.caddy;
-    #   extraConfig = builtins.readFile ./config/Caddyfile;
-    #   logFormat = lib.mkForce "level INFO";
-    #   environmentFile = config.sops.secrets."caddy/env".path;
-    # };
-
     # Minio
     minio = {
       enable = true;
@@ -180,12 +171,6 @@ in {
       mode = "400";
       restartUnits = ["syncthing.service"];
     };
-    # "caddy/env" = {
-    #   sopsFile = ./secrets.sops.yaml;
-    #   owner = "caddy";
-    #   mode = "400";
-    #   restartUnits = [ "caddy.service" ];
-    # };
   };
 
   # System settings and services.
