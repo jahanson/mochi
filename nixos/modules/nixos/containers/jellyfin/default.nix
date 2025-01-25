@@ -11,7 +11,7 @@ with lib; let
   image = "ghcr.io/jellyfin/jellyfin:${version}";
   user = "kah";
   # renovate: depName=ghcr.io/jellyfin/jellyfin datasource=docker
-  version = "10.10.4";
+  version = "10.10.5";
   volumeLocation = "/nahar/containers/volumes/jellyfin";
 in {
   # Options
