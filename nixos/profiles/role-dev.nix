@@ -29,6 +29,7 @@
 
       # dev
       bash-language-server
+      fd
       gh
       go
       hadolint
