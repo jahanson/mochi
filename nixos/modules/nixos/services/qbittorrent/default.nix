@@ -82,11 +82,15 @@ in
     ];
 
     systemd.services.qbittorrent = {
+      description = "qbittorrent server";
+      wantedBy = ["multi-user.target"];
+      after = ["network.target" "nss-lookup.target"];
       environment = {
         QBT_CONFIRM_LEGAL_NOTICE = "1";
         QBT_WEBUI_PORT = toString cfg.webuiPort;
         QBT_TORRENTING_PORT = toString cfg.qbittorrentPort;
         QBT_DOWNLOADS_PATH = "${cfg.downloadsDir}";
+        HOME = cfg.dataDir;
         XDG_CONFIG_HOME = cfg.dataDir;
         XDG_DATA_HOME = cfg.dataDir;
         CONFIG_DIR = "${cfg.dataDir}/qBittorrent";
@@ -98,10 +102,6 @@ in
       serviceConfig = lib.mkMerge [
         {
           ExecStart = "${cfg.package}/bin/qbittorrent-nox --profile=${cfg.dataDir}";
-          ReadWritePaths = [
-            cfg.dataDir
-            cfg.downloadsDir
-          ];
           Restart = "on-failure";
           RestartSec = 5;
           User = cfg.user;
@@ -121,6 +121,10 @@ in
           ProtectKernelModules = true;
           ProtectKernelTunables = true;
           ProtectSystem = "strict";
+          ReadWritePaths = [
+            cfg.dataDir
+            cfg.downloadsDir
+          ];
           RestrictAddressFamilies = [
             "AF_INET"
             "AF_INET6"
