@@ -2,12 +2,9 @@
   config,
   lib,
   pkgs,
-  modulesPath,
   ...
 }:
-
-with lib;
-{
+with lib; {
   # NOTE
   # Some 'global' areas have defaults set in their respective modules.
   # These will be applied when the modules are loaded
@@ -22,10 +19,13 @@ with lib;
     boot.tmp.cleanOnBoot = true;
     mySystem = {
       # basics for all devices
-      editor.vim.enable = true;
+      editor = {
+        nvim.enable = true;
+        vim.enable = true;
+      };
       time.timeZone = "America/Chicago";
       security.increaseWheelLoginLimits = true;
-      system.packages = [ pkgs.bat ];
+      system.packages = [pkgs.bat];
       domain = "hsn.dev";
       shell.fish.enable = true;
     };
@@ -43,5 +43,4 @@ with lib;
 
     networking.domain = config.mySystem.domain;
   };
-
 }

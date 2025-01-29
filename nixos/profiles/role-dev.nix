@@ -4,8 +4,7 @@
   ...
 }:
 # Role for dev stations
-# Could be a workstatio or a headless server.
-
+# Could be a workstation or a headless server.
 {
   config = {
     # git & vim are in global
@@ -40,6 +39,7 @@
       shfmt
       statix
       tmux
+      #unstable.aider-chat
       unstable.bottom
       unstable.cyme
       unstable.go-task

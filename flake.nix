@@ -92,6 +92,9 @@
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
+
+    # nvf -  A highly modular, extensible and distro-agnostic Neovim configuration framework for Nix/NixOS.
+    nvf.url = "github:notashelf/nvf";
   };
 
   outputs = {
@@ -106,6 +109,7 @@
     lix-module,
     vscode-server,
     krewfile,
+    nvf,
     ...
   } @ inputs: let
     forAllSystems = nixpkgs.lib.genAttrs [
@@ -146,6 +150,7 @@
         baseModules ? [
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
+          nvf.nixosModules.default
           ./nixos/profiles/global.nix # all machines get a global profile
           ./nixos/modules/nixos # all machines get nixos modules
           ./nixos/hosts/${hostname} # load this host's config folder for machine-specific config
