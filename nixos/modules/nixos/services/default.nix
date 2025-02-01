@@ -10,6 +10,7 @@
     ./nix-index-daily
     ./onepassword-connect
     ./podman
+    ./prowlarr
     ./qbittorrent
     ./reboot-required-check.nix
     ./sabnzbd
