@@ -127,7 +127,7 @@ in {
           motion = {
             hop.enable = true;
             leap.enable = true;
-            precognition.enable = true;
+            precognition.enable = false;
           };
           images = {
             image-nvim.enable = false;
