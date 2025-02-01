@@ -71,6 +71,22 @@ in {
     };
   };
 
+  environment.systemPackages = with pkgs; [
+    libva-utils # to view graphics capabilities
+    greetd.tuigreet
+    rofi-wayland
+    grim
+    inxi
+    nvtopPackages.full
+    pyprland
+    swaynotificationcenter
+    swww
+    wallust
+    wl-clipboard
+    wlogout
+    # fun
+    fastfetch
+  ];
   programs = {
     # 1Password cli
     _1password.enable = true;
@@ -88,7 +104,17 @@ in {
       portalPackage =
         inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
       withUWSM = true;
+      # xwayland.enable = true;
     };
+    waybar.enable = true;
+    thunar.enable = true;
+    thunar.plugins = with pkgs.xfce; [
+      exo
+      mousepad
+      thunar-archive-plugin
+      thunar-volman
+      tumbler
+    ];
   };
 
   # Open ports in the firewall.
@@ -138,6 +164,14 @@ in {
       settings = import ./config/soft-serve.nix {};
     };
 
+    sunshine = {
+      enable = true;
+      autoStart = true;
+      capSysAdmin = true; # only needed for Wayland
+      openFirewall = true;
+      package = pkgs.unstable.sunshine;
+    };
+
     # Tailscale
     tailscale = {
       enable = true;
@@ -148,6 +182,16 @@ in {
     vscode-server.enable = true;
 
     xserver.videoDrivers = ["nvidia"];
+    greetd = {
+      enable = true;
+      vt = 3;
+      settings = {
+        default_session = {
+          user = "jahanson";
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland"; # start Hyprland with a TUI login manager
+        };
+      };
+    };
   };
 
   # sops
@@ -175,6 +219,8 @@ in {
 
   # System settings and services.
   mySystem = {
+    # VS Code
+    editor.vscode.enable = true;
     # Containers
     containers = {
       jellyfin.enable = true;
@@ -188,6 +234,15 @@ in {
       # Misc
       libvirt-qemu.enable = true;
       podman.enable = true;
+      # Prowlarr
+      prowlarr = {
+        enable = true;
+        package = pkgs.unstable.prowlarr;
+        dataDir = "/nahar/prowlarr";
+        hardening = true;
+        openFirewall = true;
+        port = 9696;
+      };
       # Sabnzbd
       sabnzbd = {
         enable = true;
