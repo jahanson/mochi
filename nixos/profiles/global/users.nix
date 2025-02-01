@@ -1,8 +1,10 @@
-{ pkgs, config, ... }:
-let
-  ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
-in
 {
+  pkgs,
+  config,
+  ...
+}: let
+  ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
+in {
   sops.secrets = {
     jahanson-password = {
       sopsFile = ./secrets.sops.yaml;
@@ -41,6 +43,11 @@ in
             "libvirtd"
             "wireshark"
             "minecraft"
+            "prowlarr"
+            "radarr"
+            "sonarr"
+            "qbittorrent"
+            "sabnzbd"
           ];
 
         openssh.authorizedKeys.keys = [
