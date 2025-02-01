@@ -4,25 +4,20 @@
   pkgs,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.mySystem.editor.vscode;
   # VSCode Community Extensions. These are updated daily.
   vscodeCommunityExtensions = [
-    "ahmadalli.vscode-nginx-conf"
-    "astro-build.astro-vscode"
     "bmalehorn.vscode-fish"
-    "coder.coder-remote"
     "dracula-theme.theme-dracula"
+    "catppuccin.catppuccin-vsc"
     "editorconfig.editorconfig"
     "esbenp.prettier-vscode"
     "foxundermoon.shell-format"
-    "github.copilot"
-    "hashicorp.hcl"
+    # "github.copilot"
     "jnoortheen.nix-ide"
     "mikestead.dotenv"
     "mrmlnc.vscode-json5"
-    "ms-azuretools.vscode-docker"
     # "ms-python.python" # Python extensions *required* for redhat.ansible/vscode-yaml
     "ms-python.vscode-pylance"
     "ms-vscode-remote.remote-ssh-edit"
@@ -37,8 +32,6 @@ let
     "fill-labs.dependi"
     "rust-lang.rust-analyzer"
     "dustypomerleau.rust-syntax"
-    "mattheworford.hocon-tools"
-    "pgourlain.erlang"
     "exiasr.hadolint"
     # "github.copilot-chat"
   ];
@@ -49,48 +42,43 @@ let
   ];
   # Straight from the VSCode marketplace.
   marketplaceExtensions = [
-    # {
-    #   name = "copilot";
-    #   publisher = "github";
-    #   version = "1.219.0";
-    #   sha256 = "Y/l59JsmAKtENhBBf965brSwSkTjSOEuxc3tlWI88sY=";
-    # }
+    {
+      name = "copilot";
+      publisher = "github";
+      version = "1.261.0";
+      sha256 = "sha256-8IElcnSmngget8gduhdJUMx++PslOg58zcLwhRZCNyk=";
+    }
     {
       # Apparently there's no insiders build for copilot-chat so the latest isn't what we want.
       # The latest generally targets insiders build of vs code right now and it won't load on stable.
       name = "copilot-chat";
       publisher = "github";
-      version = "0.21.1";
-      sha256 = "sha256-8naCDn6esc1ZR30aX7/+F6ClFjQLPQ3k3r6jyVZ3iNg=";
-    }
-    {
-      name = "remote-ssh";
-      publisher = "ms-vscode-remote";
-      version = "0.113.1";
-      sha256 = "sha256-/tyyjf3fquUmjdEX7Gyt3MChzn1qMbijyej8Lskt6So=";
-
+      version = "0.23.2";
+      sha256 = "sha256-OT+ynCA+z8TvDE02hkOEQcJ1mBNz6geLxLOFtgIgKZE=";
     }
     {
       # Same issue as the above -- auto pulling nightly builds not compatible with vscode stable.
       name = "python";
       publisher = "ms-python";
-      version = "2024.14.1";
-      sha256 = "sha256-NhE3xATR4D6aAqIT/hToZ/qzMvZxjTmpTyDoIrdvuTE=";
+      version = "2024.22.2";
+      sha256 = "sha256-uVv4kpTf0W82Gvoju0Q/HKf6SpN2mwuYO7NItlRoezI=";
     }
   ];
   # Extract extension strings and coerce them to a list of valid attribute paths.
-  vscodeCommunityExtensionsPackages = map (
-    ext: getAttrFromPath (splitString "." ext) pkgs.vscode-marketplace
-  ) vscodeCommunityExtensions;
-  nixpkgsExtensionsPackages = map (
-    ext: getAttrFromPath (splitString "." ext) pkgs.vscode-extensions
-  ) vscodeNixpkgsExtensions;
+  vscodeCommunityExtensionsPackages =
+    map (
+      ext: getAttrFromPath (splitString "." ext) pkgs.vscode-marketplace
+    )
+    vscodeCommunityExtensions;
+  nixpkgsExtensionsPackages =
+    map (
+      ext: getAttrFromPath (splitString "." ext) pkgs.vscode-extensions
+    )
+    vscodeNixpkgsExtensions;
   marketplaceExtensionsPackages = pkgs.vscode-utils.extensionsFromVscodeMarketplace marketplaceExtensions;
-in
-{
+in {
   options.mySystem.editor.vscode.enable = mkEnableOption "vscode";
   config = mkIf cfg.enable {
-
     # Enable vscode & addons
     environment.systemPackages = with pkgs; [
       (vscode-with-extensions.override {
