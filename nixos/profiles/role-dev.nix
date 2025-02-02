@@ -39,6 +39,7 @@
       shfmt
       statix
       tmux
+      yt-dlp
       #unstable.aider-chat
       unstable.bottom
       unstable.cyme
@@ -48,6 +49,7 @@
       unstable.talosctl # overlay override
       unstable.zellij
       unstable.kitty
+      unstable.nodePackages_latest.prettier # code formatter
 
       # flake imports
       inputs.nix-inspect.packages.${pkgs.system}.default

@@ -4,26 +4,28 @@
   inputs,
   pkgs,
   ...
-}: let
-  sanoidConfig = import ./config/sanoid.nix {};
+}:
+let
+  sanoidConfig = import ./config/sanoid.nix { };
   disks = import ./config/disks.nix;
-  smartdDevices = map (device: {inherit device;}) disks;
-in {
+  smartdDevices = map (device: { inherit device; }) disks;
+in
+{
   imports = [
     inputs.disko.nixosModules.disko
     (import ../../profiles/disko-nixos.nix {
-      disks = ["/dev/sda|/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_500GB_S58SNM0W406409E"];
+      disks = [ "/dev/sda|/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_500GB_S58SNM0W406409E" ];
     })
     inputs.nix-minecraft.nixosModules.minecraft-servers
   ];
 
   boot = {
     initrd = {
-      kernelModules = ["nfs"];
-      supportedFilesystems = ["nfs"];
+      kernelModules = [ "nfs" ];
+      supportedFilesystems = [ "nfs" ];
     };
 
-    binfmt.emulatedSystems = ["aarch64-linux"]; # Enabled for arm compilation
+    binfmt.emulatedSystems = [ "aarch64-linux" ]; # Enabled for arm compilation
 
     kernelModules = [
       "vfio"
@@ -31,11 +33,11 @@ in {
       "vfio_pci"
       "vfio_virqfd"
     ];
-    extraModulePackages = [];
-    kernelParams = ["zfs.zfs_arc_max=107374182400"]; # 100GB
+    extraModulePackages = [ ];
+    kernelParams = [ "zfs.zfs_arc_max=107374182400" ]; # 100GB
   };
 
-  swapDevices = [];
+  swapDevices = [ ];
 
   hardware = {
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
@@ -45,8 +47,7 @@ in {
     nvidia-container-toolkit.enable = true;
   };
 
-  users.users.root.openssh.authorizedKeys.keys = [];
-
+  users.users.root.openssh.authorizedKeys.keys = [ ];
   # Network settings
   networking = {
     hostName = "shadowfax";
@@ -134,7 +135,7 @@ in {
     # Minio
     minio = {
       enable = true;
-      dataDir = ["/eru/minio"];
+      dataDir = [ "/eru/minio" ];
       rootCredentialsFile = config.sops.secrets."minio".path;
     };
 
@@ -161,7 +162,7 @@ in {
     # Soft Serve - SSH git server
     soft-serve = {
       enable = true;
-      settings = import ./config/soft-serve.nix {};
+      settings = import ./config/soft-serve.nix { };
     };
 
     sunshine = {
@@ -181,7 +182,7 @@ in {
     # VSCode Compatibility Settings
     vscode-server.enable = true;
 
-    xserver.videoDrivers = ["nvidia"];
+    xserver.videoDrivers = [ "nvidia" ];
     greetd = {
       enable = true;
       vt = 3;
@@ -195,27 +196,7 @@ in {
   };
 
   # sops
-  sops.secrets = {
-    "minio" = {
-      sopsFile = ./secrets.sops.yaml;
-      owner = "minio";
-      group = "minio";
-      mode = "400";
-      restartUnits = ["minio.service"];
-    };
-    "syncthing/publicCert" = {
-      sopsFile = ./secrets.sops.yaml;
-      owner = "jahanson";
-      mode = "400";
-      restartUnits = ["syncthing.service"];
-    };
-    "syncthing/privateKey" = {
-      sopsFile = ./secrets.sops.yaml;
-      owner = "jahanson";
-      mode = "400";
-      restartUnits = ["syncthing.service"];
-    };
-  };
+  sops = import ./config/sops-secrets.nix { };
 
   # System settings and services.
   mySystem = {
@@ -239,9 +220,17 @@ in {
         enable = true;
         package = pkgs.unstable.prowlarr;
         dataDir = "/nahar/prowlarr";
-        hardening = true;
-        openFirewall = true;
         port = 9696;
+        openFirewall = true;
+        hardening = true;
+        apiKeyFile = config.sops.secrets."arr/prowlarr/apiKey".path;
+        db = {
+          enable = true;
+          hostFile = config.sops.secrets."arr/prowlarr/postgres/host".path;
+          port = 5432;
+          userFile = config.sops.secrets."arr/prowlarr/postgres/user".path;
+          passwordFile = config.sops.secrets."arr/prowlarr/postgres/password".path;
+        };
       };
       # Sabnzbd
       sabnzbd = {
@@ -281,7 +270,7 @@ in {
       # qBittorrent
       qbittorrent = {
         enable = true;
-        package = pkgs.unstable.qbittorrent.override {guiSupport = false;};
+        package = pkgs.unstable.qbittorrent.override { guiSupport = false; };
         dataDir = "/nahar/qbittorrent";
         downloadsDir = "/eru/media/qb/downloads";
         webuiPort = 8456;
@@ -302,9 +291,9 @@ in {
     system = {
       incus = {
         enable = true;
-        preseed = import ./config/incus-preseed.nix {};
+        preseed = import ./config/incus-preseed.nix { };
       };
-      motd.networkInterfaces = ["bond0"];
+      motd.networkInterfaces = [ "bond0" ];
       nfs.enable = true;
       zfs.enable = true;
       zfs.mountPoolsAtBoot = [

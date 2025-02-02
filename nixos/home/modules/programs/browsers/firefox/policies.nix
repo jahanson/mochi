@@ -8,9 +8,9 @@
     Fingerprinting = true;
   };
   DisablePocket = true;
-  # DisableFirefoxAccounts = true;
-  # DisableAccounts = true;
-  # DisableFirefoxScreenshots = true;
+  DisableFirefoxAccounts = true;
+  DisableAccounts = true;
+  DisableFirefoxScreenshots = true;
   # OverrideFirstRunPage = "";
   OverridePostUpdatePage = "";
   DontCheckDefaultBrowser = true;

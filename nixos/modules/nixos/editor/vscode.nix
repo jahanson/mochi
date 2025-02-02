@@ -14,11 +14,9 @@ with lib; let
     "editorconfig.editorconfig"
     "esbenp.prettier-vscode"
     "foxundermoon.shell-format"
-    # "github.copilot"
     "jnoortheen.nix-ide"
     "mikestead.dotenv"
     "mrmlnc.vscode-json5"
-    # "ms-python.python" # Python extensions *required* for redhat.ansible/vscode-yaml
     "ms-python.vscode-pylance"
     "ms-vscode-remote.remote-ssh-edit"
     "pkief.material-icon-theme"
@@ -33,7 +31,9 @@ with lib; let
     "rust-lang.rust-analyzer"
     "dustypomerleau.rust-syntax"
     "exiasr.hadolint"
+    # "github.copilot"
     # "github.copilot-chat"
+    # "ms-python.python" # Python extensions *required* for redhat.ansible/vscode-yaml
   ];
   # Nixpkgs Extensions. These are updated whenver they get around to it.
   vscodeNixpkgsExtensions = [

@@ -72,11 +72,10 @@
     vscode-server.url = "github:nix-community/nixos-vscode-server";
 
     # krewfile - Declarative krew plugin management
-    krewfile = {
-      # url = "github:brumhard/krewfile";
-      url = "github:brumhard/krewfile";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # krewfile = {
+    #  url = "github:brumhard/krewfile";
+    #  inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     # nix-minecraft - Minecraft server management
     # https://github.com/infinidoge/nix-minecraft
@@ -103,12 +102,9 @@
     nixpkgs-unstable,
     sops-nix,
     home-manager,
-    nix-vscode-extensions,
     disko,
-    talhelper,
     lix-module,
     vscode-server,
-    krewfile,
     nvf,
     ...
   } @ inputs: let
@@ -155,6 +151,7 @@
           ./nixos/modules/nixos # all machines get nixos modules
           ./nixos/hosts/${hostname} # load this host's config folder for machine-specific config
           {
+            inherit disabledModules;
             home-manager = {
               useUserPackages = true;
               useGlobalPkgs = true;
@@ -162,7 +159,6 @@
                 inherit inputs hostname system;
               };
             };
-            disabledModules = disabledModules;
           }
         ],
         profileModules ? [],
@@ -201,7 +197,7 @@
           "${nixpkgs-unstable}/nixos/modules/services/web-servers/caddy/default.nix"
           ./nixos/profiles/role-dev.nix
           ./nixos/profiles/role-server.nix
-          {home-manager.users.jahanson = ./nixos/home/jahanson/server.nix;}
+          {home-manager.users.jahanson = ./nixos/home/jahanson/sworkstation.nix;}
         ];
       };
 

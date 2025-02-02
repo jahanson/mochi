@@ -12,6 +12,14 @@ in {
     programs.nvf = {
       enable = true;
       settings.vim = {
+        keymaps = [
+          {
+            mode = "n";
+            key = "<leader>rp";
+            action = ":lua require('precognition').peek()<CR>";
+            desc = "Peek recognition";
+          }
+        ];
         viAlias = false;
         vimAlias = true;
         lsp = {
@@ -127,7 +135,10 @@ in {
           motion = {
             hop.enable = true;
             leap.enable = true;
-            precognition.enable = false;
+            precognition = {
+              enable = true;
+              setupOpts.startVisible = false;
+            };
           };
           images = {
             image-nvim.enable = false;
