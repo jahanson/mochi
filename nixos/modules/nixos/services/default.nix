@@ -12,6 +12,7 @@
     ./podman
     ./prowlarr
     ./qbittorrent
+    ./radarr
     ./reboot-required-check.nix
     ./sabnzbd
     ./sanoid

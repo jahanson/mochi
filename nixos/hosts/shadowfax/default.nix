@@ -232,6 +232,26 @@ in
           passwordFile = config.sops.secrets."arr/prowlarr/postgres/password".path;
         };
       };
+      # Radarr
+      radarr = {
+        enable = true;
+        package = pkgs.unstable.radarr;
+        dataDir = "/nahar/radarr";
+        moviesDir = "/moria/media/Movies";
+        user = "radarr";
+        group = "kah";
+        port = 7878;
+        openFirewall = true;
+        hardening = true;
+        apiKeyFile = config.sops.secrets."arr/radarr/apiKey".path;
+        db = {
+          enable = true;
+          hostFile = config.sops.secrets."arr/radarr/postgres/host".path;
+          port = 5432;
+          userFile = config.sops.secrets."arr/radarr/postgres/user".path;
+          passwordFile = config.sops.secrets."arr/radarr/postgres/password".path;
+        };
+      };
       # Sabnzbd
       sabnzbd = {
         enable = true;
