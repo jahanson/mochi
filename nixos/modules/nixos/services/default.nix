@@ -16,6 +16,7 @@
     ./reboot-required-check.nix
     ./sabnzbd
     ./sanoid
+    ./sonarr
     ./syncthing
     ./zfs-nightly-snap
   ];

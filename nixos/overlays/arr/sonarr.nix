@@ -12,11 +12,9 @@
   openssl,
   nixosTests,
   zlib,
-}: let
-  os =
-    if stdenv.hostPlatform.isDarwin
-    then "osx"
-    else "linux";
+}:
+let
+  os = if stdenv.hostPlatform.isDarwin then "osx" else "linux";
   arch =
     {
       x86_64-linux = "x64";
@@ -24,8 +22,7 @@
       x86_64-darwin = "x64";
       aarch64-darwin = "arm64";
     }
-    ."${stdenv.hostPlatform.system}"
-    or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
+    ."${stdenv.hostPlatform.system}" or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
 
   hash =
     {
@@ -36,26 +33,26 @@
     }
     ."${arch}-${os}_hash";
 in
-  stdenv.mkDerivation rec {
-    pname = "sonarr";
-    version = "4.0.12.2823";
+stdenv.mkDerivation rec {
+  pname = "sonarr";
+  version = "4.0.12.2823";
 
-    src = fetchurl {
-      url = "https://github.com/Sonarr/Sonarr/releases/download/v${version}/Sonarr.main.${version}.${os}-${arch}.tar.gz";
-      sha256 = hash;
-    };
+  src = fetchurl {
+    url = "https://github.com/Sonarr/Sonarr/releases/download/v${version}/Sonarr.main.${version}.${os}-${arch}.tar.gz";
+    sha256 = hash;
+  };
 
-    nativeBuildInputs = [makeWrapper];
+  nativeBuildInputs = [ makeWrapper ];
 
-    installPhase = ''
-      runHook preInstall
+  installPhase = ''
+    runHook preInstall
 
-      mkdir -p $out/{bin,share/${pname}-${version}}
-      cp -r * $out/share/${pname}-${version}/.
+    mkdir -p $out/{bin,share/${pname}-${version}}
+    cp -r * $out/share/${pname}-${version}/.
 
-      makeWrapper "${dotnet-runtime}/bin/dotnet" $out/bin/Sonarr \
-        --add-flags "$out/share/${pname}-${version}/Sonarr.dll" \
-        --prefix LD_LIBRARY_PATH : ${
+    makeWrapper "${dotnet-runtime}/bin/dotnet" $out/bin/Sonarr \
+      --add-flags "$out/share/${pname}-${version}/Sonarr.dll" \
+      --prefix LD_LIBRARY_PATH : ${
         lib.makeLibraryPath [
           curl
           sqlite
@@ -67,11 +64,11 @@ in
         ]
       }
 
-      runHook postInstall
-    '';
-    passthru = {
-      tests.smoke-test = nixosTests.radarr;
-    };
+    runHook postInstall
+  '';
+  passthru = {
+    tests.smoke-test = nixosTests.radarr;
+  };
 
-    mainProgram = "Sonarr";
-  }
+  meta.mainProgram = "Sonarr";
+}

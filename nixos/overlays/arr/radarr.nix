@@ -12,11 +12,9 @@
   openssl,
   nixosTests,
   zlib,
-}: let
-  os =
-    if stdenv.hostPlatform.isDarwin
-    then "osx"
-    else "linux";
+}:
+let
+  os = if stdenv.hostPlatform.isDarwin then "osx" else "linux";
   arch =
     {
       x86_64-linux = "x64";
@@ -24,8 +22,7 @@
       x86_64-darwin = "x64";
       aarch64-darwin = "arm64";
     }
-    ."${stdenv.hostPlatform.system}"
-    or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
+    ."${stdenv.hostPlatform.system}" or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
 
   hash =
     {
@@ -36,26 +33,26 @@
     }
     ."${arch}-${os}_hash";
 in
-  stdenv.mkDerivation rec {
-    pname = "radarr";
-    version = "5.17.2.9580";
+stdenv.mkDerivation rec {
+  pname = "radarr";
+  version = "5.17.2.9580";
 
-    src = fetchurl {
-      url = "https://github.com/Radarr/Radarr/releases/download/v${version}/Radarr.master.${version}.${os}-core-${arch}.tar.gz";
-      sha256 = hash;
-    };
+  src = fetchurl {
+    url = "https://github.com/Radarr/Radarr/releases/download/v${version}/Radarr.master.${version}.${os}-core-${arch}.tar.gz";
+    sha256 = hash;
+  };
 
-    nativeBuildInputs = [makeWrapper];
+  nativeBuildInputs = [ makeWrapper ];
 
-    installPhase = ''
-      runHook preInstall
+  installPhase = ''
+    runHook preInstall
 
-      mkdir -p $out/{bin,share/${pname}-${version}}
-      cp -r * $out/share/${pname}-${version}/.
+    mkdir -p $out/{bin,share/${pname}-${version}}
+    cp -r * $out/share/${pname}-${version}/.
 
-      makeWrapper "${dotnet-runtime}/bin/dotnet" $out/bin/Radarr \
-        --add-flags "$out/share/${pname}-${version}/Radarr.dll" \
-        --prefix LD_LIBRARY_PATH : ${
+    makeWrapper "${dotnet-runtime}/bin/dotnet" $out/bin/Radarr \
+      --add-flags "$out/share/${pname}-${version}/Radarr.dll" \
+      --prefix LD_LIBRARY_PATH : ${
         lib.makeLibraryPath [
           curl
           sqlite
@@ -67,13 +64,13 @@ in
         ]
       }
 
-      runHook postInstall
-    '';
+    runHook postInstall
+  '';
 
-    passthru = {
-      updateScript = ./update.sh;
-      tests.smoke-test = nixosTests.radarr;
-    };
+  passthru = {
+    updateScript = ./update.sh;
+    tests.smoke-test = nixosTests.radarr;
+  };
 
-    mainProgram = "Radarr";
-  }
+  meta.mainProgram = "Radarr";
+}

@@ -252,6 +252,26 @@ in
           passwordFile = config.sops.secrets."arr/radarr/postgres/password".path;
         };
       };
+      # Sonarr
+      sonarr = {
+        enable = true;
+        package = pkgs.unstable.sonarr;
+        dataDir = "/nahar/sonarr";
+        tvDir = "/moria/media/TV";
+        user = "sonarr";
+        group = "kah";
+        port = 8989;
+        openFirewall = true;
+        hardening = true;
+        apiKeyFile = config.sops.secrets."arr/sonarr/apiKey".path;
+        db = {
+          enable = true;
+          hostFile = config.sops.secrets."arr/sonarr/postgres/host".path;
+          port = 5432;
+          userFile = config.sops.secrets."arr/sonarr/postgres/user".path;
+          passwordFile = config.sops.secrets."arr/sonarr/postgres/password".path;
+        };
+      };
       # Sabnzbd
       sabnzbd = {
         enable = true;
