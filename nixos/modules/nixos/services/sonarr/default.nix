@@ -113,6 +113,22 @@ in
       description = "API key for sonarr from a file (mutually exclusive with apiKey)";
     };
 
+    extraEnvVars = mkOption {
+      type = types.attrs;
+      default = { };
+      example = {
+        MY_VAR = "my value";
+      };
+      description = "Extra environment variables for sonarr.";
+    };
+
+    extraEnvVarFile = mkOption {
+      type = lib.types.nullOr lib.types.path;
+      default = null;
+      example = "/run/secrets/sonarr_extra_env";
+      description = "Extra environment file for Sonarr.";
+    };
+
     db = mkOption {
       type = types.submodule dbOptions;
       example = {
@@ -169,6 +185,7 @@ in
           SONARR__POSTGRES__PORT = toString cfg.db.port;
           SONARR__POSTGRES__MAINDB = cfg.db.dbname;
         })
+        cfg.extraEnvVars
       ];
 
       serviceConfig = lib.mkMerge [
@@ -263,7 +280,10 @@ in
             chown ${cfg.user}:${cfg.group} /run/sonarr/secrets.env
           ''}";
 
-          EnvironmentFile = [ "-/run/sonarr/secrets.env" ];
+          EnvironmentFile = (
+            [ "-/run/sonarr/secrets.env" ]
+            ++ lib.optional (cfg.extraEnvVarFile != null && cfg.extraEnvVarFile != "") cfg.extraEnvVarFile
+          );
         })
       ];
     };

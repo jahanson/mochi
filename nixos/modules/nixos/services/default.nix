@@ -18,6 +18,7 @@
     ./sanoid
     ./sonarr
     ./syncthing
+    ./unpackerr
     ./zfs-nightly-snap
   ];
 }

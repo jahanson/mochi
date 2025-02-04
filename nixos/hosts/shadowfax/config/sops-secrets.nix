@@ -84,7 +84,13 @@
       mode = "400";
       restartUnits = [ "sonarr.service" ];
     };
-    # # Radarr
+    "arr/sonarr/extraEnvVars" = {
+      sopsFile = ../secrets.sops.yaml;
+      owner = "sonarr";
+      mode = "400";
+      restartUnits = [ "sonarr.service" ];
+    };
+    # Radarr
     "arr/radarr/apiKey" = {
       sopsFile = ../secrets.sops.yaml;
       owner = "radarr";
@@ -114,6 +120,19 @@
       owner = "radarr";
       mode = "400";
       restartUnits = [ "radarr.service" ];
+    };
+    "arr/radarr/extraEnvVars" = {
+      sopsFile = ../secrets.sops.yaml;
+      owner = "radarr";
+      mode = "400";
+      restartUnits = [ "radarr.service" ];
+    };
+    # Unpackerr
+    "arr/unpackerr/extraEnvVars" = {
+      sopsFile = ../secrets.sops.yaml;
+      owner = "unpackerr";
+      mode = "400";
+      restartUnits = [ "unpackerr.service" ];
     };
   };
 }

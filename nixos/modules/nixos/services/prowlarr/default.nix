@@ -5,7 +5,8 @@
   utils,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.mySystem.services.prowlarr;
   dbOptions = {
     options = {
@@ -50,11 +51,12 @@ with lib; let
       };
     };
   };
-in {
+in
+{
   options.mySystem.services.prowlarr = {
     enable = mkEnableOption "Prowlarr";
 
-    package = mkPackageOption pkgs "prowlarr" {};
+    package = mkPackageOption pkgs "prowlarr" { };
 
     user = mkOption {
       type = types.str;
@@ -105,6 +107,22 @@ in {
       description = "API key for Prowlarr from a file (mutually exclusive with apiKey)";
     };
 
+    extraEnvVars = mkOption {
+      type = types.attrs;
+      default = { };
+      example = {
+        MY_VAR = "my value";
+      };
+      description = "Extra environment variables for Prowlarr.";
+    };
+
+    extraEnvVarFile = mkOption {
+      type = lib.types.nullOr lib.types.path;
+      default = null;
+      example = "/run/secrets/prowlarr_extra_env";
+      description = "Extra environment file for Prowlarr.";
+    };
+
     db = mkOption {
       type = types.submodule dbOptions;
       example = {
@@ -141,7 +159,7 @@ in {
         "network.target"
         "nss-lookup.target"
       ];
-      wantedBy = ["multi-user.target"];
+      wantedBy = [ "multi-user.target" ];
       environment = lib.mkMerge [
         {
           PROWLARR__APP__INSTANCENAME = "Prowlarr";
@@ -157,6 +175,7 @@ in {
           PROWLARR__POSTGRES__PORT = toString cfg.db.port;
           PROWLARR__POSTGRES__MAINDB = cfg.db.dbname;
         })
+        cfg.extraEnvVars
       ];
 
       serviceConfig = lib.mkMerge [
@@ -178,8 +197,8 @@ in {
           RestartSec = 5;
         }
         (lib.mkIf cfg.hardening {
-          CapabilityBoundingSet = [""];
-          DeviceAllow = [""];
+          CapabilityBoundingSet = [ "" ];
+          DeviceAllow = [ "" ];
           DevicePolicy = "closed";
           LockPersonality = true;
           # Needs access to .Net CLR memory space.
@@ -249,16 +268,19 @@ in {
             chown ${cfg.user}:${cfg.group} /run/prowlarr/secrets.env
           ''}";
 
-          EnvironmentFile = ["-/run/prowlarr/secrets.env"];
+          EnvironmentFile = (
+            [ "-/run/prowlarr/secrets.env" ]
+            ++ lib.optional (cfg.extraEnvVarFile != null && cfg.extraEnvVarFile != "") cfg.extraEnvVarFile
+          );
         })
       ];
     };
 
     networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [cfg.port];
+      allowedTCPPorts = [ cfg.port ];
     };
 
-    users.groups.${cfg.group} = {};
+    users.groups.${cfg.group} = { };
     users.users = mkIf (cfg.user == "prowlarr") {
       prowlarr = {
         inherit (cfg) group;

@@ -125,6 +125,22 @@ in
       };
       description = "Database settings for radarr.";
     };
+
+    extraEnvVars = mkOption {
+      type = types.attrs;
+      default = { };
+      example = {
+        MY_VAR = "my value";
+      };
+      description = "Extra environment variables for radarr.";
+    };
+
+    extraEnvVarFile = mkOption {
+      type = lib.types.nullOr lib.types.path;
+      default = null;
+      example = "/run/secrets/radarr_extra_env";
+      description = "Extra environment file for Radarr.";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -169,6 +185,7 @@ in
           RADARR__POSTGRES__PORT = toString cfg.db.port;
           RADARR__POSTGRES__MAINDB = cfg.db.dbname;
         })
+        cfg.extraEnvVars
       ];
 
       serviceConfig = lib.mkMerge [
@@ -262,7 +279,10 @@ in
             chown ${cfg.user}:${cfg.group} /run/radarr/secrets.env
           ''}";
 
-          EnvironmentFile = [ "-/run/radarr/secrets.env" ];
+          EnvironmentFile = (
+            [ "-/run/radarr/secrets.env" ]
+            ++ lib.optional (cfg.extraEnvVarFile != null && cfg.extraEnvVarFile != "") cfg.extraEnvVarFile
+          );
         })
       ];
     };

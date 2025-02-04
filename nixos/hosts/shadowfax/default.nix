@@ -4,28 +4,55 @@
   inputs,
   pkgs,
   ...
-}:
-let
-  sanoidConfig = import ./config/sanoid.nix { };
+}: let
+  sanoidConfig = import ./config/sanoid.nix {};
   disks = import ./config/disks.nix;
-  smartdDevices = map (device: { inherit device; }) disks;
-in
-{
+  smartdDevices = map (device: {inherit device;}) disks;
+  pushoverNotify = pkgs.writeShellApplication {
+    name = "pushover-notify";
+
+    runtimeInputs = with pkgs; [
+      curl
+      jo
+      jq
+    ];
+
+    excludeShellChecks = ["SC2154"];
+
+    text = ''
+      ${builtins.readFile ./scripts/pushover-notify.sh}
+    '';
+  };
+  refreshSeries = pkgs.writeShellApplication {
+    name = "refresh-series";
+
+    runtimeInputs = with pkgs; [
+      curl
+      jq
+    ];
+
+    excludeShellChecks = ["SC2154"];
+
+    text = ''
+      ${builtins.readFile ./scripts/refresh-series.sh}
+    '';
+  };
+in {
   imports = [
     inputs.disko.nixosModules.disko
     (import ../../profiles/disko-nixos.nix {
-      disks = [ "/dev/sda|/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_500GB_S58SNM0W406409E" ];
+      disks = ["/dev/sda|/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_500GB_S58SNM0W406409E"];
     })
     inputs.nix-minecraft.nixosModules.minecraft-servers
   ];
 
   boot = {
     initrd = {
-      kernelModules = [ "nfs" ];
-      supportedFilesystems = [ "nfs" ];
+      kernelModules = ["nfs"];
+      supportedFilesystems = ["nfs"];
     };
 
-    binfmt.emulatedSystems = [ "aarch64-linux" ]; # Enabled for arm compilation
+    binfmt.emulatedSystems = ["aarch64-linux"]; # Enabled for arm compilation
 
     kernelModules = [
       "vfio"
@@ -33,11 +60,11 @@ in
       "vfio_pci"
       "vfio_virqfd"
     ];
-    extraModulePackages = [ ];
-    kernelParams = [ "zfs.zfs_arc_max=107374182400" ]; # 100GB
+    extraModulePackages = [];
+    kernelParams = ["zfs.zfs_arc_max=107374182400"]; # 100GB
   };
 
-  swapDevices = [ ];
+  swapDevices = [];
 
   hardware = {
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
@@ -47,7 +74,7 @@ in
     nvidia-container-toolkit.enable = true;
   };
 
-  users.users.root.openssh.authorizedKeys.keys = [ ];
+  users.users.root.openssh.authorizedKeys.keys = [];
   # Network settings
   networking = {
     hostName = "shadowfax";
@@ -72,6 +99,7 @@ in
     };
   };
 
+  # System packages
   environment.systemPackages = with pkgs; [
     libva-utils # to view graphics capabilities
     greetd.tuigreet
@@ -87,7 +115,11 @@ in
     wlogout
     # fun
     fastfetch
+    # Scripts
+    pushoverNotify
+    refreshSeries
   ];
+
   programs = {
     # 1Password cli
     _1password.enable = true;
@@ -135,7 +167,7 @@ in
     # Minio
     minio = {
       enable = true;
-      dataDir = [ "/eru/minio" ];
+      dataDir = ["/eru/minio"];
       rootCredentialsFile = config.sops.secrets."minio".path;
     };
 
@@ -162,7 +194,7 @@ in
     # Soft Serve - SSH git server
     soft-serve = {
       enable = true;
-      settings = import ./config/soft-serve.nix { };
+      settings = import ./config/soft-serve.nix {};
     };
 
     sunshine = {
@@ -182,7 +214,7 @@ in
     # VSCode Compatibility Settings
     vscode-server.enable = true;
 
-    xserver.videoDrivers = [ "nvidia" ];
+    xserver.videoDrivers = ["nvidia"];
     greetd = {
       enable = true;
       vt = 3;
@@ -196,7 +228,7 @@ in
   };
 
   # sops
-  sops = import ./config/sops-secrets.nix { };
+  sops = import ./config/sops-secrets.nix {};
 
   # System settings and services.
   mySystem = {
@@ -237,6 +269,7 @@ in
         enable = true;
         package = pkgs.unstable.radarr;
         dataDir = "/nahar/radarr";
+        extraEnvVarFile = config.sops.secrets."arr/radarr/extraEnvVars".path;
         moviesDir = "/moria/media/Movies";
         user = "radarr";
         group = "kah";
@@ -257,12 +290,13 @@ in
         enable = true;
         package = pkgs.unstable.sonarr;
         dataDir = "/nahar/sonarr";
+        extraEnvVarFile = config.sops.secrets."arr/sonarr/extraEnvVars".path;
         tvDir = "/moria/media/TV";
         user = "sonarr";
         group = "kah";
         port = 8989;
         openFirewall = true;
-        hardening = true;
+        hardening = false;
         apiKeyFile = config.sops.secrets."arr/sonarr/apiKey".path;
         db = {
           enable = true;
@@ -278,11 +312,21 @@ in
         package = pkgs.unstable.sabnzbd;
         configFile = "/nahar/sabnzbd/sabnzbd.ini";
         port = 8457;
+        user = "sabnzbd";
+        group = "kah";
         # Security hardening.
         dataDir = "/nahar/sabnzbd";
         downloadsDir = "/eru/media/sabnzbd";
         hardening = true;
         openFirewall = true;
+      };
+      unpackerr = {
+        enable = true;
+        package = pkgs.unstable.unpackerr;
+        configFile = "/tmp/unpackerr/config.yaml";
+        extraEnvVarsFile = config.sops.secrets."arr/unpackerr/extraEnvVars".path;
+        user = "unpackerr";
+        group = "kah";
       };
       # Sanoid
       sanoid = {
@@ -310,7 +354,9 @@ in
       # qBittorrent
       qbittorrent = {
         enable = true;
-        package = pkgs.unstable.qbittorrent.override { guiSupport = false; };
+        package = pkgs.unstable.qbittorrent.override {guiSupport = false;};
+        user = "qbittorrent";
+        group = "kah";
         dataDir = "/nahar/qbittorrent";
         downloadsDir = "/eru/media/qb/downloads";
         webuiPort = 8456;
@@ -331,9 +377,9 @@ in
     system = {
       incus = {
         enable = true;
-        preseed = import ./config/incus-preseed.nix { };
+        preseed = import ./config/incus-preseed.nix {};
       };
-      motd.networkInterfaces = [ "bond0" ];
+      motd.networkInterfaces = ["bond0"];
       nfs.enable = true;
       zfs.enable = true;
       zfs.mountPoolsAtBoot = [
