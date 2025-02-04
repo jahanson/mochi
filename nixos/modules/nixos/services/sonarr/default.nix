@@ -221,6 +221,7 @@ in
             "user"
             "cgroup"
             "net"
+            "mnt"
           ];
           RestrictSUIDSGID = true;
           SystemCallArchitectures = "native";
