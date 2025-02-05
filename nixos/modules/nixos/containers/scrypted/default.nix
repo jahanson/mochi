@@ -7,7 +7,7 @@
 with lib; let
   app = "scrypted";
   # renovate: depName=ghcr.io/koush/scrypted datasource=docker versioning=docker
-  version = "v0.132.0-noble-nvidia";
+  version = "v0.138.0-noble-nvidia";
   image = "ghcr.io/koush/scrypted:${version}";
   cfg = config.mySystem.containers.${app};
 in {
