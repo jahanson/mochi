@@ -3,9 +3,7 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.mySystem.services.zfs-nightly-snap;
 
   # Replaces/Creates and mounts a ZFS snapshot
@@ -62,8 +60,7 @@ let
       mount | grep "$BACKUP_DIRECTORY"
     '';
   };
-in
-{
+in {
   options.mySystem.services.zfs-nightly-snap = {
     enable = lib.mkEnableOption "ZFS nightly snapshot service";
 
@@ -98,12 +95,12 @@ in
     ];
 
     # Adding script to system packages
-    environment.systemPackages = [ resticSnapAndMount ];
+    environment.systemPackages = [resticSnapAndMount];
 
     systemd = {
       # Timer for nightly snapshot
       timers.zfs-nightly-snap = {
-        wantedBy = [ "timers.target" ];
+        wantedBy = ["timers.target"];
         timerConfig = {
           OnCalendar = cfg.startAt;
           Persistent = true; # Run immediately if we missed the last trigger time
@@ -115,9 +112,10 @@ in
         serviceConfig = {
           Type = "oneshot";
           ExecStart = "${resticSnapAndMount}/bin/zfs-nightly-snap";
+          PrivateMounts = "no"; # We want to mount the snapshot to the system
         };
-        requires = [ "zfs.target" ];
-        after = [ "zfs.target" ];
+        requires = ["zfs.target"];
+        after = ["zfs.target"];
       };
     };
   };
