@@ -75,6 +75,7 @@ in {
         11080 # Main Scrypted interface
         10443 # HTTPS interface
         8554 # RTSP server
+        33961 # Homekit
       ];
       allowedUDPPorts = [
         10443 # HTTPS interface
