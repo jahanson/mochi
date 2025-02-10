@@ -292,7 +292,7 @@ in
             };
           };
           moviesAnime = {
-            enable = false;
+            enable = true;
             package = pkgs.unstable.radarr;
             dataDir = "/nahar/radarr/anime";
             extraEnvVarFile = config.sops.secrets."arr/radarr/anime/extraEnvVars".path;
