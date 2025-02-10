@@ -54,41 +54,77 @@
       restartUnits = [ "prowlarr.service" ];
     };
     # Sonarr
-    "arr/sonarr/apiKey" = {
+    "arr/sonarr/1080p/apiKey" = {
       sopsFile = ../secrets.sops.yaml;
       owner = "sonarr";
       mode = "400";
-      restartUnits = [ "sonarr.service" ];
+      restartUnits = [ "sonarr-tv1080p.service" ];
     };
-    "arr/sonarr/postgres/dbName" = {
+    "arr/sonarr/1080p/postgres/dbName" = {
       sopsFile = ../secrets.sops.yaml;
       owner = "sonarr";
       mode = "400";
-      restartUnits = [ "sonarr.service" ];
+      restartUnits = [ "sonarr-tv1080p.service" ];
     };
-    "arr/sonarr/postgres/user" = {
+    "arr/sonarr/1080p/postgres/user" = {
       sopsFile = ../secrets.sops.yaml;
       owner = "sonarr";
       mode = "400";
-      restartUnits = [ "sonarr.service" ];
+      restartUnits = [ "sonarr-tv1080p.service" ];
     };
-    "arr/sonarr/postgres/password" = {
+    "arr/sonarr/1080p/postgres/password" = {
       sopsFile = ../secrets.sops.yaml;
       owner = "sonarr";
       mode = "400";
-      restartUnits = [ "sonarr.service" ];
+      restartUnits = [ "sonarr-tv1080p.service" ];
     };
-    "arr/sonarr/postgres/host" = {
+    "arr/sonarr/1080p/postgres/host" = {
       sopsFile = ../secrets.sops.yaml;
       owner = "sonarr";
       mode = "400";
-      restartUnits = [ "sonarr.service" ];
+      restartUnits = [ "sonarr-tv1080p.service" ];
     };
-    "arr/sonarr/extraEnvVars" = {
+    "arr/sonarr/1080p/extraEnvVars" = {
       sopsFile = ../secrets.sops.yaml;
       owner = "sonarr";
       mode = "400";
-      restartUnits = [ "sonarr.service" ];
+      restartUnits = [ "sonarr-tv1080p.service" ];
+    };
+    "arr/sonarr/anime/apiKey" = {
+      sopsFile = ../secrets.sops.yaml;
+      owner = "sonarr";
+      mode = "400";
+      restartUnits = [ "sonarr-anime.service" ];
+    };
+    "arr/sonarr/anime/postgres/dbName" = {
+      sopsFile = ../secrets.sops.yaml;
+      owner = "sonarr";
+      mode = "400";
+      restartUnits = [ "sonarr-anime.service" ];
+    };
+    "arr/sonarr/anime/postgres/user" = {
+      sopsFile = ../secrets.sops.yaml;
+      owner = "sonarr";
+      mode = "400";
+      restartUnits = [ "sonarr-anime.service" ];
+    };
+    "arr/sonarr/anime/postgres/password" = {
+      sopsFile = ../secrets.sops.yaml;
+      owner = "sonarr";
+      mode = "400";
+      restartUnits = [ "sonarr-anime.service" ];
+    };
+    "arr/sonarr/anime/postgres/host" = {
+      sopsFile = ../secrets.sops.yaml;
+      owner = "sonarr";
+      mode = "400";
+      restartUnits = [ "sonarr-anime.service" ];
+    };
+    "arr/sonarr/anime/extraEnvVars" = {
+      sopsFile = ../secrets.sops.yaml;
+      owner = "sonarr";
+      mode = "400";
+      restartUnits = [ "sonarr-anime.service" ];
     };
     # Radarr
     "arr/radarr/1080p/apiKey" = {

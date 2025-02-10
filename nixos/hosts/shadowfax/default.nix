@@ -317,22 +317,49 @@ in
       # Sonarr
       sonarr = {
         enable = true;
-        package = pkgs.unstable.sonarr;
-        dataDir = "/nahar/sonarr";
-        extraEnvVarFile = config.sops.secrets."arr/sonarr/extraEnvVars".path;
-        tvDir = "/moria/media/TV";
-        user = "sonarr";
-        group = "kah";
-        port = 8989;
-        openFirewall = true;
-        hardening = true;
-        apiKeyFile = config.sops.secrets."arr/sonarr/apiKey".path;
-        db = {
-          enable = true;
-          hostFile = config.sops.secrets."arr/sonarr/postgres/host".path;
-          port = 5432;
-          userFile = config.sops.secrets."arr/sonarr/postgres/user".path;
-          passwordFile = config.sops.secrets."arr/sonarr/postgres/password".path;
+        instances = {
+          tv1080p = {
+            enable = true;
+            package = pkgs.unstable.sonarr;
+            dataDir = "/nahar/sonarr/1080p";
+            extraEnvVarFile = config.sops.secrets."arr/sonarr/1080p/extraEnvVars".path;
+            tvDir = "/moria/media/TV";
+            user = "sonarr";
+            group = "kah";
+            port = 8989;
+            openFirewall = true;
+            hardening = true;
+            apiKeyFile = config.sops.secrets."arr/sonarr/1080p/apiKey".path;
+            db = {
+              enable = true;
+              hostFile = config.sops.secrets."arr/sonarr/1080p/postgres/host".path;
+              port = 5432;
+              dbname = "sonarr_main";
+              userFile = config.sops.secrets."arr/sonarr/1080p/postgres/user".path;
+              passwordFile = config.sops.secrets."arr/sonarr/1080p/postgres/password".path;
+            };
+          };
+          anime = {
+            enable = true;
+            package = pkgs.unstable.sonarr;
+            dataDir = "/nahar/sonarr/anime";
+            extraEnvVarFile = config.sops.secrets."arr/sonarr/anime/extraEnvVars".path;
+            tvDir = "/moria/media/Anime/Shows";
+            user = "sonarr";
+            group = "kah";
+            port = 8990;
+            openFirewall = true;
+            hardening = true;
+            apiKeyFile = config.sops.secrets."arr/sonarr/anime/apiKey".path;
+            db = {
+              enable = true;
+              hostFile = config.sops.secrets."arr/sonarr/anime/postgres/host".path;
+              port = 5432;
+              dbname = "sonarr_anime";
+              userFile = config.sops.secrets."arr/sonarr/anime/postgres/user".path;
+              passwordFile = config.sops.secrets."arr/sonarr/anime/postgres/password".path;
+            };
+          };
         };
       };
       # Sabnzbd
