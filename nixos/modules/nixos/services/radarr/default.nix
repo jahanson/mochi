@@ -51,28 +51,6 @@ let
       };
     };
   };
-
-  # Function to create instance-specific configuration
-  mkRadarrInstance = name: instanceCfg: {
-
-    systemd.services."radarr-${name}" = {
-      description = "Radarr (${name})";
-
-    };
-
-    networking.firewall = mkIf instanceCfg.openFirewall {
-      allowedTCPPorts = [ instanceCfg.port ];
-    };
-
-    users.groups.${instanceCfg.group} = { };
-    users.users = mkIf (instanceCfg.user == "radarr") {
-      radarr = {
-        inherit (instanceCfg) group;
-        isSystemUser = true;
-        home = instanceCfg.dataDir;
-      };
-    };
-  };
 in
 {
   options.mySystem.services.radarr = {
