@@ -91,41 +91,77 @@
       restartUnits = [ "sonarr.service" ];
     };
     # Radarr
-    "arr/radarr/apiKey" = {
+    "arr/radarr/1080p/apiKey" = {
       sopsFile = ../secrets.sops.yaml;
       owner = "radarr";
       mode = "400";
-      restartUnits = [ "radarr.service" ];
+      restartUnits = [ "radarr-movies1080p.service" ];
     };
-    "arr/radarr/postgres/dbName" = {
+    "arr/radarr/1080p/postgres/dbName" = {
       sopsFile = ../secrets.sops.yaml;
       owner = "radarr";
       mode = "400";
-      restartUnits = [ "radarr.service" ];
+      restartUnits = [ "radarr-movies1080p.service" ];
     };
-    "arr/radarr/postgres/user" = {
+    "arr/radarr/1080p/postgres/user" = {
       sopsFile = ../secrets.sops.yaml;
       owner = "radarr";
       mode = "400";
-      restartUnits = [ "radarr.service" ];
+      restartUnits = [ "radarr-movies1080p.service" ];
     };
-    "arr/radarr/postgres/password" = {
+    "arr/radarr/1080p/postgres/password" = {
       sopsFile = ../secrets.sops.yaml;
       owner = "radarr";
       mode = "400";
-      restartUnits = [ "radarr.service" ];
+      restartUnits = [ "radarr-movies1080p.service" ];
     };
-    "arr/radarr/postgres/host" = {
+    "arr/radarr/1080p/postgres/host" = {
       sopsFile = ../secrets.sops.yaml;
       owner = "radarr";
       mode = "400";
-      restartUnits = [ "radarr.service" ];
+      restartUnits = [ "radarr-movies1080p.service" ];
     };
-    "arr/radarr/extraEnvVars" = {
+    "arr/radarr/1080p/extraEnvVars" = {
       sopsFile = ../secrets.sops.yaml;
       owner = "radarr";
       mode = "400";
-      restartUnits = [ "radarr.service" ];
+      restartUnits = [ "radarr-movies1080p.service" ];
+    };
+    "arr/radarr/anime/apiKey" = {
+      sopsFile = ../secrets.sops.yaml;
+      owner = "radarr";
+      mode = "400";
+      restartUnits = [ "radarr-anime.service" ];
+    };
+    "arr/radarr/anime/postgres/dbName" = {
+      sopsFile = ../secrets.sops.yaml;
+      owner = "radarr";
+      mode = "400";
+      restartUnits = [ "radarr-anime.service" ];
+    };
+    "arr/radarr/anime/postgres/user" = {
+      sopsFile = ../secrets.sops.yaml;
+      owner = "radarr";
+      mode = "400";
+      restartUnits = [ "radarr-anime.service" ];
+    };
+    "arr/radarr/anime/postgres/password" = {
+      sopsFile = ../secrets.sops.yaml;
+      owner = "radarr";
+      mode = "400";
+      restartUnits = [ "radarr-anime.service" ];
+    };
+    "arr/radarr/anime/postgres/host" = {
+      sopsFile = ../secrets.sops.yaml;
+      owner = "radarr";
+      mode = "400";
+      restartUnits = [ "radarr-anime.service" ];
+    };
+    "arr/radarr/anime/extraEnvVars" = {
+      sopsFile = ../secrets.sops.yaml;
+      owner = "radarr";
+      mode = "400";
+      restartUnits = [ "radarr-anime.service" ];
     };
     # Unpackerr
     "arr/unpackerr/extraEnvVars" = {
