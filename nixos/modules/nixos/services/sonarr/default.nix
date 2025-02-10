@@ -5,8 +5,7 @@
   utils,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.mySystem.services.sonarr;
   dbOptions = {
     options = {
@@ -51,12 +50,11 @@ let
       };
     };
   };
-in
-{
+in {
   options.mySystem.services.sonarr = {
     enable = mkEnableOption "Sonarr";
 
-    package = mkPackageOption pkgs "Sonarr" { };
+    package = mkPackageOption pkgs "Sonarr" {};
 
     user = mkOption {
       type = types.str;
@@ -115,7 +113,7 @@ in
 
     extraEnvVars = mkOption {
       type = types.attrs;
-      default = { };
+      default = {};
       example = {
         MY_VAR = "my value";
       };
@@ -169,7 +167,7 @@ in
         "network.target"
         "nss-lookup.target"
       ];
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = ["multi-user.target"];
       environment = lib.mkMerge [
         {
           SONARR__APP__INSTANCENAME = "Sonarr";
@@ -207,8 +205,8 @@ in
           RestartSec = 5;
         }
         (lib.mkIf cfg.hardening {
-          CapabilityBoundingSet = [ "" ];
-          DeviceAllow = [ "" ];
+          CapabilityBoundingSet = [""];
+          DeviceAllow = [""];
           DevicePolicy = "closed";
           LockPersonality = true;
           # Needs access to .Net CLR memory space.
@@ -225,6 +223,7 @@ in
             cfg.dataDir
             cfg.tvDir
             "/var/log/sonarr"
+            "/eru/media"
           ];
           RestrictAddressFamilies = [
             "AF_INET"
@@ -244,7 +243,7 @@ in
           SystemCallArchitectures = "native";
           SystemCallFilter = [
             "@system-service"
-            "~@privileged"
+            #"~@privileged"
             # .Net CLR requirement
             #"~@resources"
           ];
@@ -281,7 +280,7 @@ in
           ''}";
 
           EnvironmentFile = (
-            [ "-/run/sonarr/secrets.env" ]
+            ["-/run/sonarr/secrets.env"]
             ++ lib.optional (cfg.extraEnvVarFile != null && cfg.extraEnvVarFile != "") cfg.extraEnvVarFile
           );
         })
@@ -289,10 +288,10 @@ in
     };
 
     networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [ cfg.port ];
+      allowedTCPPorts = [cfg.port];
     };
 
-    users.groups.${cfg.group} = { };
+    users.groups.${cfg.group} = {};
     users.users = mkIf (cfg.user == "sonarr") {
       sonarr = {
         inherit (cfg) group;

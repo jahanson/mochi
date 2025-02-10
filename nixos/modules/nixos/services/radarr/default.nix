@@ -5,8 +5,7 @@
   utils,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.mySystem.services.radarr;
   dbOptions = {
     options = {
@@ -51,12 +50,11 @@ let
       };
     };
   };
-in
-{
+in {
   options.mySystem.services.radarr = {
     enable = mkEnableOption "Radarr";
 
-    package = mkPackageOption pkgs "Radarr" { };
+    package = mkPackageOption pkgs "Radarr" {};
 
     user = mkOption {
       type = types.str;
@@ -128,7 +126,7 @@ in
 
     extraEnvVars = mkOption {
       type = types.attrs;
-      default = { };
+      default = {};
       example = {
         MY_VAR = "my value";
       };
@@ -169,7 +167,7 @@ in
         "network.target"
         "nss-lookup.target"
       ];
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = ["multi-user.target"];
       environment = lib.mkMerge [
         {
           RADARR__APP__INSTANCENAME = "Radarr";
@@ -207,8 +205,8 @@ in
           RestartSec = 5;
         }
         (lib.mkIf cfg.hardening {
-          CapabilityBoundingSet = [ "" ];
-          DeviceAllow = [ "" ];
+          CapabilityBoundingSet = [""];
+          DeviceAllow = [""];
           DevicePolicy = "closed";
           LockPersonality = true;
           # Needs access to .Net CLR memory space.
@@ -225,6 +223,7 @@ in
             cfg.dataDir
             cfg.moviesDir
             "/var/log/radarr"
+            "/eru/media"
           ];
           RestrictAddressFamilies = [
             "AF_INET"
@@ -243,7 +242,7 @@ in
           SystemCallArchitectures = "native";
           SystemCallFilter = [
             "@system-service"
-            "~@privileged"
+            #"~@privileged"
             # .Net CLR requirement
             #"~@resources"
           ];
@@ -280,7 +279,7 @@ in
           ''}";
 
           EnvironmentFile = (
-            [ "-/run/radarr/secrets.env" ]
+            ["-/run/radarr/secrets.env"]
             ++ lib.optional (cfg.extraEnvVarFile != null && cfg.extraEnvVarFile != "") cfg.extraEnvVarFile
           );
         })
@@ -288,10 +287,10 @@ in
     };
 
     networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [ cfg.port ];
+      allowedTCPPorts = [cfg.port];
     };
 
-    users.groups.${cfg.group} = { };
+    users.groups.${cfg.group} = {};
     users.users = mkIf (cfg.user == "radarr") {
       radarr = {
         inherit (cfg) group;
