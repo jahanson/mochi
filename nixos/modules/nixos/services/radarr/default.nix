@@ -327,7 +327,7 @@ in
 
                 # Database Configuration
                 write_var "RADARR__POSTGRES__HOST" "$([ -n "${instanceCfg.db.host}" ] && echo "${instanceCfg.db.host}" || cat "${instanceCfg.db.hostFile}")"
-                write_var "RADARR__POSTGRES__USER" "$([ -n "${instanceCfg.db.user}" ] && echo "${instanceCfg.db.user}" || cat "${instanceCfg.db.userFile}")"
+                write_var "RADARR__POSTGRES__USER" "$([ -n "${instanceCfg.db.userFile}" ] && cat "${instanceCfg.db.userFile}" || echo "${instanceCfg.db.user}")"
                 write_var "RADARR__POSTGRES__PASSWORD" "$(cat ${instanceCfg.db.passwordFile})"
 
                 # Final permissions
