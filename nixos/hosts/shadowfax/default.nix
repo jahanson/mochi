@@ -296,7 +296,7 @@ in {
         group = "kah";
         port = 8989;
         openFirewall = true;
-        hardening = false;
+        hardening = true;
         apiKeyFile = config.sops.secrets."arr/sonarr/apiKey".path;
         db = {
           enable = true;
@@ -370,7 +370,8 @@ in {
         mountPath = "/mnt/restic_nightly_backup";
         zfsDataset = "nahar/containers/volumes";
         snapshotName = "restic_nightly_snap";
-        startAt = "*-*-* 06:30:00 America/Chicago";
+        #startAt = "*-*-* 06:30:00 America/Chicago";
+        startAt = "*-*-* 00:10:00 America/Chicago";
       };
     };
     # System
