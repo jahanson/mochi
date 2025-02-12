@@ -120,9 +120,13 @@ in {
     refreshSeries
   ];
 
+  # enable docker socket at /run/docker.sock
+  virtualisation.podman.dockerSocket.enable = true;
+
   programs = {
     # 1Password cli
     _1password.enable = true;
+    _1password-gui.enable = true;
 
     # Mosh
     mosh.enable = true;
