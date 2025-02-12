@@ -1,8 +1,6 @@
 {
   "recommendations": [
     "jnoortheen.nix-ide",
-    "mikestead.dotenv",
-    "redhat.vscode-yaml",
     "signageos.signageos-vscode-sops",
     "pkief.material-icon-theme",
     "ms-vscode-remote.remote-ssh"
