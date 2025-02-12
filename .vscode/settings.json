@@ -11,12 +11,12 @@
   "files.trimTrailingWhitespace": true,
   "sops.defaults.ageKeyFile": "age.key",
   "nix.enableLanguageServer": true,
-  "nix.serverPath": "/run/current-system/sw/bin/nixd",
-  "nix.formatterPath": "/run/current-system/sw/bin/nixfmt",
+  "nix.serverPath": "nixd",
+  "nix.formatterPath": "alejandra",
   "nix.serverSettings": {
     "nixd": {
       "formatting": {
-        "command": ["nixfmt"]
+        "command": ["alejandra"]
       },
       "options": {
         "nixos": {
@@ -25,7 +25,7 @@
       }
     },
     "nix": {
-      "binary": "/run/current-system/sw/bin/nix",
+      "binary": "nix",
       "maxMemoryMB": null,
       "flake": {
         "autoEvalInputs": true,

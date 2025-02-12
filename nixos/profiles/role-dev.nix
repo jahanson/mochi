@@ -25,6 +25,7 @@
       nixd
       nixpkgs-fmt
       unstable.nixfmt-rfc-style # nixfmt RFC 166-style compatible with nixpkgs soon
+      alejandra
 
       # dev
       bash-language-server
