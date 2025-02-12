@@ -4,27 +4,26 @@
   pkgs,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.mySystem.services.haproxy;
-  serviceUser = "named";
-in
-{
+in {
   options.mySystem.services.haproxy = {
-    enable = mkEnableOption "haproxy" // {
-      default = false;
-    };
-    package = mkPackageOption pkgs "haproxy" { };
+    enable =
+      mkEnableOption "haproxy"
+      // {
+        default = false;
+      };
+    package = mkPackageOption pkgs "haproxy" {};
     config = mkOption {
       type = types.str;
     };
     tcpPorts = mkOption {
       type = types.listOf types.int;
-      default = [ ];
+      default = [];
     };
     udpPorts = mkOption {
       type = types.listOf types.int;
-      default = [ ];
+      default = [];
     };
   };
 
