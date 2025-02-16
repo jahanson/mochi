@@ -113,6 +113,7 @@ in {
     wallust
     wl-clipboard
     wlogout
+    wlr-randr
     # fun
     fastfetch
     # Scripts
@@ -143,6 +144,7 @@ in {
       withUWSM = true;
       # xwayland.enable = true;
     };
+
     waybar.enable = true;
     thunar.enable = true;
     thunar.plugins = with pkgs.xfce; [
@@ -160,10 +162,13 @@ in {
       # Caddy
       80 # http
       443 # https
+      179 # BGP
       2019 # caddy admin api
       # Minio
       9000 # console web interface
       9001 # api interface
+      # Beszel-agent
+      45876
     ];
   };
 
