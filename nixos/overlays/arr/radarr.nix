@@ -29,7 +29,7 @@
 
   hash =
     {
-      x64-linux_hash = "sha256-D0Np9Jz7E4/1dnWkFdHQIGthklCVc6yav2AAE9pFcu0=";
+      x64-linux_hash = "sha256-JE6zUCUqC0MaAZ8gVfYV54q7M4eXVhxvx2Q9FzQfHVw=";
       arm64-linux_hash = lib.fakeSha256;
       x64-osx_hash = lib.fakeSha256;
       arm64-osx_hash = lib.fakeSha256;
@@ -38,14 +38,21 @@
 in
   stdenv.mkDerivation rec {
     pname = "radarr";
-    version = "5.18.4.9674";
+    version = "5.19.0.9697";
+    branch = "develop";
 
     src = fetchurl {
-      url = "https://github.com/Radarr/Radarr/releases/download/v${version}/Radarr.master.${version}.${os}-core-${arch}.tar.gz";
+      # url = "https://github.com/Radarr/Radarr/releases/download/v${version}/Radarr.master.${version}.${os}-core-${arch}.tar.gz";
+      url = "https://radarr.servarr.com/v1/update/${branch}/updatefile?version=${version}&os=linux&runtime=netcore&arch=${arch}";
       sha256 = hash;
     };
 
     nativeBuildInputs = [makeWrapper];
+
+    unpackPhase = ''
+      mkdir -p $out
+      tar -zxf $src --strip-components=1
+    '';
 
     installPhase = ''
       runHook preInstall
@@ -71,7 +78,6 @@ in
     '';
 
     passthru = {
-      updateScript = ./update.sh;
       tests.smoke-test = nixosTests.radarr;
     };
 

@@ -29,7 +29,7 @@
 
   hash =
     {
-      x64-linux_hash = "sha256-aiH4bv47cnBzUtFwfJfmrY+2LaqgZkRXT2Jx8FkSX7M=";
+      x64-linux_hash = "sha256-P2VEFDWOj4RawORH35Hxh59Aine3gp3WpTDxmzzmJGg=";
       arm64-linux_hash = lib.fakeSha256;
       x64-osx_hash = lib.fakeSha256;
       arm64-osx_hash = lib.fakeSha256;
@@ -38,14 +38,22 @@
 in
   stdenv.mkDerivation rec {
     pname = "prowlarr";
-    version = "1.30.2.4939";
+    version = "1.31.1.4959";
+    branch = "develop";
 
     src = fetchurl {
-      url = "https://github.com/Prowlarr/Prowlarr/releases/download/v${version}/Prowlarr.master.${version}.${os}-core-${arch}.tar.gz";
+      # url = "https://github.com/Prowlarr/Prowlarr/releases/download/v${version}/Prowlarr.master.${version}.${os}-core-${arch}.tar.gz";
+      # url = "https://prowlarr.servarr.com/v1/update/develop/updatefile?version=1.31.1.4959&os=linux&runtime=netcore&arch=x64";
+      url = "https://prowlarr.servarr.com/v1/update/${branch}/updatefile?version=${version}&os=linux&runtime=netcore&arch=${arch}";
       sha256 = hash;
     };
 
     nativeBuildInputs = [makeWrapper];
+
+    unpackPhase = ''
+      mkdir -p $out
+      tar -zxf $src --strip-components=1
+    '';
 
     installPhase = ''
       runHook preInstall

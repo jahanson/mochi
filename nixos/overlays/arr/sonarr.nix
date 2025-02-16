@@ -29,7 +29,7 @@
 
   hash =
     {
-      x64-linux_hash = "sha256-M2qpyV8fdFleWge1k1EUEeGFg4G7caxkShIriac8bYk=";
+      x64-linux_hash = "sha256-qG/qV6qkfwA7eRfxW6+ysJ3YcrW2oAP9lYruK5yEORI=";
       arm64-linux_hash = lib.fakeSha256;
       x64-osx_hash = lib.fakeSha256;
       arm64-osx_hash = lib.fakeSha256;
@@ -38,7 +38,7 @@
 in
   stdenv.mkDerivation rec {
     pname = "sonarr";
-    version = "4.0.12.2900";
+    version = "4.0.13.2931";
     branch = "develop";
 
     src = fetchurl {
