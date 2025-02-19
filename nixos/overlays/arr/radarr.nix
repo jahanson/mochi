@@ -29,7 +29,7 @@
 
   hash =
     {
-      x64-linux_hash = "sha256-JE6zUCUqC0MaAZ8gVfYV54q7M4eXVhxvx2Q9FzQfHVw=";
+      x64-linux_hash = "sha256-2a/HdbTJVnclajaEY8vhIqvAD6KwPK9CWuPBWlm2AVA=";
       arm64-linux_hash = lib.fakeSha256;
       x64-osx_hash = lib.fakeSha256;
       arm64-osx_hash = lib.fakeSha256;
@@ -38,10 +38,11 @@
 in
   stdenv.mkDerivation rec {
     pname = "radarr";
-    version = "5.19.0.9697";
+    version = "5.19.1.9704";
     branch = "develop";
 
     src = fetchurl {
+      name = "radarr-v${version}";
       # url = "https://github.com/Radarr/Radarr/releases/download/v${version}/Radarr.master.${version}.${os}-core-${arch}.tar.gz";
       url = "https://radarr.servarr.com/v1/update/${branch}/updatefile?version=${version}&os=linux&runtime=netcore&arch=${arch}";
       sha256 = hash;

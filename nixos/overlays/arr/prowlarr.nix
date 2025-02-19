@@ -42,6 +42,7 @@ in
     branch = "develop";
 
     src = fetchurl {
+      name = "prowlarr-v${version}";
       # url = "https://github.com/Prowlarr/Prowlarr/releases/download/v${version}/Prowlarr.master.${version}.${os}-core-${arch}.tar.gz";
       # url = "https://prowlarr.servarr.com/v1/update/develop/updatefile?version=1.31.1.4959&os=linux&runtime=netcore&arch=x64";
       url = "https://prowlarr.servarr.com/v1/update/${branch}/updatefile?version=${version}&os=linux&runtime=netcore&arch=${arch}";

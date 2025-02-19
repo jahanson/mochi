@@ -42,6 +42,7 @@ in
     branch = "develop";
 
     src = fetchurl {
+      name = "sonarr-v${version}";
       # url = "https://github.com/Sonarr/Sonarr/releases/download/v${version}/Sonarr.main.${version}.${os}-${arch}.tar.gz";
       url = "https://services.sonarr.tv/v1/update/${branch}/download?version=${version}&os=${os}&runtime=netcore&arch=${arch}";
       sha256 = hash;
