@@ -101,6 +101,7 @@ in {
 
   # System packages
   environment.systemPackages = with pkgs; [
+    # Hyprland
     libva-utils # to view graphics capabilities
     greetd.tuigreet
     rofi-wayland
@@ -114,6 +115,8 @@ in {
     wl-clipboard
     wlogout
     wlr-randr
+    # dev
+    uv
     # fun
     fastfetch
     # Scripts
@@ -169,6 +172,8 @@ in {
       9001 # api interface
       # Beszel-agent
       45876
+      # scrypted
+      45005
     ];
   };
 
@@ -265,13 +270,13 @@ in {
         openFirewall = true;
         hardening = true;
         apiKeyFile = config.sops.secrets."arr/prowlarr/apiKey".path;
-        db = {
-          enable = true;
-          hostFile = config.sops.secrets."arr/prowlarr/postgres/host".path;
-          port = 5432;
-          userFile = config.sops.secrets."arr/prowlarr/postgres/user".path;
-          passwordFile = config.sops.secrets."arr/prowlarr/postgres/password".path;
-        };
+        # db = {
+        #   enable = true;
+        #   hostFile = config.sops.secrets."arr/prowlarr/postgres/host".path;
+        #   port = 5432;
+        #   userFile = config.sops.secrets."arr/prowlarr/postgres/user".path;
+        #   passwordFile = config.sops.secrets."arr/prowlarr/postgres/password".path;
+        # };
       };
       # Radarr
       radarr = {
@@ -289,14 +294,14 @@ in {
             openFirewall = true;
             hardening = true;
             apiKeyFile = config.sops.secrets."arr/radarr/1080p/apiKey".path;
-            db = {
-              enable = true;
-              hostFile = config.sops.secrets."arr/radarr/1080p/postgres/host".path;
-              port = 5432;
-              dbname = "radarr_main";
-              userFile = config.sops.secrets."arr/radarr/1080p/postgres/user".path;
-              passwordFile = config.sops.secrets."arr/radarr/1080p/postgres/password".path;
-            };
+            # db = {
+            #   enable = true;
+            #   hostFile = config.sops.secrets."arr/radarr/1080p/postgres/host".path;
+            #   port = 5432;
+            #   dbname = "radarr_main";
+            #   userFile = config.sops.secrets."arr/radarr/1080p/postgres/user".path;
+            #   passwordFile = config.sops.secrets."arr/radarr/1080p/postgres/password".path;
+            # };
           };
           moviesAnime = {
             enable = true;
@@ -310,14 +315,14 @@ in {
             openFirewall = true;
             hardening = true;
             apiKeyFile = config.sops.secrets."arr/radarr/anime/apiKey".path;
-            db = {
-              enable = true;
-              hostFile = config.sops.secrets."arr/radarr/anime/postgres/host".path;
-              port = 5432;
-              dbname = "radarr_anime";
-              userFile = config.sops.secrets."arr/radarr/anime/postgres/user".path;
-              passwordFile = config.sops.secrets."arr/radarr/anime/postgres/password".path;
-            };
+            # db = {
+            #   enable = true;
+            #   hostFile = config.sops.secrets."arr/radarr/anime/postgres/host".path;
+            #   port = 5432;
+            #   dbname = "radarr_anime";
+            #   userFile = config.sops.secrets."arr/radarr/anime/postgres/user".path;
+            #   passwordFile = config.sops.secrets."arr/radarr/anime/postgres/password".path;
+            # };
           };
         };
       };
@@ -337,14 +342,14 @@ in {
             openFirewall = true;
             hardening = true;
             apiKeyFile = config.sops.secrets."arr/sonarr/1080p/apiKey".path;
-            db = {
-              enable = true;
-              hostFile = config.sops.secrets."arr/sonarr/1080p/postgres/host".path;
-              port = 5432;
-              dbname = "sonarr_main";
-              userFile = config.sops.secrets."arr/sonarr/1080p/postgres/user".path;
-              passwordFile = config.sops.secrets."arr/sonarr/1080p/postgres/password".path;
-            };
+            # db = {
+            #   enable = true;
+            #   hostFile = config.sops.secrets."arr/sonarr/1080p/postgres/host".path;
+            #   port = 5432;
+            #   dbname = "sonarr_main";
+            #   userFile = config.sops.secrets."arr/sonarr/1080p/postgres/user".path;
+            #   passwordFile = config.sops.secrets."arr/sonarr/1080p/postgres/password".path;
+            # };
           };
           anime = {
             enable = true;
@@ -358,14 +363,14 @@ in {
             openFirewall = true;
             hardening = true;
             apiKeyFile = config.sops.secrets."arr/sonarr/anime/apiKey".path;
-            db = {
-              enable = true;
-              hostFile = config.sops.secrets."arr/sonarr/anime/postgres/host".path;
-              port = 5432;
-              dbname = "sonarr_anime";
-              userFile = config.sops.secrets."arr/sonarr/anime/postgres/user".path;
-              passwordFile = config.sops.secrets."arr/sonarr/anime/postgres/password".path;
-            };
+            # db = {
+            #   enable = true;
+            #   hostFile = config.sops.secrets."arr/sonarr/anime/postgres/host".path;
+            #   port = 5432;
+            #   dbname = "sonarr_anime";
+            #   userFile = config.sops.secrets."arr/sonarr/anime/postgres/user".path;
+            #   passwordFile = config.sops.secrets."arr/sonarr/anime/postgres/password".path;
+            # };
           };
         };
       };

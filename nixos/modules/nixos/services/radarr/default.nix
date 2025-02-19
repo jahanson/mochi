@@ -5,8 +5,7 @@
   utils,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.mySystem.services.radarr;
   dbOptions = {
     options = {
@@ -51,20 +50,18 @@ let
       };
     };
   };
-in
-{
+in {
   options.mySystem.services.radarr = {
     enable = mkEnableOption "Radarr (global)";
 
     instances = mkOption {
       type = types.attrsOf (
         types.submodule (
-          { name, ... }:
-          {
+          {name, ...}: {
             options = {
               enable = mkEnableOption "Radarr (instance)";
 
-              package = mkPackageOption pkgs "Radarr" { };
+              package = mkPackageOption pkgs "Radarr" {};
 
               user = mkOption {
                 type = types.str;
@@ -131,12 +128,20 @@ in
                   passwordFile = "/run/secrets/radarr_db_password";
                   dbname = "radarr_main";
                 };
+                default = {
+                  enable = false;
+                  host = "";
+                  port = "5432";
+                  user = "";
+                  passwordFile = "";
+                  dbname = "";
+                };
                 description = "Database settings for radarr.";
               };
 
               extraEnvVars = mkOption {
                 type = types.attrs;
-                default = { };
+                default = {};
                 example = {
                   MY_VAR = "my value";
                 };
@@ -153,7 +158,7 @@ in
           }
         )
       );
-      default = { };
+      default = {};
       description = "Radarr instance configurations.";
     };
   };
@@ -163,8 +168,8 @@ in
     assertions = flatten (
       mapAttrsToList (
         name: instanceCfg:
-        if instanceCfg.enable then
-          [
+          if instanceCfg.enable
+          then [
             {
               assertion = !(instanceCfg.db.host != "" && instanceCfg.db.hostFile != "");
               message = "Specify either a direct database host via db.host or a file via db.hostFile (leave direct host empty).";
@@ -178,180 +183,186 @@ in
               message = "Specify either a direct API key via apiKey or a file via apiKeyFile (leave direct API key empty).";
             }
           ]
-        else
-          [ ]
-      ) cfg.instances
+          else []
+      )
+      cfg.instances
     );
 
     # Create systemd tmpfiles rules for each enabled instance
     systemd.tmpfiles.rules = flatten (
       mapAttrsToList (
         name: instanceCfg:
-        if instanceCfg.enable then
-          [
+          if instanceCfg.enable
+          then [
             "d ${instanceCfg.dataDir} 0775 ${instanceCfg.user} ${instanceCfg.group}"
           ]
-        else
-          [ ]
-      ) cfg.instances
+          else []
+      )
+      cfg.instances
     );
 
     # Create services for each enabled instance
-    systemd.services = mapAttrs' (
-      name: instanceCfg:
-      nameValuePair "radarr-${name}" (
-        mkIf instanceCfg.enable {
-          description = "Radarr (${name})";
-          after = [
-            "network.target"
-            "nss-lookup.target"
-          ];
-          wantedBy = [ "multi-user.target" ];
-          environment = lib.mkMerge [
-            {
-              RADARR__APP__INSTANCENAME = name;
-              RADARR__APP__THEME = "dark";
-              RADARR__AUTH__METHOD = "External";
-              RADARR__AUTH__REQUIRED = "DisabledForLocalAddresses";
-              RADARR__LOG__DBENABLED = "False";
-              RADARR__LOG__LEVEL = "info";
-              RADARR__SERVER__PORT = toString instanceCfg.port;
-              RADARR__UPDATE__BRANCH = "develop";
-            }
-            (lib.mkIf instanceCfg.db.enable {
-              RADARR__POSTGRES__PORT = toString instanceCfg.db.port;
-              RADARR__POSTGRES__MAINDB = instanceCfg.db.dbname;
-            })
-            instanceCfg.extraEnvVars
-          ];
-
-          serviceConfig = lib.mkMerge [
-            {
-              Type = "simple";
-              User = instanceCfg.user;
-              Group = instanceCfg.group;
-              ExecStart = utils.escapeSystemdExecArgs [
-                (lib.getExe instanceCfg.package)
-                "-nobrowser"
-                "-data=${instanceCfg.dataDir}"
-                "-port=${toString instanceCfg.port}"
+    systemd.services =
+      mapAttrs' (
+        name: instanceCfg:
+          nameValuePair "radarr-${name}" (
+            mkIf instanceCfg.enable {
+              description = "Radarr (${name})";
+              after = [
+                "network.target"
+                "nss-lookup.target"
               ];
-              WorkingDirectory = instanceCfg.dataDir;
-              RuntimeDirectory = "radarr-${name}";
-              LogsDirectory = "radarr-${name}";
-              RuntimeDirectoryMode = "0750";
-              Restart = "on-failure";
-              RestartSec = 5;
-            }
-            (lib.mkIf instanceCfg.hardening {
-              CapabilityBoundingSet = [ "" ];
-              DeviceAllow = [ "" ];
-              DevicePolicy = "closed";
-              LockPersonality = true;
-              MemoryDenyWriteExecute = false;
-              NoNewPrivileges = true;
-              PrivateDevices = true;
-              PrivateTmp = true;
-              ProtectControlGroups = true;
-              ProtectHome = "read-only";
-              ProtectKernelModules = true;
-              ProtectKernelTunables = true;
-              ProtectSystem = "strict";
-              ReadWritePaths = [
-                instanceCfg.dataDir
-                instanceCfg.moviesDir
-                "/var/log/radarr-${name}"
-                "/eru/media"
-              ];
-              RestrictAddressFamilies = [
-                "AF_INET"
-                "AF_INET6"
-                "AF_NETLINK"
-              ];
-              RestrictNamespaces = [
-                "uts"
-                "ipc"
-                "pid"
-                "user"
-                "cgroup"
-                "net"
-              ];
-              RestrictSUIDSGID = true;
-              SystemCallArchitectures = "native";
-              SystemCallFilter = [
-                "@system-service"
-              ];
-            })
-            (lib.mkIf instanceCfg.db.enable {
-              ExecStartPre = "+${pkgs.writeShellScript "radarr-${name}-pre-script" ''
-                mkdir -p /run/radarr-${name}
-                rm -f /run/radarr-${name}/secrets.env
-
-                # Helper function to safely write variables
-                write_var() {
-                  local var_name="$1"
-                  local value="$2"
-                  if [ -n "$value" ]; then
-                    printf "%s=%s\n" "$var_name" "$value" >> /run/radarr-${name}/secrets.env
-                  fi
+              wantedBy = ["multi-user.target"];
+              environment = lib.mkMerge [
+                {
+                  RADARR__APP__INSTANCENAME = name;
+                  RADARR__APP__THEME = "dark";
+                  RADARR__AUTH__METHOD = "External";
+                  RADARR__AUTH__REQUIRED = "DisabledForLocalAddresses";
+                  RADARR__LOG__DBENABLED = "False";
+                  RADARR__LOG__LEVEL = "info";
+                  RADARR__SERVER__PORT = toString instanceCfg.port;
+                  RADARR__UPDATE__BRANCH = "develop";
                 }
+                (lib.mkIf instanceCfg.db.enable {
+                  RADARR__POSTGRES__PORT = toString instanceCfg.db.port;
+                  RADARR__POSTGRES__MAINDB = instanceCfg.db.dbname;
+                })
+                instanceCfg.extraEnvVars
+              ];
 
-                # API Key (direct value or file)
-                if [ -n "${instanceCfg.apiKey}" ]; then
-                  write_var "RADARR__AUTH__APIKEY" "${instanceCfg.apiKey}"
-                else
-                  write_var "RADARR__AUTH__APIKEY" "$(cat ${instanceCfg.apiKeyFile})"
-                fi
+              serviceConfig = lib.mkMerge [
+                {
+                  Type = "simple";
+                  User = instanceCfg.user;
+                  Group = instanceCfg.group;
+                  ExecStart = utils.escapeSystemdExecArgs [
+                    (lib.getExe instanceCfg.package)
+                    "-nobrowser"
+                    "-data=${instanceCfg.dataDir}"
+                    "-port=${toString instanceCfg.port}"
+                  ];
+                  WorkingDirectory = instanceCfg.dataDir;
+                  RuntimeDirectory = "radarr-${name}";
+                  LogsDirectory = "radarr-${name}";
+                  RuntimeDirectoryMode = "0750";
+                  Restart = "on-failure";
+                  RestartSec = 5;
+                }
+                (lib.mkIf instanceCfg.hardening {
+                  CapabilityBoundingSet = [""];
+                  DeviceAllow = [""];
+                  DevicePolicy = "closed";
+                  LockPersonality = true;
+                  MemoryDenyWriteExecute = false;
+                  NoNewPrivileges = true;
+                  PrivateDevices = true;
+                  PrivateTmp = true;
+                  ProtectControlGroups = true;
+                  ProtectHome = "read-only";
+                  ProtectKernelModules = true;
+                  ProtectKernelTunables = true;
+                  ProtectSystem = "strict";
+                  ReadWritePaths = [
+                    instanceCfg.dataDir
+                    instanceCfg.moviesDir
+                    "/var/log/radarr-${name}"
+                    "/eru/media"
+                  ];
+                  RestrictAddressFamilies = [
+                    "AF_INET"
+                    "AF_INET6"
+                    "AF_NETLINK"
+                  ];
+                  RestrictNamespaces = [
+                    "uts"
+                    "ipc"
+                    "pid"
+                    "user"
+                    "cgroup"
+                    "net"
+                  ];
+                  RestrictSUIDSGID = true;
+                  SystemCallArchitectures = "native";
+                  SystemCallFilter = [
+                    "@system-service"
+                  ];
+                })
+                {
+                  ExecStartPre = "+${pkgs.writeShellScript "radarr-${name}-pre-script" ''
+                    mkdir -p /run/radarr-${name}
+                    rm -f /run/radarr-${name}/secrets.env
 
-                # Database Configuration
-                write_var "RADARR__POSTGRES__HOST" "$([ -n "${instanceCfg.db.host}" ] && echo "${instanceCfg.db.host}" || cat "${instanceCfg.db.hostFile}")"
-                write_var "RADARR__POSTGRES__USER" "$([ -n "${instanceCfg.db.userFile}" ] && cat "${instanceCfg.db.userFile}" || echo "${instanceCfg.db.user}")"
-                write_var "RADARR__POSTGRES__PASSWORD" "$(cat ${instanceCfg.db.passwordFile})"
+                    # Helper function to safely write variables
+                    write_var() {
+                      local var_name="$1"
+                      local value="$2"
+                      if [ -n "$value" ]; then
+                        printf "%s=%s\n" "$var_name" "$value" >> /run/radarr-${name}/secrets.env
+                      fi
+                    }
 
-                # Final permissions
-                chmod 600 /run/radarr-${name}/secrets.env
-                chown ${instanceCfg.user}:${instanceCfg.group} /run/radarr-${name}/secrets.env
-              ''}";
+                    # API Key (direct value or file)
+                    if [ -n "${instanceCfg.apiKey}" ]; then
+                      write_var "RADARR__AUTH__APIKEY" "${instanceCfg.apiKey}"
+                    else
+                      write_var "RADARR__AUTH__APIKEY" "$(cat ${instanceCfg.apiKeyFile})"
+                    fi
 
-              EnvironmentFile = (
-                [ "-/run/radarr-${name}/secrets.env" ]
-                ++ lib.optional (
-                  instanceCfg.extraEnvVarFile != null && instanceCfg.extraEnvVarFile != ""
-                ) instanceCfg.extraEnvVarFile
-              );
-            })
-          ];
-        }
+                    ${lib.optionalString instanceCfg.db.enable ''
+                      # Database Configuration
+                      write_var "RADARR__POSTGRES__HOST" "$([ -n "${instanceCfg.db.host}" ] && echo "${instanceCfg.db.host}" || cat "${instanceCfg.db.hostFile}")"
+                      write_var "RADARR__POSTGRES__USER" "$([ -n "${instanceCfg.db.userFile}" ] && cat "${instanceCfg.db.userFile}" || echo "${instanceCfg.db.user}")"
+                      write_var "RADARR__POSTGRES__PASSWORD" "$(cat ${instanceCfg.db.passwordFile})"
+                    ''}
+
+                    # Final permissions
+                    chmod 600 /run/radarr-${name}/secrets.env
+                    chown ${instanceCfg.user}:${instanceCfg.group} /run/radarr-${name}/secrets.env
+                  ''}";
+
+                  EnvironmentFile = (
+                    ["-/run/radarr-${name}/secrets.env"]
+                    ++ lib.optional (
+                      instanceCfg.extraEnvVarFile != null && instanceCfg.extraEnvVarFile != ""
+                    )
+                    instanceCfg.extraEnvVarFile
+                  );
+                }
+              ];
+            }
+          )
       )
-    ) cfg.instances;
+      cfg.instances;
 
     # Firewall configurations
     networking.firewall = mkMerge (
       mapAttrsToList (
         name: instanceCfg:
-        mkIf (instanceCfg.enable && instanceCfg.openFirewall) {
-          allowedTCPPorts = [ instanceCfg.port ];
-        }
-      ) cfg.instances
+          mkIf (instanceCfg.enable && instanceCfg.openFirewall) {
+            allowedTCPPorts = [instanceCfg.port];
+          }
+      )
+      cfg.instances
     );
 
     # Users and groups
     users = mkMerge (
       mapAttrsToList (
         name: instanceCfg:
-        mkIf instanceCfg.enable {
-          groups.${instanceCfg.group} = { };
-          users = mkIf (instanceCfg.user == "radarr") {
-            radarr = {
-              inherit (instanceCfg) group;
-              isSystemUser = true;
-              # home = instanceCfg.dataDir;
-              home = "/nahar/radarr";
+          mkIf instanceCfg.enable {
+            groups.${instanceCfg.group} = {};
+            users = mkIf (instanceCfg.user == "radarr") {
+              radarr = {
+                inherit (instanceCfg) group;
+                isSystemUser = true;
+                # home = instanceCfg.dataDir;
+                home = "/nahar/radarr";
+              };
             };
-          };
-        }
-      ) cfg.instances
+          }
+      )
+      cfg.instances
     );
   };
-
 }

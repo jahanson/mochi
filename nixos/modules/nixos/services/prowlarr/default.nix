@@ -5,8 +5,7 @@
   utils,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.mySystem.services.prowlarr;
   dbOptions = {
     options = {
@@ -51,12 +50,11 @@ let
       };
     };
   };
-in
-{
+in {
   options.mySystem.services.prowlarr = {
     enable = mkEnableOption "Prowlarr";
 
-    package = mkPackageOption pkgs "prowlarr" { };
+    package = mkPackageOption pkgs "prowlarr" {};
 
     user = mkOption {
       type = types.str;
@@ -109,7 +107,7 @@ in
 
     extraEnvVars = mkOption {
       type = types.attrs;
-      default = { };
+      default = {};
       example = {
         MY_VAR = "my value";
       };
@@ -125,6 +123,14 @@ in
 
     db = mkOption {
       type = types.submodule dbOptions;
+      default = {
+        enable = false;
+        host = "";
+        port = "5432";
+        user = "";
+        passwordFile = "";
+        dbname = "";
+      };
       example = {
         enable = true;
         host = "10.5.0.5"; # or use hostFile
@@ -140,11 +146,11 @@ in
   config = mkIf cfg.enable {
     assertions = [
       {
-        assertion = !(cfg.db.host != "" && cfg.db.hostFile != "");
+        assertion = !(cfg.db.enable && (cfg.db.host != "" && cfg.db.hostFile != ""));
         message = "Specify either a direct database host via db.host or a file via db.hostFile (leave direct host empty).";
       }
       {
-        assertion = !(cfg.db.user != "prowlarr" && cfg.db.userFile != "");
+        assertion = !(cfg.db.enable && (cfg.db.user != "prowlarr" && cfg.db.userFile != ""));
         message = "Specify either a direct database user via db.user or a file via db.userFile.";
       }
       {
@@ -159,7 +165,7 @@ in
         "network.target"
         "nss-lookup.target"
       ];
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = ["multi-user.target"];
       environment = lib.mkMerge [
         {
           PROWLARR__APP__INSTANCENAME = "Prowlarr";
@@ -171,7 +177,7 @@ in
           PROWLARR__SERVER__PORT = toString cfg.port;
           PROWLARR__UPDATE__BRANCH = "develop";
         }
-        (lib.mkIf cfg.db.enable {
+        (lib.optionalAttrs cfg.db.enable {
           PROWLARR__POSTGRES__PORT = toString cfg.db.port;
           PROWLARR__POSTGRES__MAINDB = cfg.db.dbname;
         })
@@ -197,8 +203,8 @@ in
           RestartSec = 5;
         }
         (lib.mkIf cfg.hardening {
-          CapabilityBoundingSet = [ "" ];
-          DeviceAllow = [ "" ];
+          CapabilityBoundingSet = [""];
+          DeviceAllow = [""];
           DevicePolicy = "closed";
           LockPersonality = true;
           # Needs access to .Net CLR memory space.
@@ -237,7 +243,7 @@ in
             #"~@resources"
           ];
         })
-        (lib.mkIf cfg.db.enable {
+        {
           ExecStartPre = "+${pkgs.writeShellScript "prowlarr-pre-script" ''
             mkdir -p /run/prowlarr
             rm -f /run/prowlarr/secrets.env
@@ -258,10 +264,12 @@ in
               write_var "PROWLARR__AUTH__APIKEY" "$(cat ${cfg.apiKeyFile})"
             fi
 
-            # Database Configuration
-            write_var "PROWLARR__POSTGRES__HOST" "$([ -n "${cfg.db.host}" ] && echo "${cfg.db.host}" || cat "${cfg.db.hostFile}")"
-            write_var "PROWLARR__POSTGRES__USER" "$([ -n "${cfg.db.user}" ] && echo "${cfg.db.user}" || cat "${cfg.db.userFile}")"
-            write_var "PROWLARR__POSTGRES__PASSWORD" "$(cat ${cfg.db.passwordFile})"
+            ${lib.optionalString cfg.db.enable ''
+              # Database Configuration
+              write_var "PROWLARR__POSTGRES__HOST" "$([ -n "${cfg.db.host}" ] && echo "${cfg.db.host}" || cat "${cfg.db.hostFile}")"
+              write_var "PROWLARR__POSTGRES__USER" "$([ -n "${cfg.db.user}" ] && echo "${cfg.db.user}" || cat "${cfg.db.userFile}")"
+              write_var "PROWLARR__POSTGRES__PASSWORD" "$(cat ${cfg.db.passwordFile})"
+            ''}
 
             # Final permissions
             chmod 600 /run/prowlarr/secrets.env
@@ -269,18 +277,18 @@ in
           ''}";
 
           EnvironmentFile = (
-            [ "-/run/prowlarr/secrets.env" ]
+            ["-/run/prowlarr/secrets.env"]
             ++ lib.optional (cfg.extraEnvVarFile != null && cfg.extraEnvVarFile != "") cfg.extraEnvVarFile
           );
-        })
+        }
       ];
     };
 
     networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [ cfg.port ];
+      allowedTCPPorts = [cfg.port];
     };
 
-    users.groups.${cfg.group} = { };
+    users.groups.${cfg.group} = {};
     users.users = mkIf (cfg.user == "prowlarr") {
       prowlarr = {
         inherit (cfg) group;
