@@ -1,6 +1,7 @@
 {
   imports = [
     ./jellyfin
+    ./jellyseerr
     ./ollama
     ./plex
     ./scrutiny

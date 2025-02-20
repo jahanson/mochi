@@ -251,6 +251,7 @@ in {
     # Containers
     containers = {
       jellyfin.enable = true;
+      jellyseerr.enable = true;
       ollama.enable = true;
       plex.enable = true;
       scrypted.enable = true;
@@ -388,6 +389,7 @@ in {
         hardening = true;
         openFirewall = true;
       };
+      # Unpackerr
       unpackerr = {
         enable = true;
         package = pkgs.unstable.unpackerr;
