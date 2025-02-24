@@ -45,7 +45,7 @@ in {
     services.forgejo = {
       enable = true;
       package = cfg.package;
-      # enable sql db dumps daily
+      # enable forgejo db and data dumps daily
       dump = {
         enable = true;
         backupDir = "/mnt/storagebox/forgejo/backup";
