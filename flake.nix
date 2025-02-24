@@ -134,6 +134,7 @@
       inherit inputs;
       # Import overlays for building nixosconfig with them.
       overlays = import ./nixos/overlays {inherit inputs;};
+
       # generate a base nixos configuration with the specified overlays, hardware modules, and any AerModules applied
       mkNixosConfig = {
         hostname,
@@ -162,20 +163,24 @@
           }
         ],
         profileModules ? [],
-      }:
+      }: let
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = builtins.attrValues overlays;
+          config = {
+            allowUnfree = true;
+            allowUnfreePredicate = _: true;
+          };
+        };
+      in
         nixpkgs.lib.nixosSystem {
           inherit system lib;
           modules = baseModules ++ hardwareModules ++ profileModules;
-          specialArgs = {inherit self inputs nixpkgs;};
-          # Add our overlays
-          pkgs = import nixpkgs {
-            inherit system;
-            overlays = builtins.attrValues overlays;
-            config = {
-              allowUnfree = true;
-              allowUnfreePredicate = _: true;
-            };
+          specialArgs = {
+            inherit self inputs nixpkgs;
+            myPkgs = lib.myLib.mkMyPkgs pkgs;
           };
+          inherit pkgs;
         };
     in {
       "shadowfax" = mkNixosConfig {

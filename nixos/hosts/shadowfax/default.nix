@@ -43,6 +43,7 @@ in {
     (import ../../profiles/disko-nixos.nix {
       disks = ["/dev/sda|/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_500GB_S58SNM0W406409E"];
     })
+    ./config/borgmatic
     inputs.nix-minecraft.nixosModules.minecraft-servers
   ];
 
