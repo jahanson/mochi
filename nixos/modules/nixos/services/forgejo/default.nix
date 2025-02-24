@@ -1,12 +1,15 @@
-{ lib, config, ... }:
-with lib;
-let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+with lib; let
   cfg = config.mySystem.services.forgejo;
   http_port = 3000;
   serviceUser = "forgejo";
   domain = "git.hsn.dev";
-in
-{
+in {
   options.mySystem.services.forgejo = {
     enable = mkEnableOption "Forgejo";
     package = mkOption {
@@ -27,6 +30,18 @@ in
       };
     };
 
+    # Add path unit to check mount point before backup
+    # We don't want to backup to the file system in case of network mount failure
+    systemd.services."forgejo-dump-path-check" = {
+      description = "Check if Forgejo backup mount point exists and is mounted";
+      before = ["forgejo-dump.service"];
+      requiredBy = ["forgejo-dump.service"];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.util-linux}/bin/mountpoint /mnt/storagebox";
+      };
+    };
+
     services.forgejo = {
       enable = true;
       package = cfg.package;
@@ -34,7 +49,9 @@ in
       dump = {
         enable = true;
         backupDir = "/mnt/storagebox/forgejo/backup";
+        type = "tar.gz";
       };
+
       database.type = "postgres";
       # Enable support for Git Large File Storage
       lfs.enable = true;
@@ -97,7 +114,7 @@ in
       sopsFile = ./secrets.sops.yaml;
       owner = serviceUser;
       mode = "400";
-      restartUnits = [ "forgejo.service" ];
+      restartUnits = ["forgejo.service"];
     };
   };
 }
