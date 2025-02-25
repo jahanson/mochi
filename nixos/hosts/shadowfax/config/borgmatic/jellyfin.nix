@@ -4,25 +4,25 @@
   ...
 }: {
   mySystem.services.borgmatic = {
-    configurations.plex = {
+    configurations.jellyfin = {
       source_directories = [
-        "/nahar/containers/volumes/plex"
+        "/nahar/containers/volumes/jellyfin"
       ];
 
       repositories = [
         {
           label = "local";
-          path = "/eru/borg/plex";
+          path = "/eru/borg/jellyfin";
         }
         {
           label = "remote";
-          path = "ssh://kvq39z04@kvq39z04.repo.borgbase.com/./repo";
+          path = "ssh://uy5oy4m3@uy5oy4m3.repo.borgbase.com/./repo";
         }
       ];
 
-      ssh_command = "${pkgs.openssh}/bin/ssh -i ${config.sops.secrets."borgmatic/plex/append_key".path}";
+      ssh_command = "${pkgs.openssh}/bin/ssh -i ${config.sops.secrets."borgmatic/jellyfin/append_key".path}";
 
-      encryption_passcommand = ''${pkgs.coreutils-full}/bin/cat ${config.sops.secrets."borgmatic/plex/encryption_passphrase".path}'';
+      encryption_passcommand = ''${pkgs.coreutils-full}/bin/cat ${config.sops.secrets."borgmatic/jellyfin/encryption_passphrase".path}'';
 
       # Retention settings
       keep_daily = 14;

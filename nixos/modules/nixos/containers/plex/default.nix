@@ -41,7 +41,6 @@ in {
           ${pkgs.podman}/bin/podman rm -f ${app} || true
           rm -f /run/${app}.ctr-id
         ''}";
-        # TODO: mount /config instead of /config/Library/Application Support/Plex Media Server
         ExecStart = ''
           ${pkgs.podman}/bin/podman run \
             --rm \
@@ -78,38 +77,6 @@ in {
       allowedTCPPorts = [
         32400 # Primary Plex port
       ];
-    };
-
-    sops.secrets = {
-      "restic/plex/env" = {
-        inherit group;
-        sopsFile = ./secrets.sops.yaml;
-        owner = user;
-        mode = "0400";
-      };
-      "restic/plex/password" = {
-        inherit group;
-        sopsFile = ./secrets.sops.yaml;
-        owner = user;
-        mode = "0400";
-      };
-      "restic/plex/template" = {
-        inherit group;
-        sopsFile = ./secrets.sops.yaml;
-        owner = user;
-        mode = "0400";
-      };
-    };
-
-    # Restic backups for `plex-local` and `plex-remote`
-    services.restic.backups = config.lib.mySystem.mkRestic {
-      inherit app user;
-      environmentFile = config.sops.secrets."restic/plex/env".path;
-      excludePaths = ["${volumeLocation}/Library/Application Support/Plex Media Server/Cache"];
-      localResticTemplate = "/eru/restic/plex";
-      passwordFile = config.sops.secrets."restic/plex/password".path;
-      paths = ["${volumeLocation}/Library"];
-      remoteResticTemplateFile = config.sops.secrets."restic/plex/template".path;
     };
 
     # TODO add nginx proxy

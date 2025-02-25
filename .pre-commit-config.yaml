@@ -9,10 +9,12 @@ repos:
           - --config-file
           - .yamllint.yaml
         id: yamllint
+        exclude: "borgmatic-template.yaml"
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
       - id: trailing-whitespace
+        exclude: "borgmatic-template.yaml"
       - id: end-of-file-fixer
       - id: fix-byte-order-marker
       - id: mixed-line-ending

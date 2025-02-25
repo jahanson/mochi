@@ -1,5 +1,6 @@
 {
   imports = [
+    ./borgmatic
     ./bind
     ./dnsmasq
     ./forgejo

@@ -205,7 +205,23 @@
       mode = "400";
       restartUnits = ["unpackerr.service"];
     };
-    "borgmatic/encryption_passphrase" = {
+    # Borgmatic
+    "borgmatic/plex/encryption_passphrase" = {
+      sopsFile = ../secrets.sops.yaml;
+      mode = "400";
+      restartUnits = ["borgmatic.service"];
+    };
+    "borgmatic/plex/append_key" = {
+      sopsFile = ../secrets.sops.yaml;
+      mode = "400";
+      restartUnits = ["borgmatic.service"];
+    };
+    "borgmatic/jellyfin/encryption_passphrase" = {
+      sopsFile = ../secrets.sops.yaml;
+      mode = "400";
+      restartUnits = ["borgmatic.service"];
+    };
+    "borgmatic/jellyfin/append_key" = {
       sopsFile = ../secrets.sops.yaml;
       mode = "400";
       restartUnits = ["borgmatic.service"];

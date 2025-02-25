@@ -20,9 +20,9 @@ with lib; rec {
       user = existsOrDefault "user" options "568";
       group = existsOrDefault "group" options "568";
 
-      enableBackups =
-        (lib.attrsets.hasAttrByPath ["persistence" "folder"] options)
-        && (lib.attrsets.attrByPath ["persistence" "enable"] true options);
+      # enableBackups =
+      #   (lib.attrsets.hasAttrByPath ["persistence" "folder"] options)
+      #   && (lib.attrsets.attrByPath ["persistence" "enable"] true options);
 
       # Security options for containers
       containerExtraOptions =

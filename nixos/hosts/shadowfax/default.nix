@@ -260,6 +260,7 @@ in {
     purpose = "Production";
     # Services
     services = {
+      borgmatic.enable = true;
       # Misc
       libvirt-qemu.enable = true;
       podman.enable = true;
@@ -434,15 +435,6 @@ in {
         openFirewall = true;
         hardening = true;
         qbittorrentPort = 50413;
-      };
-      # ZFS nightly snapshot of container volumes
-      zfs-nightly-snap = {
-        enable = true;
-        mountPath = "/mnt/restic_nightly_backup";
-        zfsDataset = "nahar/containers/volumes";
-        snapshotName = "restic_nightly_snap";
-        #startAt = "*-*-* 06:30:00 America/Chicago";
-        startAt = "*-*-* 00:10:00 America/Chicago";
       };
     };
     # System

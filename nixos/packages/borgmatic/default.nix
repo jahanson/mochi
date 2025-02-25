@@ -2,6 +2,7 @@
   lib,
   python3,
   fetchFromGitHub,
+  installShellFiles,
 }:
 python3.pkgs.buildPythonApplication rec {
   pname = "borgmatic";
@@ -19,6 +20,8 @@ python3.pkgs.buildPythonApplication rec {
     python3.pkgs.setuptools
   ];
 
+  nativeBuildInputs = [installShellFiles];
+
   dependencies = with python3.pkgs; [
     jsonschema
     packaging
@@ -35,6 +38,13 @@ python3.pkgs.buildPythonApplication rec {
   pythonImportsCheck = [
     "borgmatic"
   ];
+
+  postInstall = ''
+    installShellCompletion --cmd borgmatic \
+      --bash <($out/bin/borgmatic --bash-completion)
+    # installShellCompletion --cmd borgmatic \
+    #   --fish <($out/bin/borgmatic --fish-completion | sed '20d)
+  '';
 
   meta = {
     description = "Simple, configuration-driven backup software for servers and workstations";

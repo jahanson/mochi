@@ -88,37 +88,6 @@ in {
       ];
     };
 
-    sops.secrets = {
-      "restic/jellyfin/env" = {
-        inherit group;
-        sopsFile = ./secrets.sops.yaml;
-        owner = user;
-        mode = "0400";
-      };
-      "restic/jellyfin/password" = {
-        inherit group;
-        sopsFile = ./secrets.sops.yaml;
-        owner = user;
-        mode = "0400";
-      };
-      "restic/jellyfin/template" = {
-        inherit group;
-        sopsFile = ./secrets.sops.yaml;
-        owner = user;
-        mode = "0400";
-      };
-    };
-
-    # Restic backups for `jellyfin-local` and `jellyfin-remote`
-    services.restic.backups = config.lib.mySystem.mkRestic {
-      inherit app user;
-      environmentFile = config.sops.secrets."restic/jellyfin/env".path;
-      excludePaths = [];
-      localResticTemplate = "/eru/restic/jellyfin";
-      passwordFile = config.sops.secrets."restic/jellyfin/password".path;
-      paths = [volumeLocation];
-      remoteResticTemplateFile = config.sops.secrets."restic/jellyfin/template".path;
-    };
     # TODO add nginx proxy
     # services.nginx.virtualHosts."${app}.${config.networking.domain}" = {
     #   useACMEHost = config.networking.domain;

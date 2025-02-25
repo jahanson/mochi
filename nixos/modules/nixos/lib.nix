@@ -77,10 +77,10 @@
   #   - nextcloud-remote: backs up to remote storage (e.g. S3)
   lib.mySystem.mkRestic = options: let
     # excludePaths is optional
-    excludePaths =
-      if builtins.hasAttr "excludePaths" options
-      then options.excludePaths
-      else [];
+    # excludePaths =
+    #   if builtins.hasAttr "excludePaths" options
+    #   then options.excludePaths
+    #   else [];
     # Decide which mutually exclusive options to use
     remoteResticTemplateFile =
       if builtins.hasAttr "remoteResticTemplateFile" options
