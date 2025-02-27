@@ -1,37 +1,16 @@
-{
-  pkgs,
-  inputs,
-  ...
-}:
-let
-  coderMainline = pkgs.coder.override { channel = "mainline"; };
-in
-{
+{pkgs, ...}: {
   imports = [
     ./global.nix
-    inputs.krewfile.homeManagerModules.krewfile
   ];
   config = {
-    # Krewfile management
-    programs.krewfile = {
-      enable = true;
-      krewPackage = pkgs.krew;
-      indexes = {
-        "netshoot" = "https://github.com/nilic/kubectl-netshoot.git";
-      };
-      plugins = [
-        "netshoot/netshoot"
-        "resource-capacity"
-        "rook-ceph"
-      ];
-    };
-
+    # Custom Home Manager Configuration
     myHome = {
-      programs.firefox.enable = true;
-      programs.thunderbird.enable = true;
+      de.hyprland.enable = true;
+      programs = {
+        firefox.enable = true;
+        thunderbird.enable = true;
+      };
       shell = {
-        wezterm.enable = true;
-
         git = {
           enable = true;
           username = "Joseph Hanson";
@@ -41,15 +20,16 @@ in
       };
     };
 
+    # Home Manager Configuration
     home = {
       # Install these packages for my user
       packages = with pkgs; [
         # apps
-        obsidian
-        parsec-bin
+        # parsec-bin
         solaar # open source manager for logitech unifying receivers
         unstable.bruno
         # unstable.fractal
+        unstable.obsidian
         unstable.httpie
         unstable.jetbrains.datagrip
         unstable.jetbrains.rust-rover
@@ -57,23 +37,13 @@ in
         unstable.talosctl # overlay override
         unstable.telegram-desktop
         unstable.tidal-hifi
-        unstable.xpipe
+        # unstable.xpipe
         # unstable.vesktop # gpu issues. Using the flatpak version solves this issue.
         vlc
         yt-dlp
 
         # cli
         brightnessctl
-
-        # dev utils
-        kubectl
-        minio-client # S3 management
-        pre-commit # Pre-commit tasks for git
-        shellcheck # shell script linting
-        unstable.act # run GitHub actions locally
-        unstable.kubebuilder # k8s controller development
-        unstable.nodePackages_latest.prettier # code formatter
-        coderMainline # VSCode in the browser -- has overlay
       ];
     };
   };

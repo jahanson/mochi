@@ -102,20 +102,6 @@ in {
 
   # System packages
   environment.systemPackages = with pkgs; [
-    # Hyprland
-    libva-utils # to view graphics capabilities
-    greetd.tuigreet
-    rofi-wayland
-    grim
-    inxi
-    nvtopPackages.full
-    pyprland
-    swaynotificationcenter
-    swww
-    wallust
-    wl-clipboard
-    wlogout
-    wlr-randr
     # dev
     uv
     # fun
@@ -138,26 +124,6 @@ in {
 
     # VSCode Compatibility Settings
     nix-ld.enable = true;
-
-    # Hyprland
-    hyprland = {
-      enable = true;
-      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-      portalPackage =
-        inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-      withUWSM = true;
-      # xwayland.enable = true;
-    };
-
-    waybar.enable = true;
-    thunar.enable = true;
-    thunar.plugins = with pkgs.xfce; [
-      exo
-      mousepad
-      thunar-archive-plugin
-      thunar-volman
-      tumbler
-    ];
   };
 
   # Open ports in the firewall.
@@ -230,16 +196,6 @@ in {
     vscode-server.enable = true;
 
     xserver.videoDrivers = ["nvidia"];
-    greetd = {
-      enable = true;
-      vt = 3;
-      settings = {
-        default_session = {
-          user = "jahanson";
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd='uwsm start select'"; # start Hyprland with a TUI login manager
-        };
-      };
-    };
   };
 
   # sops
@@ -247,6 +203,9 @@ in {
 
   # System settings and services.
   mySystem = {
+    ## Desktop Environment
+    # Hyprland
+    de.hyprland.enable = true;
     # VS Code
     editor.vscode.enable = true;
     # Containers

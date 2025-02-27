@@ -1,7 +1,6 @@
-{ lib, ... }:
-{
-
+{lib, ...}: {
   imports = [
+    ./de
     ./shell
     ./programs
     ./security
@@ -33,5 +32,4 @@
       allowUnfree = true;
     };
   };
-
 }

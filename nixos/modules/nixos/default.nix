@@ -1,8 +1,12 @@
-{ lib, config, ... }:
-with lib;
 {
+  lib,
+  config,
+  ...
+}:
+with lib; {
   imports = [
     ./containers
+    ./de
     ./editor
     ./hardware
     ./lib.nix
@@ -51,7 +55,7 @@ with lib;
     monitoring.prometheus.scrapeConfigs = mkOption {
       type = lib.types.listOf lib.types.attrs;
       description = "Prometheus scrape targets";
-      default = [ ];
+      default = [];
     };
   };
 

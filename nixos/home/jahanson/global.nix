@@ -2,9 +2,7 @@
   pkgs,
   config,
   ...
-}:
-with config;
-{
+}: {
   imports = [
     ../modules
   ];
@@ -32,7 +30,6 @@ with config;
     };
 
     home = {
-
       # Install these packages for my user
       packages = with pkgs; [
         # misc
@@ -106,7 +103,6 @@ with config;
         # backup tools
         unstable.rclone
         unstable.restic
-
       ];
     };
   };

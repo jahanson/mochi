@@ -91,6 +91,8 @@
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
+    # Hyprland AGS (Application Grouping System)
+    ags.url = "github:Aylur/ags/v1";
 
     # nvf -  A highly modular, extensible and distro-agnostic Neovim configuration framework for Nix/NixOS.
     nvf.url = "github:notashelf/nvf";
@@ -203,6 +205,25 @@
           ./nixos/profiles/role-dev.nix
           ./nixos/profiles/role-server.nix
           {home-manager.users.jahanson = ./nixos/home/jahanson/sworkstation.nix;}
+        ];
+      };
+
+      "telchar" = mkNixosConfig {
+        # Framework 16 Ryzen 7 7840HS - Radeon 780M Graphics
+        # Hyprland first, QEMU Windows second
+        hostname = "telchar";
+        system = "x86_64-linux";
+        hardwareModules = [
+          inputs.nixos-hardware.nixosModules.framework-16-7040-amd
+          ./nixos/profiles/hw-framework-16-7840hs.nix
+          disko.nixosModules.disko
+          (import ./nixos/profiles/disko/simple-efi.nix {disk = "/dev/nvme0n1";})
+          lix-module.nixosModules.default
+        ];
+        profileModules = [
+          ./nixos/profiles/role-dev.nix
+          ./nixos/profiles/role-workstation.nix
+          {home-manager.users.jahanson = ./nixos/home/jahanson/workstation.nix;}
         ];
       };
 
