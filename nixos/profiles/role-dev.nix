@@ -65,10 +65,13 @@
       vhs
     ];
 
-    programs.direnv = {
-      # TODO move to home-manager
-      enable = true;
-      nix-direnv.enable = true;
+    programs = {
+      mtr.enable = true;
+      direnv = {
+        # TODO move to home-manager
+        enable = true;
+        nix-direnv.enable = true;
+      };
     };
   };
 }

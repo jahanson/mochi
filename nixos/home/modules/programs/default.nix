@@ -1,5 +1,4 @@
-{ ... }:
-{
+{...}: {
   imports = [
     ./browsers
     ./thunderbird

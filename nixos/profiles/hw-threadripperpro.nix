@@ -1,6 +1,5 @@
-{ lib, ... }:
-{
-  imports = [ ];
+{lib, ...}: {
+  imports = [];
 
   boot = {
     loader.systemd-boot.enable = true;
@@ -13,9 +12,9 @@
       "usb_storage"
       "sd_mod"
     ];
-    initrd.kernelModules = [ ];
-    kernelModules = [ "kvm-amd" ];
-    extraModulePackages = [ ];
+    initrd.kernelModules = [];
+    kernelModules = ["kvm-amd"];
+    extraModulePackages = [];
   };
 
   mySystem = {
@@ -52,9 +51,9 @@
       };
       "40-bond0" = {
         matchConfig.Name = "bond0";
-        address = [ "10.1.1.61/24" ];
+        address = ["10.1.1.61/24"];
         routes = [
-          { Gateway = "10.1.1.1"; }
+          {Gateway = "10.1.1.1";}
         ];
         networkConfig = {
           LinkLocalAddressing = "no";
@@ -70,5 +69,6 @@
     useDHCP = lib.mkDefault false;
     nftables.enable = true;
   };
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }

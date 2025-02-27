@@ -17,8 +17,7 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = config.mySystem.system.fingerprint-reader-on-laptop-lid;
   laptop-lid = pkgs.writeShellScript "laptop-lid" ''
     lock=/var/lock/fingerprint-reader-disabled
@@ -36,8 +35,7 @@ let
       rm "$lock"
     fi
   '';
-in
-{
+in {
   options.mySystem.system.fingerprint-reader-on-laptop-lid = {
     enable = lib.mkEnableOption "disable fingerprint reader when laptop lid closes";
   };
@@ -69,15 +67,15 @@ in
         auth       required                    ${pkgs.fprintd}/lib/security/pam_fprintd.so
         auth       optional                    pam_permit.so
         auth       required                    pam_env.so
-        auth       [success=ok default=1]      ${pkgs.gnome.gdm}/lib/security/pam_gdm.so
-        auth       optional                    ${pkgs.gnome.gnome-keyring}/lib/security/pam_gnome_keyring.so
+        auth       [success=ok default=1]      ${pkgs.gdm}/lib/security/pam_gdm.so
+        auth       optional                    ${pkgs.gnome-keyring}/lib/security/pam_gnome_keyring.so
 
         account    include                     login
 
         password   required                    pam_deny.so
 
         session    include                     login
-        session    optional                    ${pkgs.gnome.gnome-keyring}/lib/security/pam_gnome_keyring.so auto_start
+        session    optional                    ${pkgs.gnome-keyring}/lib/security/pam_gnome_keyring.so auto_start
       '';
     };
 
@@ -91,7 +89,7 @@ in
         "multi-user.target"
         "suspend.target"
       ];
-      after = [ "suspend.target" ];
+      after = ["suspend.target"];
     };
   };
 }

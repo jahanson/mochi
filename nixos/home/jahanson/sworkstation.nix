@@ -5,8 +5,11 @@
 
   config = {
     myHome = {
-      programs.firefox.enable = true;
-      programs.thunderbird.enable = true;
+      de.hyprland.enable = true;
+      programs = {
+        firefox.enable = true;
+        thunderbird.enable = true;
+      };
       shell = {
         # soon(tm)
         # ghostty.enable = true;
