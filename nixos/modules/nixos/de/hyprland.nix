@@ -83,6 +83,10 @@ in {
       };
       dconf.enable = true;
       seahorse.enable = true;
+      ssh = {
+        enableAskPassword = true;
+        askPassword = "${pkgs.seahorse}/libexec/seahorse/ssh-askpass";
+      };
       fuse.userAllowOther = true;
 
       ## Additional programs for the overall Hyprland experience
