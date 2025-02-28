@@ -1,8 +1,11 @@
 {
   config,
   pkgs,
+  inputs,
   ...
-}: {
+}: let
+  hypr-pkgs = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+in {
   imports = [];
   swapDevices = [];
   virtualisation.docker.enable = true;
@@ -11,7 +14,12 @@
   environment.systemPackages = with pkgs; [
     uv
     fastfetch
+    gtk3
   ];
+
+  hardware.graphics = {
+    package = hypr-pkgs.mesa.drivers;
+  };
 
   environment.sessionVariables = {
     # Wayland and Chromium/Electron apps.
@@ -19,20 +27,20 @@
   };
 
   # sops
-  sops.secrets = {
-    "syncthing/publicCert" = {
-      sopsFile = ./secrets.sops.yaml;
-      owner = "jahanson";
-      mode = "400";
-      restartUnits = ["syncthing.service"];
-    };
-    "syncthing/privateKey" = {
-      sopsFile = ./secrets.sops.yaml;
-      owner = "jahanson";
-      mode = "400";
-      restartUnits = ["syncthing.service"];
-    };
-  };
+  #  sops.secrets = {
+  #  "syncthing/publicCert" = {
+  #    sopsFile = ./secrets.sops.yaml;
+  #    owner = "jahanson";
+  #    mode = "400";
+  #    restartUnits = ["syncthing.service"];
+  #  };
+  #  "syncthing/privateKey" = {
+  #    sopsFile = ./secrets.sops.yaml;
+  #    owner = "jahanson";
+  #    mode = "400";
+  #    restartUnits = ["syncthing.service"];
+  #  };
+  #};
 
   services = {
     # Tailscale
@@ -54,12 +62,12 @@
   mySystem = {
     purpose = "Development";
 
-    services.syncthing = {
-      enable = false;
-      user = "jahanson";
-      publicCertPath = config.sops.secrets."syncthing/publicCert".path;
-      privateKeyPath = config.sops.secrets."syncthing/privateKey".path;
-    };
+    #services.syncthing = {
+    #  enable = false;
+    #  user = "jahanson";
+    #  publicCertPath = config.sops.secrets."syncthing/publicCert".path;
+    #  privateKeyPath = config.sops.secrets."syncthing/privateKey".path;
+    #};
 
     ## Desktop Environment
     ## Gnome

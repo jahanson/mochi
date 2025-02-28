@@ -40,6 +40,7 @@ in {
       swaynotificationcenter
       swww # Wallpaper daemon for wayland
       wallust # Generate and change colors schemes on the fly.
+      waybar # Wayland top bar
       wl-clipboard # Pipe to and from the clipboard
       wlogout
       wlr-randr # Wayland screen management
@@ -60,6 +61,7 @@ in {
       # bar
       libappindicator
       libnotify
+      busybox
     ];
 
     # Hyprland nixpkgs program modules
@@ -73,7 +75,6 @@ in {
         withUWSM = true;
       };
       ## Additional programs for the overall Hyprland experience
-      waybar.enable = true;
       hyprlock.enable = true;
       nm-applet.indicator = true; # Compatability; Application indicator for NetworkManager
       thunar.enable = true;

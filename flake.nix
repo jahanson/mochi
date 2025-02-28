@@ -217,7 +217,7 @@
           inputs.nixos-hardware.nixosModules.framework-16-7040-amd
           ./nixos/profiles/hw-framework-16-7840hs.nix
           disko.nixosModules.disko
-          (import ./nixos/profiles/disko/simple-efi.nix {disk = "/dev/nvme0n1";})
+          (import ./nixos/profiles/disko/simple-efi.nix)
           lix-module.nixosModules.default
         ];
         profileModules = [

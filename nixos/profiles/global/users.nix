@@ -5,13 +5,6 @@
 }: let
   ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 in {
-  sops.secrets = {
-    jahanson-password = {
-      sopsFile = ./secrets.sops.yaml;
-      neededForUsers = true;
-    };
-  };
-
   users = {
     groups = {
       kah = {
@@ -28,7 +21,6 @@ in {
       jahanson = {
         isNormalUser = true;
         shell = pkgs.fish;
-        hashedPasswordFile = config.sops.secrets.jahanson-password.path;
         extraGroups =
           [
             "wheel"
