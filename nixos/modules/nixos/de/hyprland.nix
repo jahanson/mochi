@@ -33,6 +33,7 @@ in {
       nvtopPackages.full # Video card monitoring
       nwg-displays # Display manager for Hyprland
       nwg-look # GTK settings editor, designed for Wayland.
+      pamixer # Volume control
       pyprland # Python bindings for Hyprland
       rofi-wayland # Window switcher and run dialog
       slurp # Select a region in Wayland
@@ -64,6 +65,12 @@ in {
       busybox
     ];
 
+    # Enabling Hyprlock to unlock the system
+    security = {
+      pam.services.hyprlock = {};
+      polkit.enable = true;
+    };
+
     # Hyprland nixpkgs program modules
     programs = {
       # Hyprland DE
@@ -74,8 +81,15 @@ in {
           inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
         withUWSM = true;
       };
+      dconf.enable = true;
+      seahorse.enable = true;
+      fuse.userAllowOther = true;
+
       ## Additional programs for the overall Hyprland experience
-      hyprlock.enable = true;
+      hyprlock = {
+        enable = true;
+        package = inputs.hyprlock.packages.${pkgs.stdenv.hostPlatform.system}.hyprlock;
+      };
       nm-applet.indicator = true; # Compatability; Application indicator for NetworkManager
       thunar.enable = true;
       thunar.plugins = with pkgs.xfce; [
@@ -85,6 +99,10 @@ in {
         thunar-volman
         tumbler
       ];
+      gnupg.agent = {
+        enable = true;
+        enableSSHSupport = true;
+      };
     };
     # Hyprland nixpkgs service modules
     services = {
@@ -98,6 +116,7 @@ in {
           };
         };
       };
+      gnome.gnome-keyring.enable = true;
     };
     # Fonts
     fonts.packages = with pkgs; [

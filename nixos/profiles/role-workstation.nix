@@ -59,7 +59,6 @@ in
     };
 
     programs = {
-      ssh.startAgent = true;
       # Enable OpenJDK
       java.enable = true;
 

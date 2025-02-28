@@ -15,6 +15,7 @@ in {
     uv
     fastfetch
     gtk3
+    dconf-editor
   ];
 
   hardware.graphics = {
