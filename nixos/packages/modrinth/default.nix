@@ -1,0 +1,119 @@
+{
+  lib,
+  rustPlatform,
+  fetchFromGitHub,
+  pkg-config,
+  wrapGAppsHook,
+  atk,
+  bzip2,
+  cairo,
+  dbus,
+  gdk-pixbuf,
+  glib,
+  gtk3,
+  libsoup_3,
+  openssl,
+  pango,
+  rust-jemalloc-sys,
+  sqlite,
+  webkitgtk,
+  xz,
+  zstd,
+  stdenv,
+  darwin,
+  wayland,
+  webkitgtk_4_1,
+  cacert,
+  cargo-tauri,
+  desktop-file-utils,
+  nodejs,
+  pnpm_9,
+}: let
+  pnpm = pnpm_9;
+in
+  rustPlatform.buildRustPackage rec {
+    pname = "modrinth-app";
+    version = "0.9.3";
+
+    src = fetchFromGitHub {
+      owner = "modrinth";
+      repo = "code";
+      rev = "v${version}";
+      hash = "sha256-h+zj4Hm7v8SU6Zy0rIWbOknXVdSDf8b1d4q6M12J5Lc=";
+    };
+
+    cargoLock = {
+      lockFile = ./Cargo.lock;
+      outputHashes = {
+        "wry-0.47.2" = "sha256-zb/BX2UU3Hw87H0m+l3wl6YnCroC+93xMMr+SGl532w=";
+      };
+    };
+
+    pnpmDeps = pnpm.fetchDeps {
+      inherit pname version src;
+      hash = "sha256-nFuPFgwJw38XVxhW0QXmU31o+hqJKGJysnPg2YSg2D0=";
+    };
+
+    nativeBuildInputs = [
+      pkg-config
+      wrapGAppsHook
+      cacert # Required for turbo
+      cargo-tauri.hook
+      desktop-file-utils
+      nodejs
+      pkg-config
+      pnpm.configHook
+    ];
+
+    buildInputs =
+      [
+        atk
+        bzip2
+        cairo
+        dbus
+        gdk-pixbuf
+        glib
+        gtk3
+        libsoup_3
+        openssl
+        pango
+        rust-jemalloc-sys
+        sqlite
+        webkitgtk
+        xz
+        zstd
+      ]
+      ++ lib.optionals stdenv.isDarwin [
+        darwin.apple_sdk.frameworks.AppKit
+        darwin.apple_sdk.frameworks.CoreFoundation
+        darwin.apple_sdk.frameworks.CoreGraphics
+        darwin.apple_sdk.frameworks.CoreServices
+        darwin.apple_sdk.frameworks.Foundation
+        darwin.apple_sdk.frameworks.IOKit
+        darwin.apple_sdk.frameworks.Security
+        darwin.apple_sdk.frameworks.SystemConfiguration
+      ]
+      ++ lib.optionals stdenv.isLinux [
+        wayland
+        webkitgtk_4_1
+      ];
+
+    # Tests fail on other, unrelated packages in the monorepo
+    cargoTestFlags = [
+      "--package"
+      "theseus_gui"
+    ];
+
+    env = {
+      OPENSSL_NO_VENDOR = true;
+      ZSTD_SYS_USE_PKG_CONFIG = true;
+    };
+
+    meta = {
+      description = "The Modrinth monorepo containing all code which powers Modrinth";
+      homepage = "https://github.com/modrinth/code";
+      license = lib.licenses.unfree; # FIXME: nix-init did not find a license
+      maintainers = with lib.maintainers; [];
+      mainProgram = "modrinth-app";
+    };
+  }

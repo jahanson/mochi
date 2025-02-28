@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  myPkgs,
   inputs,
   ...
 }: let
@@ -16,6 +17,7 @@ in {
     fastfetch
     gtk3
     dconf-editor
+    myPkgs.modrinth-app-unwrapped
   ];
 
   hardware.graphics = {
