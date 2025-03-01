@@ -150,7 +150,7 @@ in {
       enable = true;
       eula = true;
       openFirewall = true;
-      dataDir = "/nahar/minecraft/fab";
+      dataDir = "/nahar/minecraft";
       servers.fabric = {
         enable = true;
 
