@@ -4,12 +4,10 @@
   lib,
   ...
 }:
-with lib;
-let
+with lib; let
   inherit (config.myHome) username homeDirectory;
   cfg = config.myHome.shell.fish;
-in
-{
+in {
   options.myHome.shell.fish = {
     enable = mkEnableOption "fish";
   };
@@ -86,6 +84,7 @@ in
           update_path ${homeDirectory}/go/bin
           update_path ${homeDirectory}/.cargo/bin
           update_path ${homeDirectory}/.local/bin
+          update_path ${homeDirectory}/.npm-packages/bin
 
           set -gx EDITOR "vim"
 
