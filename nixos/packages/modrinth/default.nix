@@ -1,35 +1,36 @@
 {
-  lib,
-  rustPlatform,
-  fetchFromGitHub,
-  pkg-config,
-  wrapGAppsHook,
   atk,
   bzip2,
+  cacert,
   cairo,
+  cargo-tauri,
+  darwin,
   dbus,
+  desktop-file-utils,
+  fetchFromGitHub,
   gdk-pixbuf,
   glib,
   gtk3,
+  lib,
   libsoup_3,
+  nodejs,
   openssl,
   pango,
+  pkg-config,
+  pnpm_9,
   rust-jemalloc-sys,
+  rustPlatform,
   sqlite,
-  webkitgtk,
-  xz,
-  zstd,
   stdenv,
-  darwin,
+  turbo,
   wayland,
   webkitgtk_4_1,
-  cacert,
-  cargo-tauri,
-  desktop-file-utils,
-  nodejs,
-  pnpm_9,
+  wrapGAppsHook,
+  xz,
+  zstd,
 }: let
   pnpm = pnpm_9;
+  webkitgtk = webkitgtk_4_1;
 in
   rustPlatform.buildRustPackage rec {
     pname = "modrinth-app";
@@ -61,7 +62,6 @@ in
       cargo-tauri.hook
       desktop-file-utils
       nodejs
-      pkg-config
       pnpm.configHook
     ];
 
@@ -105,14 +105,18 @@ in
     ];
 
     env = {
-      OPENSSL_NO_VENDOR = true;
-      ZSTD_SYS_USE_PKG_CONFIG = true;
+      # OPENSSL_NO_VENDOR = true;
+      # ZSTD_SYS_USE_PKG_CONFIG = true;
+      TURBO_BINARY_PATH = lib.getExe turbo;
     };
 
     meta = {
       description = "The Modrinth monorepo containing all code which powers Modrinth";
       homepage = "https://github.com/modrinth/code";
-      license = lib.licenses.unfree; # FIXME: nix-init did not find a license
+      license = with lib.licenses; [
+        gpl3Plus
+        unfreeRedistributable
+      ];
       maintainers = with lib.maintainers; [];
       mainProgram = "modrinth-app";
     };
