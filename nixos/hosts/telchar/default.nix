@@ -20,6 +20,7 @@ in {
     # myPkgs.modrinth-app-unwrapped
     zulu # Java OpenJDK
     nodejs_22
+    vesktop
   ];
 
   hardware.graphics = {
