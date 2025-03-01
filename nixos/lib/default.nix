@@ -12,7 +12,7 @@ with lib; rec {
   # Create custom package set
   mkMyPkgs = pkgs: {
     borgmatic = pkgs.callPackage ../../nixos/packages/borgmatic {};
-    modrinth-app-unwrapped = pkgs.callPackage ../../nixos/packages/modrinth {};
+    # modrinth-app-unwrapped = pkgs.callPackage ../../nixos/packages/modrinth {};
   };
 
   # main service builder

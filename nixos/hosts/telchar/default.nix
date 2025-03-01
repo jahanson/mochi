@@ -17,7 +17,9 @@ in {
     fastfetch
     gtk3
     dconf-editor
-    myPkgs.modrinth-app-unwrapped
+    # myPkgs.modrinth-app-unwrapped
+    zulu # Java OpenJDK
+    nodejs_22
   ];
 
   hardware.graphics = {
