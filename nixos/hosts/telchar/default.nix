@@ -1,11 +1,4 @@
-{
-  config,
-  pkgs,
-  myPkgs,
-  inputs,
-  ...
-}: let
-  hypr-pkgs = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+{pkgs, ...}: let
 in {
   imports = [];
   swapDevices = [];
@@ -13,40 +6,21 @@ in {
 
   # System packages
   environment.systemPackages = with pkgs; [
-    uv
+    # myPkgs.modrinth-app-unwrapped
+    dconf-editor
     fastfetch
     gtk3
-    dconf-editor
-    # myPkgs.modrinth-app-unwrapped
-    zulu # Java OpenJDK
     nodejs_22
-    vesktop
+    pavucontrol # Pulseaudio volume control
+    uv # python package manager
+    vesktop # Discord custom client
+    zulu # Java OpenJDK
   ];
-
-  hardware.graphics = {
-    package = hypr-pkgs.mesa.drivers;
-  };
 
   environment.sessionVariables = {
     # Wayland and Chromium/Electron apps.
     NIXOS_OZONE_WL = "1";
   };
-
-  # sops
-  #  sops.secrets = {
-  #  "syncthing/publicCert" = {
-  #    sopsFile = ./secrets.sops.yaml;
-  #    owner = "jahanson";
-  #    mode = "400";
-  #    restartUnits = ["syncthing.service"];
-  #  };
-  #  "syncthing/privateKey" = {
-  #    sopsFile = ./secrets.sops.yaml;
-  #    owner = "jahanson";
-  #    mode = "400";
-  #    restartUnits = ["syncthing.service"];
-  #  };
-  #};
 
   services = {
     # Tailscale
@@ -58,8 +32,19 @@ in {
     pipewire = {
       enable = true;
       alsa.enable = true;
-      jack.enable = true;
       pulse.enable = true;
+      extraConfig.pipewire = {
+        "10-clock-rate" = {
+          "context.properties" = {
+            "default.clock.rate" = 48000;
+          };
+        };
+        "10-clock-quantum" = {
+          "context.properties" = {
+            "default.clock.quantum" = 1024;
+          };
+        };
+      };
     };
     blueman.enable = true;
   };

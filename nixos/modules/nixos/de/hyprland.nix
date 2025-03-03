@@ -6,6 +6,7 @@
   ...
 }: let
   cfg = config.mySystem.de.hyprland;
+  hypr-pkgs = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   options = {
     mySystem.de.hyprland = {
@@ -17,6 +18,12 @@ in {
     };
   };
   config = lib.mkIf cfg.enable {
+    # We need all hyprland packages to follow the same MESA version
+    hardware = {
+      graphics = {
+        package = hypr-pkgs.mesa.drivers;
+      };
+    };
     # Hyprland nixpkgs system packages
     environment.systemPackages = with pkgs; [
       # Hyprland

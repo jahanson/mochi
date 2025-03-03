@@ -12,9 +12,10 @@ in {
 
   imports = [inputs.ags.homeManagerModules.default];
   config = mkIf cfg.enable {
+    # Theme settings
     gtk = {
       enable = true;
-
+      # Some apps just need the good ol' ini files.
       gtk3.extraConfig = {
         gtk-application-prefer-dark-theme = 1;
         gtk-theme-name = "Andromeda-dark";
@@ -50,6 +51,16 @@ in {
         gtk-xft-hinting = 1;
         gtk-xft-hintstyle = "hintslight";
         gtk-xft-rgba = "rgb";
+      };
+    };
+    # Wayland and apps pull from dconf since we're using the gtk portal.
+    dconf.settings = {
+      "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+        cursor-size = 24;
+        cursor-theme = "Bibata-Modern-Ice";
+        gtk-theme = "Flat-Remix-GTK-Blue-Dark";
+        icon-theme = "Flat-Remix-Blue-Dark";
       };
     };
     programs.ags = {

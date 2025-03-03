@@ -7,20 +7,19 @@
   testers,
   mods,
 }:
-
 buildGoModule rec {
   pname = "mods";
-  version = "1.6.0";
-  commitHash = "2a7f9d4dc11b6c828bf35a0b3d0be709f3ed79b9";
+  version = "1.7.0";
+  commitHash = "bf8337f9f4c586aaa267f8019ac2d0daa3b30129";
 
   src = fetchFromGitHub {
     owner = "charmbracelet";
     repo = "mods";
     rev = commitHash;
-    hash = "sha256-23gtb8BOx/0c643/paRt7VFHEyMyF4Q4a5b5+a4+kNU=";
+    hash = "sha256-EoDia+7ObtpnTDjJMzOk9djyCrW0m9pIToNHEDZ8Ch8=";
   };
 
-  vendorHash = "sha256-RV/Nr60BpCLcUL2Yy1Dd2ScwoI0BhGhTb/igCEcJPjI=";
+  vendorHash = "sha256-dnKvT3VcvidfDcgJ9FerjtReIOwvRZtJZiBwNx2BEQ8=";
 
   nativeBuildInputs = [
     installShellFiles
@@ -33,7 +32,7 @@ buildGoModule rec {
   ];
 
   # These tests require internet access.
-  checkFlags = [ "-skip=^TestLoad/http_url$|^TestLoad/https_url$" ];
+  checkFlags = ["-skip=^TestLoad/http_url$|^TestLoad/https_url$"];
 
   passthru = {
     updateScript = gitUpdater {

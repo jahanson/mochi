@@ -1,5 +1,6 @@
 {
   pkgs,
+  myPkgs,
   inputs,
   ...
 }:
@@ -57,8 +58,8 @@
       inputs.talhelper.packages.${pkgs.system}.default
 
       # charmbracelet tools
+      myPkgs.mods
       gum
-      mods
       skate
       soft-serve
       unstable.glow
