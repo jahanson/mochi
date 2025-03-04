@@ -1,5 +1,4 @@
-{pkgs, ...}: let
-in {
+{pkgs, ...}: {
   imports = [];
   swapDevices = [];
   virtualisation.docker.enable = true;
@@ -12,7 +11,6 @@ in {
     gtk3
     nodejs_22
     pavucontrol # Pulseaudio volume control
-    uv # python package manager
     vesktop # Discord custom client
     zulu # Java OpenJDK
   ];

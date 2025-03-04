@@ -12,13 +12,25 @@ in {
 
   imports = [inputs.ags.homeManagerModules.default];
   config = mkIf cfg.enable {
+    # Downloads the Theme Resources
+    home.packages = with pkgs; [
+      andromeda-gtk-theme
+      flat-remix-icon-theme
+      bibata-cursors
+    ];
+    # 'Installs' (sym-links) the Theme Resources
+    home.file = {
+      ".themes/Andromeda".source = "${pkgs.andromeda-gtk-theme}/share/themes/Andromeda";
+      ".icons/Flat-Remix-Blue-Dark".source = "${pkgs.flat-remix-icon-theme}/share/icons/Flat-Remix-Blue-Dark";
+      ".icons/Bibata-Modern-Ice".source = "${pkgs.bibata-cursors}/share/icons/Bibata-Modern-Ice";
+    };
     # Theme settings
     gtk = {
       enable = true;
       # Some apps just need the good ol' ini files.
       gtk3.extraConfig = {
         gtk-application-prefer-dark-theme = 1;
-        gtk-theme-name = "Andromeda-dark";
+        gtk-theme-name = "Andromeda";
         gtk-icon-theme-name = "Flat-Remix-Blue-Dark";
         gtk-font-name = "Fira Code Semi-Bold 14";
         gtk-cursor-theme-name = "Bibata-Modern-Ice";
@@ -36,7 +48,7 @@ in {
       };
       gtk4.extraConfig = {
         gtk-application-prefer-dark-theme = "1";
-        gtk-theme-name = "Andromeda-dark";
+        gtk-theme-name = "Andromeda";
         gtk-icon-theme-name = "Flat-Remix-Blue-Dark";
         gtk-font-name = "Fira Code Semi-Bold 14";
         gtk-cursor-theme-name = "Bibata-Modern-Ice";
@@ -59,13 +71,12 @@ in {
         color-scheme = "prefer-dark";
         cursor-size = 24;
         cursor-theme = "Bibata-Modern-Ice";
-        gtk-theme = "Flat-Remix-GTK-Blue-Dark";
+        gtk-theme = "Andromeda";
         icon-theme = "Flat-Remix-Blue-Dark";
       };
     };
     programs.ags = {
       enable = true;
-
       # I don't want Home Manager to manage these config files.
       # Just setup the programs.
       configDir = null;

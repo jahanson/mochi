@@ -29,6 +29,7 @@
       alejandra
 
       # dev
+      uv # python package manager
       bash-language-server
       fd
       gh

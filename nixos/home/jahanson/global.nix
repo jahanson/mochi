@@ -54,6 +54,7 @@
         direnv
         git
         python3
+        pipx
         fzf
         ripgrep
         lsd
