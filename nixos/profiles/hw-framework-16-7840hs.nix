@@ -13,22 +13,6 @@
       powerOnBoot = true;
     };
   };
-  # Force SOF for AMD controller while keeping HDA for HDMI
-  boot.kernelParams = [
-    "snd-intel-dspcfg.dsp_driver=3" # SOF for AMD Zen2+ audio
-  ];
-
-  # Essential firmware packages
-  hardware.firmware = with pkgs; [
-    sof-firmware
-    alsa-firmware
-  ];
-
-  # SOF-specific configuration
-  boot.extraModprobeConfig = ''
-    options snd-hda-intel model=auto position_fix=1
-    options snd-hda-intel power_save=1
-  '';
 
   boot = {
     # for managing/mounting nfs
