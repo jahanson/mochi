@@ -7,7 +7,7 @@
 with lib; let
   app = "ollama";
   # renovate: depName=docker.io/ollama/ollama datasource=docker
-  version = "0.5.12";
+  version = "0.5.13";
   image = "docker.io/ollama/ollama:${version}";
   cfg = config.mySystem.containers.${app};
 in {
