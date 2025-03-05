@@ -53,6 +53,7 @@
       unstable.zellij
       unstable.kitty
       unstable.nodePackages_latest.prettier # code formatter
+      unstable.aider-chat
 
       # flake imports
       inputs.nix-inspect.packages.${pkgs.system}.default

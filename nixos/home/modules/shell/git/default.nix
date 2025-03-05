@@ -3,11 +3,9 @@
   config,
   lib,
   ...
-}:
-let
+}: let
   cfg = config.myHome.shell.git;
-in
-{
+in {
   options.myHome.shell.git = {
     enable = lib.mkEnableOption "git";
     username = lib.mkOption {
@@ -61,6 +59,8 @@ in
             "*.decrypted.*"
             # Python virtualenvs
             ".venv"
+            # Aider Chat
+            ".aider*"
           ];
         };
       };
