@@ -1,111 +1,6 @@
 {
   description = "My NixOS flake";
 
-  inputs = {
-    # Nixpkgs and unstable
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    # Lix - Substitution of the Nix package manager, focused on correctness, usability, and growth – and committed to doing right by its community.
-    # https://git.lix.systems/lix-project/lix
-    lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.92.0.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Nix User Repository: User contributed nix packages
-    nur.url = "github:nix-community/NUR";
-
-    # nix-community hardware quirks
-    # https://github.com/nix-community
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-
-    # disko - Declarative disk partitioning and formatting using nix
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # home-manager - Manage user configuration with nix
-    # https://github.com/nix-community/home-manager
-    home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # sops-nix - secrets with mozilla sops
-    # https://github.com/Mic92/sops-nix
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # VSCode community extensions
-    # https://github.com/nix-community/nix-vscode-extensions
-    nix-vscode-extensions = {
-      url = "github:nix-community/nix-vscode-extensions";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # nix-inspect - inspect nix derivations usingn a TUI interface
-    # https://github.com/bluskript/nix-inspect
-    nix-inspect = {
-      url = "github:bluskript/nix-inspect";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # talhelper - A tool to help creating Talos kubernetes cluster
-    # https://github.com/budimanjojo/talhelper
-    talhelper = {
-      url = "github:budimanjojo/talhelper";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
-    # NixVirt for qemu & libvirt
-    # https://github.com/AshleyYakeley/NixVirt
-    nixvirt-git = {
-      url = "github:AshleyYakeley/NixVirt/v0.5.0";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # vscode-server - NixOS module for running vscode-server
-    vscode-server.url = "github:nix-community/nixos-vscode-server";
-
-    # krewfile - Declarative krew plugin management
-    # krewfile = {
-    #  url = "github:brumhard/krewfile";
-    #  inputs.nixpkgs.follows = "nixpkgs";
-    # };
-
-    # nix-minecraft - Minecraft server management
-    # https://github.com/infinidoge/nix-minecraft
-    nix-minecraft = {
-      url = "github:Infinidoge/nix-minecraft";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
-    # Hyprland
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    # Hyprlock
-    hyprlock = {
-      url = "github:hyprwm/hyprlock";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    # Hyprland plugins
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
-      inputs.hyprland.follows = "hyprland";
-    };
-    # Hyprland AGS (Application Grouping System)
-    ags.url = "github:Aylur/ags/v1";
-
-    # nvf -  A highly modular, extensible and distro-agnostic Neovim configuration framework for Nix/NixOS.
-    nvf.url = "github:notashelf/nvf";
-  };
-
   outputs = {
     self,
     nixpkgs,
@@ -274,5 +169,110 @@
       );
     in
       nixtop;
+  };
+
+  inputs = {
+    # Nixpkgs and unstable
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    # Lix - Substitution of the Nix package manager, focused on correctness, usability, and growth – and committed to doing right by its community.
+    # https://git.lix.systems/lix-project/lix
+    lix-module = {
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.92.0.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Nix User Repository: User contributed nix packages
+    nur.url = "github:nix-community/NUR";
+
+    # nix-community hardware quirks
+    # https://github.com/nix-community
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    # disko - Declarative disk partitioning and formatting using nix
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # home-manager - Manage user configuration with nix
+    # https://github.com/nix-community/home-manager
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # sops-nix - secrets with mozilla sops
+    # https://github.com/Mic92/sops-nix
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # VSCode community extensions
+    # https://github.com/nix-community/nix-vscode-extensions
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # nix-inspect - inspect nix derivations usingn a TUI interface
+    # https://github.com/bluskript/nix-inspect
+    nix-inspect = {
+      url = "github:bluskript/nix-inspect";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # talhelper - A tool to help creating Talos kubernetes cluster
+    # https://github.com/budimanjojo/talhelper
+    talhelper = {
+      url = "github:budimanjojo/talhelper";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    # NixVirt for qemu & libvirt
+    # https://github.com/AshleyYakeley/NixVirt
+    nixvirt-git = {
+      url = "github:AshleyYakeley/NixVirt/v0.5.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # vscode-server - NixOS module for running vscode-server
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
+
+    # krewfile - Declarative krew plugin management
+    # krewfile = {
+    #  url = "github:brumhard/krewfile";
+    #  inputs.nixpkgs.follows = "nixpkgs";
+    # };
+
+    # nix-minecraft - Minecraft server management
+    # https://github.com/infinidoge/nix-minecraft
+    nix-minecraft = {
+      url = "github:Infinidoge/nix-minecraft";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    # Hyprland
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # Hyprlock
+    hyprlock = {
+      url = "github:hyprwm/hyprlock";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # Hyprland plugins
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
+    # Hyprland AGS (Application Grouping System)
+    ags.url = "github:Aylur/ags/v1";
+
+    # nvf -  A highly modular, extensible and distro-agnostic Neovim configuration framework for Nix/NixOS.
+    nvf.url = "github:notashelf/nvf";
   };
 }
