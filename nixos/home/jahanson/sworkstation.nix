@@ -28,8 +28,10 @@
       packages = with pkgs; [
         # apps
         solaar # open source manager for logitech unifying receivers
+        unstable.seabird
         # unstable.vesktop # gpu issues. Using the flatpak version solves this issue.
         vlc
+        yt-dlp
       ];
     };
   };

@@ -69,8 +69,29 @@ in {
 
   hardware = {
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-    nvidia.open = true;
-    graphics.enable = true;
+    nvidia = {
+      modesetting.enable = true;
+      nvidiaSettings = true;
+      open = false;
+      package = config.boot.kernelPackages.nvidiaPackages.latest;
+      powerManagement = {
+        enable = false;
+        finegrained = false;
+      };
+    };
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+      extraPackages = with pkgs; [
+        vaapiVdpau
+        libvdpau
+        libvdpau-va-gl
+        nvidia-vaapi-driver
+        vdpauinfo
+        libva
+        libva-utils
+      ];
+    };
     # opengl.enable = true;
     nvidia-container-toolkit.enable = true;
   };
@@ -100,16 +121,22 @@ in {
     };
   };
 
-  # System packages
-  environment.systemPackages = with pkgs; [
-    # dev
-    uv
-    # fun
-    fastfetch
-    # Scripts
-    pushoverNotify
-    refreshSeries
-  ];
+  environment = {
+    sessionVariables = {
+      # Wayland and Chromium/Electron apps.
+      NIXOS_OZONE_WL = "1";
+    };
+    # System packages
+    systemPackages = with pkgs; [
+      # dev
+      uv
+      # fun
+      fastfetch
+      # Scripts
+      pushoverNotify
+      refreshSeries
+    ];
+  };
 
   # enable docker socket at /run/docker.sock
   virtualisation.podman.dockerSocket.enable = true;

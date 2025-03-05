@@ -12,10 +12,6 @@ in {
 
   imports = [inputs.ags.homeManagerModules.default];
   config = mkIf cfg.enable {
-    environment.sessionVariables = {
-      # Wayland and Chromium/Electron apps.
-      NIXOS_OZONE_WL = "1";
-    };
     # Downloads the Theme Resources
     home.packages = with pkgs; [
       andromeda-gtk-theme

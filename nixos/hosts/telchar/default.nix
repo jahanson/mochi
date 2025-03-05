@@ -4,16 +4,22 @@
   virtualisation.docker.enable = true;
 
   # System packages
-  environment.systemPackages = with pkgs; [
-    # myPkgs.modrinth-app-unwrapped
-    dconf-editor
-    fastfetch
-    gtk3
-    nodejs_22
-    pavucontrol # Pulseaudio volume control
-    vesktop # Discord custom client
-    zulu # Java OpenJDK
-  ];
+  environment = {
+    sessionVariables = {
+      # Wayland and Chromium/Electron apps.
+      NIXOS_OZONE_WL = "1";
+    };
+    systemPackages = with pkgs; [
+      # myPkgs.modrinth-app-unwrapped
+      dconf-editor
+      fastfetch
+      gtk3
+      nodejs_22
+      pavucontrol # Pulseaudio volume control
+      vesktop # Discord custom client
+      zulu # Java OpenJDK
+    ];
+  };
 
   services = {
     # Tailscale
