@@ -15,11 +15,6 @@
     zulu # Java OpenJDK
   ];
 
-  environment.sessionVariables = {
-    # Wayland and Chromium/Electron apps.
-    NIXOS_OZONE_WL = "1";
-  };
-
   services = {
     # Tailscale
     tailscale = {
