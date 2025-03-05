@@ -241,12 +241,6 @@
     # vscode-server - NixOS module for running vscode-server
     vscode-server.url = "github:nix-community/nixos-vscode-server";
 
-    # krewfile - Declarative krew plugin management
-    # krewfile = {
-    #  url = "github:brumhard/krewfile";
-    #  inputs.nixpkgs.follows = "nixpkgs";
-    # };
-
     # nix-minecraft - Minecraft server management
     # https://github.com/infinidoge/nix-minecraft
     nix-minecraft = {
