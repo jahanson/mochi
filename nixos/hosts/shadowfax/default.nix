@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   inputs,
   pkgs,
   ...
@@ -47,53 +46,24 @@ in {
     inputs.nix-minecraft.nixosModules.minecraft-servers
   ];
 
-  boot = {
-    initrd = {
-      kernelModules = ["nfs"];
-      supportedFilesystems = ["nfs"];
+  environment = {
+    sessionVariables = {
+      # Wayland and Chromium/Electron apps.
+      NIXOS_OZONE_WL = "1";
     };
-
-    binfmt.emulatedSystems = ["aarch64-linux"]; # Enabled for arm compilation
-
-    kernelModules = [
-      "vfio"
-      "vfio_iommu_type1"
-      "vfio_pci"
-      "vfio_virqfd"
+    # System packages
+    systemPackages = with pkgs; [
+      pavucontrol # Pulseaudio volume control
+      zulu
+      # dev
+      uv
+      # fun
+      fastfetch
+      prismlauncher # Minecraft launcher
+      # Scripts
+      pushoverNotify
+      refreshSeries
     ];
-    extraModulePackages = [];
-    kernelParams = ["zfs.zfs_arc_max=107374182400"]; # 100GB
-  };
-
-  swapDevices = [];
-
-  hardware = {
-    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-    nvidia = {
-      modesetting.enable = true;
-      nvidiaSettings = true;
-      open = false;
-      package = config.boot.kernelPackages.nvidiaPackages.latest;
-      powerManagement = {
-        enable = false;
-        finegrained = false;
-      };
-    };
-    graphics = {
-      enable = true;
-      enable32Bit = true;
-      extraPackages = with pkgs; [
-        vaapiVdpau
-        libvdpau
-        libvdpau-va-gl
-        nvidia-vaapi-driver
-        vdpauinfo
-        libva
-        libva-utils
-      ];
-    };
-    # opengl.enable = true;
-    nvidia-container-toolkit.enable = true;
   };
 
   users.users.root.openssh.authorizedKeys.keys = [];
@@ -119,23 +89,6 @@ in {
         rebase.autoStash = true;
       };
     };
-  };
-
-  environment = {
-    sessionVariables = {
-      # Wayland and Chromium/Electron apps.
-      NIXOS_OZONE_WL = "1";
-    };
-    # System packages
-    systemPackages = with pkgs; [
-      # dev
-      uv
-      # fun
-      fastfetch
-      # Scripts
-      pushoverNotify
-      refreshSeries
-    ];
   };
 
   # enable docker socket at /run/docker.sock
@@ -182,20 +135,14 @@ in {
         enable = true;
 
         # Specify the custom minecraft server package
-        package = pkgs.fabricServers.fabric-1_21_1.override {
-          loaderVersion = "0.16.10";
-        }; # Specific fabric loader version
+        package = pkgs.fabricServers.fabric-1_21_4;
 
         symlinks = {
           mods = pkgs.linkFarmFromDrvs "mods" (
             builtins.attrValues {
               Fabric-API = pkgs.fetchurl {
-                url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/9YVrKY0Z/fabric-api-0.115.0%2B1.21.1.jar";
-                sha512 = "e5f3c3431b96b281300dd118ee523379ff6a774c0e864eab8d159af32e5425c915f8664b1cd576f20275e8baf995e016c5971fea7478c8cb0433a83663f2aea8";
-              };
-              Backpacks = pkgs.fetchurl {
-                url = "https://cdn.modrinth.com/data/MGcd6kTf/versions/Ci0F49X1/1.2.1-backpacks_mod-1.21.2-1.21.3.jar";
-                sha512 = "6efcff5ded172d469ddf2bb16441b6c8de5337cc623b6cb579e975cf187af0b79291b91a37399a6e67da0758c0e0e2147281e7a19510f8f21fa6a9c14193a88b";
+                url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/ZNwYCTsk/fabric-api-0.118.0%2B1.21.4.jar";
+                sha512 = "1e0d31b6663dc2c7be648f3a5a9cf7b698b9a0fd0f7ae16d1d3f32d943d7c5205ff63a4f81b0c4e94a8997482cce026b7ca486e99d9ce35ac069aeb29b02a30d";
               };
             }
           );

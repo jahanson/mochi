@@ -1,20 +1,74 @@
-{lib, ...}: {
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: {
   imports = [];
 
   boot = {
-    loader.systemd-boot.enable = true;
-    loader.efi.canTouchEfiVariables = true;
-    initrd.availableKernelModules = [
-      "xhci_pci"
-      "ahci"
-      "nvme"
-      "usbhid"
-      "usb_storage"
-      "sd_mod"
+    loader = {
+      efi.canTouchEfiVariables = true;
+      systemd-boot.enable = true;
+    };
+
+    initrd = {
+      kernelModules = ["nfs"];
+      supportedFilesystems = ["nfs"];
+      availableKernelModules = [
+        "xhci_pci"
+        "ahci"
+        "nvme"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+      ];
+    };
+
+    kernelModules = [
+      "kvm-amd"
+      "vfio"
+      "vfio_iommu_type1"
+      "vfio_pci"
+      "vfio_virqfd"
     ];
-    initrd.kernelModules = [];
-    kernelModules = ["kvm-amd"];
+
     extraModulePackages = [];
+
+    binfmt.emulatedSystems = ["aarch64-linux"]; # Enabled for arm compilation
+
+    kernelParams = ["zfs.zfs_arc_max=107374182400"]; # 100GB
+  };
+
+  swapDevices = [];
+
+  hardware = {
+    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    nvidia = {
+      modesetting.enable = true;
+      nvidiaSettings = true;
+      open = false;
+      package = config.boot.kernelPackages.nvidiaPackages.latest;
+      powerManagement = {
+        enable = false;
+        finegrained = false;
+      };
+    };
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+      extraPackages = with pkgs; [
+        vaapiVdpau
+        libvdpau
+        libvdpau-va-gl
+        nvidia-vaapi-driver
+        vdpauinfo
+        libva
+        libva-utils
+      ];
+    };
+    # opengl.enable = true;
+    nvidia-container-toolkit.enable = true;
   };
 
   mySystem = {
