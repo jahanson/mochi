@@ -1,9 +1,11 @@
-{ lib, config, ... }:
-with lib;
-let
-  cfg = config.mySystem.nix;
-in
 {
+  lib,
+  config,
+  ...
+}:
+with lib; let
+  cfg = config.mySystem.nix;
+in {
   options.mySystem.nix = {
     autoOptimiseStore = mkOption {
       type = lib.types.bool;
@@ -11,9 +13,11 @@ in
       default = true;
     };
     gc = {
-      enable = mkEnableOption "automatic garbage collection" // {
-        default = true;
-      };
+      enable =
+        mkEnableOption "automatic garbage collection"
+        // {
+          default = true;
+        };
       persistent = mkOption {
         type = lib.types.bool;
         description = "Persistent timer for gc, runs at startup if timer missed";

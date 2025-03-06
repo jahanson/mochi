@@ -8,9 +8,7 @@
   stdenvNoCC,
   unzip,
   nixosTests,
-}:
-
-let
+}: let
   inherit (stdenvNoCC.hostPlatform) system;
 
   channels = {
@@ -34,14 +32,13 @@ let
     };
   };
 in
-stdenvNoCC.mkDerivation (finalAttrs: {
-  pname = "coder";
-  version = channels.${channel}.version;
-  src = fetchurl {
-    hash = (channels.${channel}.hash).${system};
+  stdenvNoCC.mkDerivation (finalAttrs: {
+    pname = "coder";
+    version = channels.${channel}.version;
+    src = fetchurl {
+      hash = (channels.${channel}.hash).${system};
 
-    url =
-      let
+      url = let
         systemName =
           {
             x86_64-linux = "linux_amd64";
@@ -59,59 +56,58 @@ stdenvNoCC.mkDerivation (finalAttrs: {
             aarch64-darwin = "zip";
           }
           .${system};
-      in
-      "https://github.com/coder/coder/releases/download/v${finalAttrs.version}/coder_${finalAttrs.version}_${systemName}.${ext}";
-  };
-
-  nativeBuildInputs = [
-    installShellFiles
-    makeBinaryWrapper
-    unzip
-  ];
-
-  unpackPhase = ''
-    runHook preUnpack
-
-    case $src in
-        *.tar.gz) tar -xz -f "$src" ;;
-        *.zip)    unzip      "$src" ;;
-    esac
-
-    runHook postUnpack
-  '';
-
-  installPhase = ''
-    runHook preInstall
-
-    install -D -m755 coder $out/bin/coder
-
-    runHook postInstall
-  '';
-
-  postInstall = ''
-    wrapProgram $out/bin/coder \
-      --prefix PATH : ${lib.makeBinPath [ terraform ]}
-  '';
-
-  # integration tests require network access
-  doCheck = false;
-
-  meta = {
-    description = "Provision remote development environments via Terraform";
-    homepage = "https://coder.com";
-    license = lib.licenses.agpl3Only;
-    mainProgram = "coder";
-    maintainers = with lib.maintainers; [
-      ghuntley
-      kylecarbs
-      urandom
-    ];
-  };
-
-  passthru = {
-    updateScript = ./update.sh;
-    tests = {
-      inherit (nixosTests) coder;
+      in "https://github.com/coder/coder/releases/download/v${finalAttrs.version}/coder_${finalAttrs.version}_${systemName}.${ext}";
     };
-  };
-})
+
+    nativeBuildInputs = [
+      installShellFiles
+      makeBinaryWrapper
+      unzip
+    ];
+
+    unpackPhase = ''
+      runHook preUnpack
+
+      case $src in
+          *.tar.gz) tar -xz -f "$src" ;;
+          *.zip)    unzip      "$src" ;;
+      esac
+
+      runHook postUnpack
+    '';
+
+    installPhase = ''
+      runHook preInstall
+
+      install -D -m755 coder $out/bin/coder
+
+      runHook postInstall
+    '';
+
+    postInstall = ''
+      wrapProgram $out/bin/coder \
+        --prefix PATH : ${lib.makeBinPath [terraform]}
+    '';
+
+    # integration tests require network access
+    doCheck = false;
+
+    meta = {
+      description = "Provision remote development environments via Terraform";
+      homepage = "https://coder.com";
+      license = lib.licenses.agpl3Only;
+      mainProgram = "coder";
+      maintainers = with lib.maintainers; [
+        ghuntley
+        kylecarbs
+        urandom
+      ];
+    };
+
+    passthru = {
+      updateScript = ./update.sh;
+      tests = {
+        inherit (nixosTests) coder;
+      };
+    };
+  })

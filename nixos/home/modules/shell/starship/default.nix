@@ -3,11 +3,9 @@
   config,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.myHome.shell.starship;
-in
-{
+in {
   options.myHome.shell.starship = {
     enable = mkEnableOption "starship";
   };

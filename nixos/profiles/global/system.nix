@@ -1,5 +1,8 @@
-{ lib, pkgs, ... }:
 {
+  lib,
+  pkgs,
+  ...
+}: {
   system = {
     # Enable printing changes on nix build etc with nvd
     activationScripts.report-changes = ''

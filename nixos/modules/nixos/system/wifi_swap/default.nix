@@ -5,8 +5,7 @@
   pkgs,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.mySystem.framework_wifi_swap;
   wifiSwap = pkgs.writeShellScriptBin "wifi_swap" ''
     #! /usr/bin/env bash
@@ -34,12 +33,13 @@ let
         ;;
     esac
   '';
-in
-{
+in {
   options.mySystem.framework_wifi_swap = {
-    enable = mkEnableOption "framework_wifi_swap" // {
-      default = false;
-    };
+    enable =
+      mkEnableOption "framework_wifi_swap"
+      // {
+        default = false;
+      };
   };
   config = mkIf cfg.enable {
     # Create bash script and add it to nix store

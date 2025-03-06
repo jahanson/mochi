@@ -4,14 +4,12 @@
   pkgs,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.mySystem.services.bind;
-in
-{
+in {
   options.mySystem.services.bind = {
     enable = mkEnableOption "bind";
-    package = mkPackageOption pkgs "bind" { };
+    package = mkPackageOption pkgs "bind" {};
     extraConfig = mkOption {
       type = types.str;
     };
@@ -19,8 +17,8 @@ in
 
   config = mkIf cfg.enable {
     networking.firewall = {
-      allowedTCPPorts = [ 53 ];
-      allowedUDPPorts = [ 53 ];
+      allowedTCPPorts = [53];
+      allowedUDPPorts = [53];
     };
 
     # Forces the machine to use the resolver provided by the network

@@ -1,5 +1,4 @@
-{ ... }:
-{
+{...}: {
   config = {
     "core.https_address" = "10.1.1.15:8445"; # Need quotes around key
   };
@@ -27,7 +26,7 @@
   ];
   profiles = [
     {
-      config = { };
+      config = {};
       description = "";
       devices = {
         eth0 = {
@@ -44,6 +43,6 @@
       name = "default";
     }
   ];
-  projects = [ ];
+  projects = [];
   cluster = null;
 }

@@ -1,5 +1,8 @@
-{ lib, pkgs, ... }:
 {
+  lib,
+  pkgs,
+  ...
+}: {
   # Support windows partition
   mySystem = {
     security.wheelNeedsSudoPassword = false;
@@ -22,7 +25,7 @@
         device = "nodev";
         mirroredBoots = [
           {
-            devices = [ "nodev" ];
+            devices = ["nodev"];
             path = "/boot";
           }
         ];

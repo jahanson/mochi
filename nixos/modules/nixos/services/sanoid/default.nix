@@ -4,14 +4,12 @@
   pkgs,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.mySystem.services.sanoid;
-in
-{
+in {
   options.mySystem.services.sanoid = {
     enable = mkEnableOption "sanoid";
-    package = mkPackageOption pkgs "sanoid" { };
+    package = mkPackageOption pkgs "sanoid" {};
     datasets = mkOption {
       type = lib.types.attrsOf (lib.types.attrsOf lib.types.unspecified);
     };

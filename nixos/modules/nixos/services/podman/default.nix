@@ -4,11 +4,9 @@
   pkgs,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.mySystem.services.podman;
-in
-{
+in {
   options.mySystem.services.podman.enable = mkEnableOption "Podman";
 
   config = mkIf cfg.enable {
@@ -16,7 +14,7 @@ in
       enable = true;
 
       dockerCompat = true;
-      extraPackages = [ pkgs.zfs ];
+      extraPackages = [pkgs.zfs];
 
       # regular cleanup
       autoPrune.enable = true;
@@ -42,16 +40,16 @@ in
       lazypodman = "sudo DOCKER_HOST=unix:///run/podman/podman.sock lazydocker";
     };
 
-    networking.firewall.interfaces.podman0.allowedUDPPorts = [ 53 ];
+    networking.firewall.interfaces.podman0.allowedUDPPorts = [53];
 
     # extra user for containers
-    users.groups.kah = { };
+    users.groups.kah = {};
     users.users = {
       kah = {
         uid = 568;
         group = "kah";
       };
-      jahanson.extraGroups = [ "kah" ];
+      jahanson.extraGroups = ["kah"];
     };
   };
 }

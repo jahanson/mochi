@@ -1,5 +1,8 @@
-{ config, lib, ... }:
 {
+  config,
+  lib,
+  ...
+}: {
   boot = {
     # Use the systemd-boot EFI boot loader.
     loader = {

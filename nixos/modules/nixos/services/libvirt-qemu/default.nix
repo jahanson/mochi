@@ -5,12 +5,10 @@
   inputs,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.mySystem.services.libvirt-qemu;
-in
-{
-  imports = [ inputs.nixvirt-git.nixosModules.default ];
+in {
+  imports = [inputs.nixvirt-git.nixosModules.default];
   options.mySystem.services.libvirt-qemu = {
     enable = mkEnableOption "libvirt-qemu";
   };
@@ -30,7 +28,7 @@ in
       qemu = {
         package = pkgs.qemu_kvm;
         ovmf.enable = true;
-        ovmf.packages = [ pkgs.OVMFFull.fd ];
+        ovmf.packages = [pkgs.OVMFFull.fd];
       };
     };
   };

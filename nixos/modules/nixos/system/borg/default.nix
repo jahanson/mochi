@@ -1,5 +1,4 @@
-{ ... }:
-{
+{...}: {
   imports = [
     ./borgbackup
     ./pikabackup

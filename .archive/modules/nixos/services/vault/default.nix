@@ -3,11 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = config.mySystem.services.vault;
-in
-{
+in {
   options.mySystem.services.vault = {
     enable = lib.mkEnableOption "vault";
     address = lib.mkOption {

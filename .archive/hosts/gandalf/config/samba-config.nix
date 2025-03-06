@@ -1,5 +1,4 @@
-{ ... }:
-{
+{...}: {
   global = {
     "workgroup" = "WORKGROUP";
     "server string" = "gandalf";

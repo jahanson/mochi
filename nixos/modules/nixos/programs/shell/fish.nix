@@ -1,9 +1,11 @@
-{ lib, config, ... }:
-with lib;
-let
-  cfg = config.mySystem.shell.fish;
-in
 {
+  lib,
+  config,
+  ...
+}:
+with lib; let
+  cfg = config.mySystem.shell.fish;
+in {
   options.mySystem.shell.fish = {
     enable = mkEnableOption "Fish";
     enablePlugins = mkOption {
@@ -22,5 +24,4 @@ in
       functions.enable = true;
     };
   };
-
 }

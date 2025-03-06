@@ -4,11 +4,9 @@
   pkgs,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.mySystem.services.cockpit;
-in
-{
+in {
   options.mySystem.services.cockpit.enable = mkEnableOption "Cockpit";
 
   config.services.cockpit = mkIf cfg.enable {

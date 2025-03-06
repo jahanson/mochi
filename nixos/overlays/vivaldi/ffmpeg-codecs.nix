@@ -4,7 +4,6 @@
   lib,
   stdenv,
 }:
-
 # This derivation roughly follows the update-ffmpeg script that ships with the official Vivaldi
 # downloads at https://vivaldi.com/download/
 stdenv.mkDerivation rec {
@@ -16,7 +15,7 @@ stdenv.mkDerivation rec {
     hash = "sha256-a1peHhku+OaGvPyChvLdh6/7zT+v8OHNwt60QUq7VvU=";
   };
 
-  buildInputs = [ squashfsTools ];
+  buildInputs = [squashfsTools];
 
   unpackPhase = ''
     unsquashfs -dest . $src
@@ -29,13 +28,13 @@ stdenv.mkDerivation rec {
   meta = with lib; {
     description = "Additional support for proprietary codecs for Vivaldi";
     homepage = "https://ffmpeg.org/";
-    sourceProvenance = with sourceTypes; [ binaryNativeCode ];
+    sourceProvenance = with sourceTypes; [binaryNativeCode];
     license = licenses.lgpl21;
     maintainers = with maintainers; [
       betaboon
       cawilliamson
       fptje
     ];
-    platforms = [ "x86_64-linux" ];
+    platforms = ["x86_64-linux"];
   };
 }

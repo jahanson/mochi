@@ -1,5 +1,4 @@
-{ ... }:
-{
+{...}: {
   config = {
     networking.hostId = "ad4380db";
     networking.hostName = "durincore";
@@ -12,10 +11,10 @@
           "usb_storage"
           "sd_mod"
         ];
-        kernelModules = [ ];
+        kernelModules = [];
       };
-      kernelModules = [ "kvm-intel" ];
-      extraModulePackages = [ ];
+      kernelModules = ["kvm-intel"];
+      extraModulePackages = [];
     };
 
     fileSystems = {
@@ -39,7 +38,7 @@
       };
     };
 
-    swapDevices = [ ];
+    swapDevices = [];
 
     # System settings and services.
     mySystem = {
@@ -48,6 +47,5 @@
         "wlp4s0"
       ];
     };
-
   };
 }

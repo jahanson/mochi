@@ -1,5 +1,4 @@
-{ ... }:
-{
+{...}: {
   outputs = {
     # ZFS automated snapshots
     templates = {
@@ -14,27 +13,27 @@
 
     datasets = {
       "nahar/qbittorrent" = {
-        useTemplate = [ "production" ];
+        useTemplate = ["production"];
         recursive = true;
       };
       "nahar/sabnzbd" = {
-        useTemplate = [ "production" ];
+        useTemplate = ["production"];
         recursive = true;
       };
       "nahar/containers/volumes/jellyfin" = {
-        useTemplate = [ "production" ];
+        useTemplate = ["production"];
         recursive = true;
       };
       "nahar/containers/volumes/plex" = {
-        useTemplate = [ "production" ];
+        useTemplate = ["production"];
         recursive = true;
       };
       "nahar/containers/volumes/scrutiny" = {
-        useTemplate = [ "production" ];
+        useTemplate = ["production"];
         recursive = true;
       };
       "nahar/containers/volumes/scrypted" = {
-        useTemplate = [ "production" ];
+        useTemplate = ["production"];
         recursive = true;
       };
     };

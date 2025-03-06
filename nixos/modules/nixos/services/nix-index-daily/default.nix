@@ -3,11 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = config.mySystem.services.nix-index-daily;
-in
-{
+in {
   options.mySystem.services.nix-index-daily = {
     enable = lib.mkEnableOption "Automatic daily nix-index database updates";
 
@@ -29,8 +27,8 @@ in
     systemd.user = {
       # Timer for nix-index update
       timers.nix-index-update = {
-        wantedBy = [ "timers.target" ];
-        partOf = [ "nix-index-update.service" ];
+        wantedBy = ["timers.target"];
+        partOf = ["nix-index-update.service"];
         timerConfig = {
           OnCalendar = cfg.startTime;
           Persistent = true;

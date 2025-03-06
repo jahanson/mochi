@@ -7,9 +7,7 @@
   modulesPath,
   pkgs,
   ...
-}:
-
-{
+}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
@@ -25,9 +23,9 @@
       "usb_storage"
       "sd_mod"
     ];
-    initrd.kernelModules = [ ];
-    kernelModules = [ "kvm-intel" ];
-    extraModulePackages = [ ];
+    initrd.kernelModules = [];
+    kernelModules = ["kvm-intel"];
+    extraModulePackages = [];
   };
   fileSystems = {
     "/" = {
@@ -51,7 +49,7 @@
     };
   };
 
-  swapDevices = [ ];
+  swapDevices = [];
 
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   # Until I can figure out why the tftp port is not opening, disable the firewall.
@@ -118,12 +116,12 @@
 
       bind = {
         enable = true;
-        extraConfig = import ./config/bind.nix { inherit config; };
+        extraConfig = import ./config/bind.nix {inherit config;};
       };
 
       haproxy = {
         enable = true;
-        config = import ./config/haproxy.nix { inherit config; };
+        config = import ./config/haproxy.nix {inherit config;};
         tcpPorts = [
           6443
           6444

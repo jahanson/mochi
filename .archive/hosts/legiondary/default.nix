@@ -6,9 +6,7 @@
   lib,
   modulesPath,
   ...
-}:
-
-{
+}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
@@ -24,9 +22,9 @@
       "usbhid"
       "sd_mod"
     ];
-    initrd.kernelModules = [ ];
-    kernelModules = [ "kvm-amd" ];
-    extraModulePackages = [ ];
+    initrd.kernelModules = [];
+    kernelModules = ["kvm-amd"];
+    extraModulePackages = [];
   };
 
   fileSystems = {
@@ -57,7 +55,7 @@
   #     options = [ "fmask=0022" "dmask=0022" ];
   #   };
 
-  swapDevices = [ ];
+  swapDevices = [];
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 

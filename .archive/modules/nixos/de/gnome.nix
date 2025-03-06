@@ -3,24 +3,27 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = config.mySystem.de.gnome;
-in
-{
+in {
   options = {
     mySystem.de.gnome = {
-      enable = lib.mkEnableOption "GNOME" // {
-        default = false;
-      };
-      systrayicons = lib.mkEnableOption "Enable systray icons" // {
-        default = true;
-      };
-      gsconnect = lib.mkEnableOption "Enable gsconnect (KDEConnect for GNOME)" // {
-        default = true;
-      };
+      enable =
+        lib.mkEnableOption "GNOME"
+        // {
+          default = false;
+        };
+      systrayicons =
+        lib.mkEnableOption "Enable systray icons"
+        // {
+          default = true;
+        };
+      gsconnect =
+        lib.mkEnableOption "Enable gsconnect (KDEConnect for GNOME)"
+        // {
+          default = true;
+        };
     };
-
   };
 
   config = lib.mkIf cfg.enable {
@@ -49,14 +52,13 @@ in
         };
       };
 
-      udev.packages = lib.optionals cfg.systrayicons [ pkgs.gnome.gnome-settings-daemon ]; # support appindicator
+      udev.packages = lib.optionals cfg.systrayicons [pkgs.gnome.gnome-settings-daemon]; # support appindicator
     };
 
     # systyray icons
     # extra pkgs and extensions
     environment = {
-      systemPackages =
-        with pkgs;
+      systemPackages = with pkgs;
         [
           wl-clipboard # ls ~/Downloads | wl-copy or wl-paste > clipboard.txt
           playerctl # gsconnect play/pause command
@@ -70,7 +72,7 @@ in
           gnomeExtensions.caffeine
           gnomeExtensions.dash-to-dock
         ]
-        ++ optionals cfg.systrayicons [ pkgs.gnomeExtensions.appindicator ];
+        ++ optionals cfg.systrayicons [pkgs.gnomeExtensions.appindicator];
     };
 
     # enable gsconnect

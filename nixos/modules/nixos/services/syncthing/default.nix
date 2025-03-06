@@ -2,11 +2,9 @@
   config,
   lib,
   ...
-}:
-let
+}: let
   cfg = config.mySystem.services.syncthing;
-in
-{
+in {
   options.mySystem.services.syncthing = {
     enable = lib.mkEnableOption "Syncthing";
     publicCertPath = lib.mkOption {
@@ -30,13 +28,13 @@ in
         sopsFile = ./secrets.sops.yaml;
         owner = "jahanson";
         mode = "400";
-        restartUnits = [ "syncthing.service" ];
+        restartUnits = ["syncthing.service"];
       };
       "password" = {
         sopsFile = ./secrets.sops.yaml;
         owner = "jahanson";
         mode = "400";
-        restartUnits = [ "syncthing.service" ];
+        restartUnits = ["syncthing.service"];
       };
     };
 
@@ -48,7 +46,7 @@ in
         openDefaultPorts = true;
         key = "${cfg.privateKeyPath}";
         cert = "${cfg.publicCertPath}";
-        settings = import ./config { inherit (config) sops; };
+        settings = import ./config {inherit (config) sops;};
       };
     };
     # Don't create default ~/Sync folder

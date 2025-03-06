@@ -1,6 +1,9 @@
-{ lib, config, ... }:
-with lib;
-let
+{
+  lib,
+  config,
+  ...
+}:
+with lib; let
   app = "lego-auto";
   image = "ghcr.io/bjw-s/lego-auto:v0.3.0";
   user = "999"; # string
@@ -8,8 +11,7 @@ let
   port = 9898; # int
   cfg = config.mySystem.services.${app};
   appFolder = "/eru/containers/volumes/${app}";
-in
-{
+in {
   options.mySystem.services.${app} = {
     enable = mkEnableOption "${app}";
     dnsimpleTokenPath = mkOption {
@@ -56,9 +58,11 @@ in
           DNSIMPLE_OAUTH_TOKEN_FILE = "/config/dnsimple-token";
         };
 
-      volumes = [
-        "${appFolder}/cert:/cert"
-      ] ++ optionals (cfg.provider == "dnsimple") [ "${cfg.dnsimpleTokenPath}:/config/dnsimple-token" ];
+      volumes =
+        [
+          "${appFolder}/cert:/cert"
+        ]
+        ++ optionals (cfg.provider == "dnsimple") ["${cfg.dnsimpleTokenPath}:/config/dnsimple-token"];
     };
   };
 }

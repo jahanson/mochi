@@ -1,14 +1,16 @@
-{ lib, config, ... }:
-with lib;
-let
-  cfg = config.mySystem.system;
-in
 {
+  lib,
+  config,
+  ...
+}:
+with lib; let
+  cfg = config.mySystem.system;
+in {
   options.mySystem.system = {
     packages = mkOption {
       type = with types; listOf package;
       description = "List of system level package installs";
-      default = [ ];
+      default = [];
     };
   };
   # System packages deployed globally.

@@ -1,13 +1,14 @@
-{ lib, config, ... }:
-with lib;
-let
-  cfg = config.mySystem.services.nginx;
-in
 {
+  lib,
+  config,
+  ...
+}:
+with lib; let
+  cfg = config.mySystem.services.nginx;
+in {
   options.mySystem.services.nginx.enable = mkEnableOption "nginx";
 
   config = mkIf cfg.enable {
-
     services.nginx = {
       enable = true;
 
@@ -63,6 +64,6 @@ in
     };
 
     # required for using acme certs
-    users.users.nginx.extraGroups = [ "acme" ];
+    users.users.nginx.extraGroups = ["acme"];
   };
 }

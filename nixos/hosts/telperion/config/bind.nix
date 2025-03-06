@@ -1,5 +1,4 @@
-{ config, ... }:
-''
+{config, ...}: ''
   include "${config.sops.secrets."bind/rndc-keys/externaldns".path}";
 
   acl trusted {

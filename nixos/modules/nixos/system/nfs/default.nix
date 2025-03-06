@@ -1,8 +1,10 @@
-{ lib, config, ... }:
-let
-  cfg = config.mySystem.system.nfs;
-in
 {
+  lib,
+  config,
+  ...
+}: let
+  cfg = config.mySystem.system.nfs;
+in {
   options.mySystem.system.nfs = {
     enable = lib.mkEnableOption "nfs";
     exports = lib.mkOption {

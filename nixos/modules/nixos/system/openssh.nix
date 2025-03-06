@@ -1,13 +1,17 @@
-{ lib, config, ... }:
-with lib;
-let
-  cfg = config.mySystem.services.openssh;
-in
 {
+  lib,
+  config,
+  ...
+}:
+with lib; let
+  cfg = config.mySystem.services.openssh;
+in {
   options.mySystem.services.openssh = {
-    enable = mkEnableOption "openssh" // {
-      default = true;
-    };
+    enable =
+      mkEnableOption "openssh"
+      // {
+        default = true;
+      };
     passwordAuthentication = mkOption {
       type = lib.types.bool;
       description = "If password can be accepted for ssh (commonly disable for security hardening)";

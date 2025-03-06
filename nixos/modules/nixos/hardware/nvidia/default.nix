@@ -4,15 +4,12 @@
   pkgs,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.mySystem.hardware.nvidia;
-in
-{
+in {
   options.mySystem.hardware.nvidia.enable = mkEnableOption "NVIDIA config";
 
   config = mkIf cfg.enable {
-
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
     # ref: https://nixos.wiki/wiki/Nvidia
     # Enable OpenGL
@@ -30,7 +27,6 @@ in
       # This is for the benefit of VSCODE running natively in wayland
 
       nvidia = {
-
         # Modesetting is required.
         modesetting.enable = true;
 

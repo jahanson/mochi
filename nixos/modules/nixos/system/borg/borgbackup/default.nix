@@ -1,17 +1,19 @@
-{ lib, config, ... }:
-let
-  cfg = config.mySystem.system.borgbackup;
-in
 {
+  lib,
+  config,
+  ...
+}: let
+  cfg = config.mySystem.system.borgbackup;
+in {
   options.mySystem.system.borgbackup = {
     enable = lib.mkEnableOption "borgbackup";
     paths = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = [ ];
+      default = [];
     };
     exclude = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = [ ];
+      default = [];
     };
     repo = lib.mkOption {
       example = "borgbackup@myserver:repo";

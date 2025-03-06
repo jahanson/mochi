@@ -4,17 +4,13 @@
   pkgs,
   ...
 }:
-
-with lib;
-
-let
+with lib; let
   cfg = config.mySystem.services.unpackerr;
-in
-{
+in {
   options.mySystem.services.unpackerr = {
     enable = mkEnableOption "Unpackerr";
 
-    package = mkPackageOption pkgs "unpackerr" { };
+    package = mkPackageOption pkgs "unpackerr" {};
 
     user = mkOption {
       type = types.str;
@@ -43,7 +39,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    users.groups.${cfg.group} = { };
+    users.groups.${cfg.group} = {};
     users.users = mkIf (cfg.user == "unpackerr") {
       unpackerr = {
         inherit (cfg) group;
@@ -53,8 +49,8 @@ in
 
     systemd.services.unpackerr = {
       description = "Unpackerr service";
-      after = [ "network.target" ];
-      wantedBy = [ "multi-user.target" ];
+      after = ["network.target"];
+      wantedBy = ["multi-user.target"];
       serviceConfig = {
         User = cfg.user;
         Group = cfg.group;
@@ -66,9 +62,11 @@ in
           ]
         );
 
-        EnvironmentFile = lib.optional (
-          cfg.extraEnvVarsFile != null && cfg.extraEnvVarsFile != ""
-        ) cfg.extraEnvVarsFile;
+        EnvironmentFile =
+          lib.optional (
+            cfg.extraEnvVarsFile != null && cfg.extraEnvVarsFile != ""
+          )
+          cfg.extraEnvVarsFile;
       };
     };
   };

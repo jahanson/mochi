@@ -1,5 +1,4 @@
-{ ... }:
-{
+{...}: {
   imports = [
     ./atuind
     ./fish

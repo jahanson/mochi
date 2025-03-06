@@ -1,10 +1,12 @@
-{ config, lib, ... }:
-with lib;
-let
+{
+  config,
+  lib,
+  ...
+}:
+with lib; let
   cfg = config.mySystem.security._1password;
   user = "jahanson";
-in
-{
+in {
   options.mySystem.security._1password = {
     enable = mkEnableOption "_1password";
   };
@@ -14,7 +16,7 @@ in
       _1password.enable = true;
       _1password-gui = {
         enable = true;
-        polkitPolicyOwners = [ "${user}" ];
+        polkitPolicyOwners = ["${user}"];
       };
     };
 

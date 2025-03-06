@@ -17,7 +17,7 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     inputs.disko.nixosModules.disko
-    (import ../../profiles/disko-nixos.nix { disks = [ "/dev/sda" ]; })
+    (import ../../profiles/disko-nixos.nix {disks = ["/dev/sda"];})
   ];
 
   boot = {
@@ -31,8 +31,8 @@
         "usb_storage"
         "sd_mod"
       ];
-      kernelModules = [ "nfs" ];
-      supportedFilesystems = [ "nfs" ];
+      kernelModules = ["nfs"];
+      supportedFilesystems = ["nfs"];
     };
 
     kernelModules = [
@@ -42,7 +42,7 @@
       "vfio_pci"
       "vfio_virqfd"
     ];
-    extraModulePackages = [ ];
+    extraModulePackages = [];
     kernelParams = [
       "iommu=pt"
       "intel_iommu=on"
@@ -50,7 +50,7 @@
     ]; # 100GB
   };
 
-  swapDevices = [ ];
+  swapDevices = [];
 
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAGSFTSVPt43PBpSMSF1dGTzN2JbxztDZUml7g4+PnWe CSI-Driver@talos"
@@ -107,13 +107,13 @@
         sopsFile = ./secrets.sops.yaml;
         owner = "jahanson";
         mode = "400";
-        restartUnits = [ "syncthing.service" ];
+        restartUnits = ["syncthing.service"];
       };
       "syncthing/privateKey" = {
         sopsFile = ./secrets.sops.yaml;
         owner = "jahanson";
         mode = "400";
-        restartUnits = [ "syncthing.service" ];
+        restartUnits = ["syncthing.service"];
       };
     };
   };

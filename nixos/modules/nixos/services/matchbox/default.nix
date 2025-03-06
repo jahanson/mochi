@@ -4,14 +4,12 @@
   pkgs,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.mySystem.services.matchbox;
-in
-{
+in {
   options.mySystem.services.matchbox = {
     enable = mkEnableOption "matchbox";
-    package = mkPackageOption pkgs "matchbox-server" { };
+    package = mkPackageOption pkgs "matchbox-server" {};
     dataPath = mkOption {
       type = types.str;
       example = "/var/lib/matchbox";
@@ -38,10 +36,10 @@ in
 
     networking.firewall = {
       # HTTP communication
-      allowedTCPPorts = [ 8086 ];
+      allowedTCPPorts = [8086];
     };
 
-    users.groups.matchbox = { };
+    users.groups.matchbox = {};
     users.users = {
       matchbox = {
         home = cfg.dataPath;
@@ -51,8 +49,8 @@ in
     };
 
     systemd.services.matchbox = {
-      wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
+      wantedBy = ["multi-user.target"];
+      after = ["network.target"];
       serviceConfig = {
         ExecStart = "${pkgs.matchbox-server}/bin/matchbox -address=0.0.0.0:8086 -data-path=${cfg.dataPath} -assets-path=${cfg.assetPath} -log-level=debug";
         Restart = "on-failure";

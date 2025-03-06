@@ -1,9 +1,11 @@
-{ lib, config, ... }:
-with lib;
-let
-  cfg = config.mySystem.security;
-in
 {
+  lib,
+  config,
+  ...
+}:
+with lib; let
+  cfg = config.mySystem.security;
+in {
   options.mySystem.security = {
     sshAgentAuth.enable = lib.mkEnableOption "openssh";
     wheelNeedsSudoPassword = lib.mkOption {

@@ -6,8 +6,7 @@
   osConfig,
   ...
 }:
-with lib.hm.gvariant;
-{
+with lib.hm.gvariant; {
   config = lib.mkIf osConfig.mySystem.de.gnome.enable {
     # add user packages
     home.packages = with pkgs; [
@@ -23,7 +22,7 @@ with lib.hm.gvariant;
         workspaces-only-on-primary = false;
       };
       "org/gnome/settings-daemon/plugins/media-keys" = {
-        home = [ "<Super>e" ];
+        home = ["<Super>e"];
       };
       "org/gnome/desktop/wm/preferences" = {
         workspace-names = [

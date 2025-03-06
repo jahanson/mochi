@@ -3,11 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = config.mySystem.games.steam;
-in
-{
+in {
   options.mySystem.games.steam = {
     enable = lib.mkEnableOption "Steam";
   };
@@ -24,6 +22,5 @@ in
     environment.systemPackages = with pkgs; [
       protonup-qt
     ];
-
   };
 }

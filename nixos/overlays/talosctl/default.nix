@@ -5,7 +5,6 @@
   installShellFiles,
   git,
 }:
-
 buildGoModule rec {
   pname = "talosctl";
   version = "1.9.0";
@@ -24,7 +23,7 @@ buildGoModule rec {
     "-w"
   ];
 
-  subPackages = [ "cmd/talosctl" ];
+  subPackages = ["cmd/talosctl"];
 
   doCheck = false;
 
@@ -58,7 +57,7 @@ buildGoModule rec {
     description = "A CLI for out-of-band management of Kubernetes nodes created by Talos";
     homepage = "https://www.talos.dev/";
     license = licenses.mpl20;
-    maintainers = with maintainers; [ flokli ];
+    maintainers = with maintainers; [flokli];
     mainProgram = "talosctl";
   };
 }

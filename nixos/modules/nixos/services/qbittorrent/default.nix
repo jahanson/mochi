@@ -4,11 +4,9 @@
   pkgs,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.mySystem.services.qbittorrent;
-in
-{
+in {
   options.mySystem.services.qbittorrent = {
     enable = mkEnableOption "qBittorrent";
 
@@ -68,7 +66,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    users.groups.${cfg.group} = { };
+    users.groups.${cfg.group} = {};
     users.users = mkIf (cfg.user == "qbittorrent") {
       qbittorrent = {
         inherit (cfg) group;
@@ -108,8 +106,8 @@ in
           Group = cfg.group;
         }
         (lib.mkIf cfg.hardening {
-          CapabilityBoundingSet = [ "" ];
-          DeviceAllow = [ "" ];
+          CapabilityBoundingSet = [""];
+          DeviceAllow = [""];
           DevicePolicy = "closed";
           LockPersonality = true;
           MemoryDenyWriteExecute = true;
@@ -154,7 +152,7 @@ in
         cfg.webuiPort
         cfg.qbittorrentPort
       ];
-      allowedUDPPorts = [ cfg.qbittorrentPort ];
+      allowedUDPPorts = [cfg.qbittorrentPort];
     };
   };
 }

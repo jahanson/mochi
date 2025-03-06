@@ -4,14 +4,12 @@
   pkgs,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.mySystem.services.dnsmasq;
-in
-{
+in {
   options.mySystem.services.dnsmasq = {
     enable = mkEnableOption "dnsmasq";
-    package = mkPackageOption pkgs "dnsmasq" { };
+    package = mkPackageOption pkgs "dnsmasq" {};
     bootAsset = mkOption {
       type = types.str;
       example = "http://10.1.1.57:8086/boot.ipxe";
@@ -48,7 +46,7 @@ in
       settings = {
         # Disables only the DNS port.
         port = 0;
-        dhcp-range = [ "10.1.1.1,proxy,255.255.255.0" ];
+        dhcp-range = ["10.1.1.1,proxy,255.255.255.0"];
         # serves TFTP from dnsmasq
         enable-tftp = true;
         tftp-root = cfg.tftpRoot;

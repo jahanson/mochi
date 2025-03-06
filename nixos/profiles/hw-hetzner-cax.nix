@@ -1,6 +1,5 @@
-{ lib, ... }:
-{
-  imports = [ ];
+{lib, ...}: {
+  imports = [];
 
   boot = {
     loader.systemd-boot.enable = true;
@@ -12,9 +11,9 @@
       "usbhid"
       "sr_mod"
     ];
-    initrd.kernelModules = [ ];
-    kernelModules = [ ];
-    extraModulePackages = [ ];
+    initrd.kernelModules = [];
+    kernelModules = [];
+    extraModulePackages = [];
   };
 
   mySystem = {

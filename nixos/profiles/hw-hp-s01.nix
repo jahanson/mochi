@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+{lib, ...}: {
   mySystem = {
     security.wheelNeedsSudoPassword = false;
   };

@@ -1,12 +1,14 @@
-{ lib, config, ... }:
-with lib;
-let
+{
+  lib,
+  config,
+  ...
+}:
+with lib; let
   app = "scrutiny";
   # renovate: depName=AnalogJ/scrutiny datasource=github-releases
   version = "v0.8.1";
   cfg = config.mySystem.services.${app};
-in
-{
+in {
   options.mySystem.services.${app} = {
     enable = mkEnableOption "${app}";
 
@@ -33,7 +35,7 @@ in
     # --device /dev/disk/by-id/nvme-XXXXXXXXXXXXXXXXXXXXXXXXXXXX
     devices = mkOption {
       type = types.listOf types.str;
-      default = [ ];
+      default = [];
       description = ''
         Devices to monitor on Scrutiny.
       '';

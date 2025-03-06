@@ -1,7 +1,10 @@
-{ lib, pkgs, ... }:
-# Role for headless servers
-with lib;
 {
+  lib,
+  pkgs,
+  ...
+}:
+# Role for headless servers
+with lib; {
   config = {
     mySystem = {
       services.rebootRequiredCheck.enable = true;
@@ -20,7 +23,7 @@ with lib;
     };
 
     environment = {
-      systemPackages = [ pkgs.unstable.lazygit ];
+      systemPackages = [pkgs.unstable.lazygit];
     };
 
     documentation = {

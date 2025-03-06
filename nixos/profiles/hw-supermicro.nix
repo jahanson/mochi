@@ -1,8 +1,11 @@
-{ lib, pkgs, ... }:
 {
+  lib,
+  pkgs,
+  ...
+}: {
   boot = {
     # for managing/mounting nfs
-    supportedFilesystems = [ "nfs" ];
+    supportedFilesystems = ["nfs"];
 
     loader = {
       grub = {
@@ -11,7 +14,7 @@
         efiInstallAsRemovable = true;
         mirroredBoots = [
           {
-            devices = [ "nodev" ];
+            devices = ["nodev"];
             path = "/boot";
           }
         ];

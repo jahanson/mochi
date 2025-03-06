@@ -4,11 +4,9 @@
   lib,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.myHome.shell.wezterm;
-in
-{
+in {
   options.myHome.shell.wezterm = {
     enable = mkEnableOption "wezterm";
     configPath = mkOption {

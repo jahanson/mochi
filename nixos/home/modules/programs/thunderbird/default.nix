@@ -3,8 +3,7 @@
   pkgs,
   lib,
   ...
-}:
-let
+}: let
   cfg = config.myHome.programs.thunderbird;
 
   policies = {
@@ -25,15 +24,14 @@ let
       };
     };
   };
-in
-{
+in {
   options.myHome.programs.thunderbird.enable = lib.mkEnableOption "Thunderbird";
 
   config = lib.mkIf cfg.enable {
     programs.thunderbird = {
       enable = true;
       package = pkgs.thunderbird-128.override (old: {
-        extraPolicies = (old.extrapPolicies or { }) // policies;
+        extraPolicies = (old.extrapPolicies or {}) // policies;
       });
 
       profiles.default.isDefault = true;

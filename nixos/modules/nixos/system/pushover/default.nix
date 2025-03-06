@@ -4,21 +4,18 @@
   pkgs,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.mySystem.system.systemd.pushover-alerts;
-in
-{
+in {
   options.mySystem.system.systemd.pushover-alerts.enable =
     mkEnableOption "Pushover alerts for systemd failures"
     // {
       default = true;
     };
   options.systemd.services = mkOption {
-    type =
-      with types;
+    type = with types;
       attrsOf (submodule {
-        config.onFailure = [ "notify-pushover@%n.service" ];
+        config.onFailure = ["notify-pushover@%n.service"];
       });
   };
 
@@ -32,7 +29,7 @@ in
 
     systemd.services."notify-pushover@" = mkIf cfg.enable {
       enable = true;
-      onFailure = lib.mkForce [ ]; # cant refer to itself on failure
+      onFailure = lib.mkForce []; # cant refer to itself on failure
       description = "Notify on failed unit %i";
       serviceConfig = {
         Type = "oneshot";

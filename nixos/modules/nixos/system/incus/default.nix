@@ -3,12 +3,10 @@
   pkgs,
   lib,
   ...
-}:
-let
+}: let
   cfg = config.mySystem.system.incus;
   user = "jahanson";
-in
-{
+in {
   # sops.secrets.secret-domain-0 = {
   #   sopsFile = ./secret.sops.yaml;
   # };
@@ -27,14 +25,13 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-
     virtualisation.incus = {
       inherit (cfg) preseed;
       enable = true;
       ui.enable = true;
     };
 
-    users.users.${user}.extraGroups = [ "incus-admin" ];
+    users.users.${user}.extraGroups = ["incus-admin"];
 
     # systemd.services.incus-preseed.postStart = "${oidcSetup}";
 

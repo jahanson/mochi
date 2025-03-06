@@ -1,13 +1,10 @@
-{ pkgs, ... }:
-
-let
+{pkgs, ...}: let
   cleanupScript = pkgs.writeShellScriptBin "cleanup-backups.sh" (
     builtins.readFile ./prune-backups.sh
   );
-in
-{
+in {
   systemd.timers.cleanup-backups = {
-    wantedBy = [ "timers.target" ];
+    wantedBy = ["timers.target"];
     timerConfig = {
       OnCalendar = "daily";
       Persistent = true;

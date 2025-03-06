@@ -3,12 +3,10 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = config.mySystem.system.borg.pika-backup;
   user = "jahanson";
-in
-{
+in {
   options.mySystem.system.borg.pika-backup = {
     enable = lib.mkEnableOption "pika-backup";
   };

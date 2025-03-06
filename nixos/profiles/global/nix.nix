@@ -1,5 +1,8 @@
-{ lib, nixpkgs, ... }:
 {
+  lib,
+  nixpkgs,
+  ...
+}: {
   ## Below is to align shell/system to flake's nixpkgs
   ## ref: https://nixos-and-flakes.thiscute.world/best-practices/nix-path-and-flake-registry
 
@@ -10,7 +13,7 @@
     registry.nixpkgs.flake = nixpkgs;
     channel.enable = false; # remove nix-channel related tools & configs, we use flakes instead.
 
-    nixPath = [ "nixpkgs=${nixpkgs}" ];
+    nixPath = ["nixpkgs=${nixpkgs}"];
 
     settings = {
       # but NIX_PATH is still used by many useful tools, so we set it to the same value as the one used by this flake.

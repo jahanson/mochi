@@ -3,8 +3,7 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   motd = pkgs.writeShellScriptBin "motd" ''
     #! /usr/bin/env bash
     source /etc/os-release
@@ -41,8 +40,7 @@ let
     printf "\n"
     ${lib.strings.concatStrings (
       lib.lists.forEach cfg.networkInterfaces (
-        x:
-        "printf \"$BOLD  * %-20s$ENDCOLOR %s\\n\" \"IPv4 ${x}\" \"$(ip -4 addr show ${x} | grep -oP '(?<=inet\\s)\\d+(\\.\\d+){3}')\"\n"
+        x: "printf \"$BOLD  * %-20s$ENDCOLOR %s\\n\" \"IPv4 ${x}\" \"$(ip -4 addr show ${x} | grep -oP '(?<=inet\\s)\\d+(\\.\\d+){3}')\"\n"
       )
     )}
     printf "$BOLD  * %-20s$ENDCOLOR %s\n" "Release" "$PRETTY_NAME"
@@ -82,17 +80,15 @@ let
     fi
   '';
   cfg = config.mySystem.system.motd;
-in
-{
+in {
   options.mySystem.system.motd = {
     enable = lib.mkEnableOption "MOTD";
     networkInterfaces = lib.mkOption {
       description = "Network interfaces to monitor";
       type = lib.types.listOf lib.types.str;
       # default = lib.mapAttrsToList (_: val: val.interface)
-      default = [ ];
+      default = [];
     };
-
   };
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [

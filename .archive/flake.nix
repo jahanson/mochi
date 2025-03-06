@@ -11,7 +11,7 @@
     profileModules = [
       ./nixos/profiles/role-workstation.nix
       ./nixos/profiles/role-dev.nix
-      { home-manager.users.jahanson = ./nixos/home/jahanson/workstation.nix; }
+      {home-manager.users.jahanson = ./nixos/home/jahanson/workstation.nix;}
     ];
   };
 
@@ -24,13 +24,13 @@
       inputs.nixos-hardware.nixosModules.lenovo-legion-15arh05h
       ./nixos/profiles/hw-legion-15arh05h.nix
       disko.nixosModules.disko
-      (import ./nixos/profiles/disko-nixos.nix { disks = [ "/dev/nvme0n1" ]; })
+      (import ./nixos/profiles/disko-nixos.nix {disks = ["/dev/nvme0n1"];})
     ];
     profileModules = [
       ./nixos/profiles/role-dev.nix
       ./nixos/profiles/role-gaming.nix
       ./nixos/profiles/role-workstation.nix
-      { home-manager.users.jahanson = ./nixos/home/jahanson/workstation.nix; }
+      {home-manager.users.jahanson = ./nixos/home/jahanson/workstation.nix;}
     ];
   };
 }

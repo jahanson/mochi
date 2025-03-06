@@ -1,9 +1,11 @@
-{ lib, config, ... }:
-with lib;
-let
-  cfg = config.mySystem.services.onepassword-connect;
-in
 {
+  lib,
+  config,
+  ...
+}:
+with lib; let
+  cfg = config.mySystem.services.onepassword-connect;
+in {
   options.mySystem.services.onepassword-connect = {
     enable = mkEnableOption "onepassword-connect";
     apiVersion = lib.mkOption {
@@ -27,7 +29,7 @@ in
 
   config = mkIf cfg.enable {
     # Create data dir
-    system.activationScripts.makeOnePasswordConnectDataDir = lib.stringAfter [ "var" ] ''
+    system.activationScripts.makeOnePasswordConnectDataDir = lib.stringAfter ["var"] ''
       mkdir -p "${cfg.dataDir}"
       chown -R 999:999 ${cfg.dataDir}
     '';
@@ -37,7 +39,7 @@ in
       onepassword-connect-api = {
         image = "docker.io/1password/connect-api:${cfg.apiVersion}";
         autoStart = true;
-        ports = [ "8080:8080" ];
+        ports = ["8080:8080"];
         volumes = [
           "${cfg.credentialsFile}:/home/opuser/.op/1password-credentials.json"
           "${cfg.dataDir}:/home/opuser/.op/data"
@@ -47,7 +49,7 @@ in
       onepassword-connect-sync = {
         image = "docker.io/1password/connect-sync:${cfg.syncVersion}";
         autoStart = true;
-        ports = [ "8081:8080" ];
+        ports = ["8081:8080"];
         volumes = [
           "${cfg.credentialsFile}:/home/opuser/.op/1password-credentials.json"
           "${cfg.dataDir}:/home/opuser/.op/data"

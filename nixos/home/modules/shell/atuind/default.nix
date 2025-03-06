@@ -4,11 +4,9 @@
   lib,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.myHome.shell.atuind;
-in
-{
+in {
   options.myHome.shell.atuind = {
     enable = mkEnableOption "atuind";
   };
@@ -17,10 +15,10 @@ in
     (mkIf cfg.enable {
       systemd.user.services.atuind = {
         Install = {
-          WantedBy = [ "default.target" ];
+          WantedBy = ["default.target"];
         };
         Unit = {
-          After = [ "network.target" ];
+          After = ["network.target"];
         };
         Service = {
           Environment = "ATUIN_LOG=info";

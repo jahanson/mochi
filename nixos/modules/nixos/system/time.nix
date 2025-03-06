@@ -1,8 +1,10 @@
-{ lib, config, ... }:
-let
-  cfg = config.mySystem.time;
-in
 {
+  lib,
+  config,
+  ...
+}: let
+  cfg = config.mySystem.time;
+in {
   options.mySystem.time = {
     timeZone = lib.mkOption {
       type = lib.types.str;

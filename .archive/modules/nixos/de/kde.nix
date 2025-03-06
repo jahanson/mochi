@@ -3,17 +3,17 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = config.mySystem.de.kde;
-  flameshotOverride = pkgs.unstable.flameshot.override { enableWlrSupport = true; };
-in
-{
+  flameshotOverride = pkgs.unstable.flameshot.override {enableWlrSupport = true;};
+in {
   options = {
     mySystem.de.kde = {
-      enable = lib.mkEnableOption "KDE" // {
-        default = false;
-      };
+      enable =
+        lib.mkEnableOption "KDE"
+        // {
+          default = false;
+        };
     };
   };
 
