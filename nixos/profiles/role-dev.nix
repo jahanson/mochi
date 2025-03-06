@@ -63,9 +63,9 @@
       myPkgs.mods
       gum
       skate
-      soft-serve
       unstable.glow
       vhs
+      unstable.soft-serve
     ];
 
     programs = {

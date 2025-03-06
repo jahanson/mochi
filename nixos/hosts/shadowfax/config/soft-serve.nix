@@ -1,5 +1,4 @@
-{ ... }:
-{
+{...}: {
   name = "Soft Serve";
   log = {
     format = "text";
@@ -27,6 +26,7 @@
     public_url = "http://10.1.1.61:23232";
   };
   stats = {
+    enabled = false;
     listen_addr = "10.1.1.61:23233";
   };
   db = {

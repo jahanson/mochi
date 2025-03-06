@@ -175,6 +175,7 @@
     # Nixpkgs and unstable
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-master.url = "github:nixos/nixpkgs/master";
 
     # Lix - Substitution of the Nix package manager, focused on correctness, usability, and growth – and committed to doing right by its community.
     # https://git.lix.systems/lix-project/lix

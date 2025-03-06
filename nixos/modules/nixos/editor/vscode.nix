@@ -45,23 +45,23 @@ with lib; let
     {
       name = "copilot";
       publisher = "github";
-      version = "1.261.0";
-      sha256 = "sha256-8IElcnSmngget8gduhdJUMx++PslOg58zcLwhRZCNyk=";
+      version = "1.277.0";
+      sha256 = "sha256-cRz5gby2VOk4QS+Z67Sm/rb5heBANJFitkn+s06yVv0=";
     }
     {
       # Apparently there's no insiders build for copilot-chat so the latest isn't what we want.
       # The latest generally targets insiders build of vs code right now and it won't load on stable.
       name = "copilot-chat";
       publisher = "github";
-      version = "0.23.2";
-      sha256 = "sha256-OT+ynCA+z8TvDE02hkOEQcJ1mBNz6geLxLOFtgIgKZE=";
+      version = "0.25.0";
+      sha256 = "sha256-rureag8PaZwEME41EdaDMIVnYN17CqBhu9Pa5SuWRKU=";
     }
     {
       # Same issue as the above -- auto pulling nightly builds not compatible with vscode stable.
       name = "python";
       publisher = "ms-python";
-      version = "2024.22.2";
-      sha256 = "sha256-uVv4kpTf0W82Gvoju0Q/HKf6SpN2mwuYO7NItlRoezI=";
+      version = "2025.2.0";
+      sha256 = "sha256-f573A/7s8jVfH1f3ZYZSTftrfBs6iyMWewhorX4Z0Nc=";
     }
   ];
   # Extract extension strings and coerce them to a list of valid attribute paths.
@@ -82,7 +82,7 @@ in {
     # Enable vscode & addons
     environment.systemPackages = with pkgs; [
       (vscode-with-extensions.override {
-        inherit (unstable) vscode;
+        inherit (master) vscode;
         # Merge all the extension packages together.
         vscodeExtensions =
           vscodeCommunityExtensionsPackages ++ nixpkgsExtensionsPackages ++ marketplaceExtensionsPackages;

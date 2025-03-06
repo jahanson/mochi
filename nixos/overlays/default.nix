@@ -39,4 +39,11 @@ in {
         sonarr = final.unstable.callPackage ./arr/sonarr.nix {};
       };
   };
+
+  master-packages = final: prev: {
+    master = import inputs.nixpkgs-master {
+      inherit (final) system;
+      config.allowUnfree = true;
+    };
+  };
 }

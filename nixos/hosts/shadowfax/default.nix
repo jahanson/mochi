@@ -117,8 +117,10 @@ in {
       # Minio
       9000 # console web interface
       9001 # api interface
-      # Beszel-agent
-      45876
+      # Soft-serve
+      23231 # SSH
+      23232 # HTTP
+      9418 # Git
       # scrypted
       45005
     ];
@@ -180,6 +182,7 @@ in {
     soft-serve = {
       enable = true;
       settings = import ./config/soft-serve.nix {};
+      package = pkgs.unstable.soft-serve;
     };
 
     sunshine = {

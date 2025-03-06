@@ -1031,6 +1031,22 @@
         "url": "https://github.com/NixOS/nixpkgs/archive/5487e69da40cbd611ab2cadee0b4637225f7cfae.tar.gz"
       }
     },
+    "nixpkgs-master": {
+      "locked": {
+        "lastModified": 1741273048,
+        "narHash": "sha256-Iwb7l9abMLuREi0XOULEzKm2sU2NUEhZQ93mwArlkjc=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "5a8afe6feb69907dde2006a1a784ab809088d751",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-ovmf": {
       "locked": {
         "lastModified": 1708984720,
@@ -1329,6 +1345,7 @@
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
+        "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvirt-git": "nixvirt-git",
         "nur": "nur",
