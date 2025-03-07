@@ -53,6 +53,7 @@ in {
     };
     # System packages
     systemPackages = with pkgs; [
+      inputs.zen-browser.packages."${system}".default # beta
       pavucontrol # Pulseaudio volume control
       zulu
       # dev

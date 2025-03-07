@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  inputs,
+  ...
+}: {
   imports = [];
   swapDevices = [];
   virtualisation.docker.enable = true;
@@ -11,6 +15,7 @@
     };
     systemPackages = with pkgs; [
       # myPkgs.modrinth-app-unwrapped
+      inputs.zen-browser.packages."${system}".default # beta
       dconf-editor
       fastfetch
       gtk3

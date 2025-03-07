@@ -269,5 +269,8 @@
 
     # nvf -  A highly modular, extensible and distro-agnostic Neovim configuration framework for Nix/NixOS.
     nvf.url = "github:notashelf/nvf";
+
+    # Zen Browser
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
   };
 }
