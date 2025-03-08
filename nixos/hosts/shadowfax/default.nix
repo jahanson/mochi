@@ -364,6 +364,8 @@ in {
         hardening = true;
         qbittorrentPort = 50413;
       };
+
+      zfs-nightly-snap.enable = true;
     };
     # System
     system = {
