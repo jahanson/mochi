@@ -37,6 +37,7 @@
       hadolint
       kubectl
       minio-client # S3 management
+      nodejs_22
       pre-commit # Pre-commit tasks for git
       shellcheck # shell script linting
       shfmt
@@ -66,6 +67,12 @@
       unstable.glow
       vhs
       unstable.soft-serve
+
+      # VMs
+      ## Distrobox
+      distrobox
+      distrobox-tui
+      boxbuddy
     ];
 
     programs = {
