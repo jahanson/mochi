@@ -31,6 +31,7 @@ with lib; let
     "rust-lang.rust-analyzer"
     "dustypomerleau.rust-syntax"
     "exiasr.hadolint"
+    "astro-build.astro-vscode"
     # "github.copilot"
     # "github.copilot-chat"
     # "ms-python.python" # Python extensions *required* for redhat.ansible/vscode-yaml
