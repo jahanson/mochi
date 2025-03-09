@@ -50,6 +50,10 @@
       "sambaCredentials" = {
         sopsFile = ./secrets.sops.yaml;
       };
+      "security/acme/env" = {
+        sopsFile = ./secrets.sops.yaml;
+        restartUnits = ["lego.service"];
+      };
     };
   };
 
@@ -70,11 +74,26 @@
     };
   };
 
+  # ACME (Let's Encrypt) Configuration
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "admin@${config.networking.domain}";
+
+    certs.${config.networking.domain} = {
+      extraDomainNames = [
+        "${config.networking.domain}"
+        "*.${config.networking.domain}"
+      ];
+      dnsProvider = "dnsimple";
+      dnsResolver = "1.1.1.1:53";
+      credentialsFile = config.sops.secrets."security/acme/env".path;
+    };
+  };
+
   # System settings and services.
   mySystem = {
     purpose = "Production";
     system.motd.networkInterfaces = ["enp1s0"];
-    security.acme.enable = true;
     services = {
       forgejo = {
         enable = true;

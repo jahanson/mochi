@@ -32,15 +32,8 @@ in {
 
         shellAbbrs = {
           nrs = "sudo nixos-rebuild switch --flake . --show-trace --accept-flake-config";
+          nfc = "nix flake check --show-trace --accept-flake-config";
           nvdiff = "nvd diff /run/current-system result";
-          # rook & ceph versions.
-          rcv = ''
-            kubectl \
-              -n rook-ceph \
-              get deployments \
-              -l rook_cluster=rook-ceph \
-              -o jsonpath='{range .items[*]}{.metadata.name}{"  \treq/upd/avl: "}{.spec.replicas}{"/"}{.status.updatedReplicas}{"/"}{.status.readyReplicas}{"  \trook-version="}{.metadata.labels.rook-version}{"  \tceph-version="}{.metadata.labels.ceph-version}{"\n"}{end}'
-          '';
         };
 
         functions = {
