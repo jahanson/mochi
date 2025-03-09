@@ -52,7 +52,6 @@
       };
       "security/acme/env" = {
         sopsFile = ./secrets.sops.yaml;
-        restartUnits = ["lego.service"];
       };
     };
   };
