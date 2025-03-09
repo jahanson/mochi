@@ -101,7 +101,10 @@ in {
     _1password-gui.enable = true;
 
     # Mosh
-    mosh.enable = true;
+    mosh = {
+      enable = true;
+      openFirewall = true;
+    };
 
     # VSCode Compatibility Settings
     nix-ld.enable = true;

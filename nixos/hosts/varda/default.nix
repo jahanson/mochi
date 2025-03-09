@@ -11,6 +11,7 @@
   # Add required CIFS support
   environment.systemPackages = with pkgs; [
     cifs-utils
+    minio-client
   ];
 
   fileSystems = {
@@ -52,8 +53,17 @@
     };
   };
 
+  programs = {
+    # Mosh
+    mosh = {
+      enable = true;
+      openFirewall = true;
+    };
+  };
+
   services = {
     zfs = {
+      # This helps a lot when upgrading
       expandOnBoot = "all";
       autoScrub.enable = true;
       trim.enable = true;
