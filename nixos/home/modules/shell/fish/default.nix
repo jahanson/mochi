@@ -31,7 +31,7 @@ in {
         };
 
         shellAbbrs = {
-          nrs = "sudo nixos-rebuild switch --flake .";
+          nrs = "sudo nixos-rebuild switch --flake . --show-trace --accept-flake-config";
           nvdiff = "nvd diff /run/current-system result";
           # rook & ceph versions.
           rcv = ''
