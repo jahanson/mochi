@@ -54,6 +54,7 @@ in {
     # System packages
     systemPackages = with pkgs; [
       inputs.zen-browser.packages."${system}".default # beta
+      inputs.ghostty.packages."${system}".default # terminal
       pavucontrol # Pulseaudio volume control
       zulu
       # dev

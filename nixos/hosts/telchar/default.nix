@@ -16,6 +16,7 @@
     systemPackages = with pkgs; [
       # myPkgs.modrinth-app-unwrapped
       inputs.zen-browser.packages."${system}".default # beta
+      inputs.ghostty.packages."${system}".default # terminal
       dconf-editor
       fastfetch
       gtk3

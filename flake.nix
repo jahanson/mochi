@@ -290,5 +290,10 @@
     buildbot-nix = {
       url = "github:nix-community/buildbot-nix";
     };
+
+    # Ghostty 👻 - Awesome terminal that uses GPU acceleration
+    ghostty = {
+      url = "github:ghostty-org/ghostty/v1.1.2";
+    };
   };
 }
