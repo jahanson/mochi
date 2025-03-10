@@ -107,7 +107,7 @@
           "${nixpkgs-unstable}/nixos/modules/services/web-servers/caddy/default.nix"
           ./nixos/profiles/role-dev.nix
           ./nixos/profiles/role-server.nix
-          {home-manager.users.jahanson = ./nixos/home/jahanson/sworkstation.nix;}
+          {home-manager.users.jahanson = ./nixos/home/jahanson/workstation.nix;}
         ];
       };
 
