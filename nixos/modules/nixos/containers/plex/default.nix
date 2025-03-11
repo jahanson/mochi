@@ -11,7 +11,7 @@ with lib; let
   image = "ghcr.io/onedr0p/plex:${version}";
   user = "kah";
   # renovate: depName=ghcr.io/onedr0p/plex datasource=docker versioning=loose
-  version = "1.41.4.9463-630c9f557";
+  version = "1.41.5.9522-a96edc606";
   volumeLocation = "/nahar/containers/volumes/plex";
 in {
   # Options
