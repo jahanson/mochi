@@ -37,7 +37,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set up Cachix
-        uses: https://github.com/cachix/cachix-action@v15
+        uses: https://github.com/cachix/cachix-action@v16
         if: ${{ !github.event.pull_request.head.repo.fork }}
         with:
           name: hsndev
