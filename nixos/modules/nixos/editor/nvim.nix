@@ -9,6 +9,7 @@ in {
   options.mySystem.editor.nvim.enable = mkEnableOption "nvim";
   config = mkIf cfg.enable {
     # Enable nvim and configure plugins/settings
+    # Uses nvf https://github.com/NotAShelf/nvf to configure nvim on nix.
     programs.nvf = {
       enable = true;
       settings.vim = {
