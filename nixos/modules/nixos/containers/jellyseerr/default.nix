@@ -11,7 +11,7 @@ with lib; let
   image = "ghcr.io/fallenbagel/jellyseerr:${version}";
   user = "jellyseerr";
   # renovate: depName=ghcr.io/fallenbagel/jellyseerr datasource=docker
-  version = "2.3.0";
+  version = "2.5.0";
   volumeLocation = "/nahar/containers/volumes/jellyseerr";
 in {
   # Options
