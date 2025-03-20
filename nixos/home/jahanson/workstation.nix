@@ -37,6 +37,7 @@
         unstable.talosctl # overlay override
         unstable.telegram-desktop
         unstable.tidal-hifi
+        unstable.peazip
         # unstable.xpipe
         # unstable.vesktop # gpu issues. Using the flatpak version solves this issue.
         vlc
