@@ -98,7 +98,8 @@
           "services/web-servers/caddy/default.nix"
         ];
         hardwareModules = [
-          lix-module.nixosModules.default
+          # https://github.com/alarsyo/nixos-config/commit/03346040e01c988ff03bf0c34519529051023a2c
+          # lix-module.nixosModules.default
           ./nixos/profiles/hw-threadripperpro.nix
         ];
         profileModules = [
@@ -193,7 +194,7 @@
     # Lix - Substitution of the Nix package manager, focused on correctness, usability, and growth – and committed to doing right by its community.
     # https://git.lix.systems/lix-project/lix
     lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.92.0.tar.gz";
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.92.0-1.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
