@@ -127,7 +127,7 @@ in {
       23232 # HTTP
       9418 # Git
       # scrypted
-      45005
+      # 45005
     ];
   };
 
@@ -226,7 +226,7 @@ in {
       jellyseerr.enable = true;
       ollama.enable = true;
       plex.enable = true;
-      scrypted.enable = true;
+      scrypted.enable = false;
     };
     purpose = "Production";
     # Services
